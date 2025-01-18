@@ -10,6 +10,7 @@ import About from './pages/About';
 import Landing from './pages/Home';
 import Student from './pages/Student';
 import Album_Image from './pages/Album_Image';
+import Contact from './pages/Contact';
 const App = () => {
   return (
     <>
@@ -30,6 +31,10 @@ const App = () => {
             <Route
               path='/student'
               element={<Student />}
+            ></Route>
+            <Route
+              path='/contact'
+              element={<Contact />}
             ></Route>
             <Route
               path='/album/:name'
