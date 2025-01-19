@@ -1,6 +1,6 @@
 const Form = () => {
   return (
-    <form className='space-y-4'>
+    <form className='space-y-7'>
       <div className='relative'>
         <input
           type='text'
@@ -64,7 +64,7 @@ const Form = () => {
       <button
         type='submit'
         aria-label="Submit contact form"
-        className='w-full bg-[#333333] text-white py-2 px-4 rounded-md'
+        className='w-full text-lg bg-[#333333] text-white py-2 px-4 rounded-md'
       >
         Submit
       </button>
