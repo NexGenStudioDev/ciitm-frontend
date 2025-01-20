@@ -32,7 +32,7 @@ const Hero = () => {
       setHeading(data.homeTitle);
       setParagraph(data.homeParagraph);
     }
-  }, []);
+  }, [hero]);
 
   return !hero ? (
     <Loader />
@@ -43,8 +43,9 @@ const Hero = () => {
         backgroundImage: `url(${image})`,
       }}
     >
+
       <div className='text w-full lg:w-1/2 h-full flex items-start justify-center lg:justify-center flex-col gap-3 absolute left-[3vw]'>
-        <h3 className=' max-[400px]:text-[8.5vw] text-[8vw] min-[768px]:text-5xl min-[768px]:w-[15ch] lg:text-[4vw] sm:font-bold md:text-[4vw] md:w-[15ch] lg:font-[700] leading-tight w-[25vh] lg:w-fit'>
+        <h3 className=' max-[400px]:text-[8.5vw] text-[8vw] min-[768px]:text-5xl min-[768px]:w-[15ch] lg:text-[4vw] font-bold md:text-[4vw] md:w-[15ch] lg:font-[700] leading-tight w-[25vh] lg:w-fit'>
           {heading}
         </h3>
 
