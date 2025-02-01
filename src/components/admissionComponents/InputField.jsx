@@ -25,7 +25,7 @@ const InputField = ({
     .toLowerCase();
 
   return (
-    <div className='max-[600px]:max-w-[248px] w-full w-full relative'>
+    <div className='max-[600px]:max-w-[248px] w-full relative'>
       <input
         id={nameAndId}
         name={nameAndId}
