@@ -148,7 +148,6 @@ const Steps = () => {
                     ${index <= activeStep ? 'text-black' : 'text-[#AAAAAA]'}`}
                 >
                   {step.label}
-                  
                 </div>
                 <div className='flex items-center'>
                   <div
