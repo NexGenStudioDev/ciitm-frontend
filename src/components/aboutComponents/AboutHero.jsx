@@ -1,44 +1,37 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
-import About_BG from '../../assets/images/aboutbg.svg';
-import Loader from '../Loader';
+import React, { useEffect, useState, lazy, Suspense, memo } from 'react';
 import { useSelector } from 'react-redux';
+import Loader from '../Loader';
 
 const AboutHero = () => {
-  const [image, setimage] =
-    useState('');
-  const [para, setpara] = useState('');
-  const [heading, setheading] =
-    useState('');
+  const [image, setImage] = useState('');
+  const [para, setPara] = useState('');
+  const [heading, setHeading] = useState('');
 
-  let about = useSelector(
-    state => state.about.aboutPage,
-  );
+  const about = useSelector(state => state.about.aboutPage);
 
   useEffect(() => {
     if (about) {
-      setimage(about.AboutHero.image);
-      setpara(
-        about.AboutHero.paragraph,
-      );
-      setheading(
-        about.AboutHero.Heading,
-      );
+      setImage(about.AboutHero.image);
+      setPara(about.AboutHero.paragraph);
+      setHeading(about.AboutHero.Heading);
     }
   }, [about]);
+
+  const LazyImage = lazy(() => import('../../assets/images/aboutbg.svg'));
+
   return !about ? (
     <Loader />
   ) : (
     <section className='bg-black w-full text-white'>
       <div className='about_hero relative w-full h-[90vh] bg-gradient-to-b from-white via-gray-700 to-black'>
-        <img
-          className='w-full h-full object-cover opacity-75 blur-[1.5px] object-top'
-          src={image}
-          alt=''
-        />
-
+        <Suspense fallback={<Loader />}>
+          <img
+            className='w-full h-full object-cover opacity-75 blur-[1.5px] object-top'
+            src={image}
+            alt='About Background'
+            loading='lazy'
+          />
+        </Suspense>
         <div className='txt w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center gap-5 max-[599px]:gap-6 flex-col pt-10 max-[599px]:pt-20'>
           <h1 className='w-1/2 max-[599px]:w-full text-center leading-tight text-[3.33vw] max-[599px]:text-[10vw] font-bold font-[Montserrat]'>
             {heading}
@@ -60,4 +53,4 @@ const AboutHero = () => {
   );
 };
 
-export default AboutHero;
+export default memo(AboutHero);

@@ -6,20 +6,13 @@ import Grades from './Grades';
 import UniversityInfo from './UniversityInfo';
 
 const Steps = () => {
-  const [activeStep, setActiveStep] =
-    useState(0);
-  const [isLoading, setIsLoading] =
-    useState(false);
-  const [image, setImage] =
-    useState(null);
-  const [
-    imageUploadSuccess,
-    setImageUploadSuccess,
-  ] = useState(false);
-  const [formData, setFormData] =
-    useState({});
+  const [activeStep, setActiveStep] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState(null);
+  const [imageUploadSuccess, setImageUploadSuccess] = useState(false);
+  const [formData, setFormData] = useState({});
 
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
       ...prevData,
@@ -27,17 +20,14 @@ const Steps = () => {
     }));
   };
 
-  const handleDropdownChange = (
-    name,
-    value,
-  ) => {
+  const handleDropdownChange = (name, value) => {
     setFormData(prevData => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleImageUpload = e => {
+  const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -50,93 +40,43 @@ const Steps = () => {
   };
 
   const steps = [
-    {
-      label: 'Your Info',
-      component: (
-        <YourInfo
-          handleInputChange={
-            handleInputChange
-          }
-          handleDropdownChange={
-            handleDropdownChange
-          }
-        />
-      ),
-    },
-    {
-      label: 'Parents Info',
-      component: (
-        <ParentsInfo
-          handleInputChange={
-            handleInputChange
-          }
-          handleDropdownChange={
-            handleDropdownChange
-          }
-        />
-      ),
-    },
-    {
-      label: 'Are you Human?',
-      component: <AreyouHuman />,
-    },
-    {
-      label: 'Grades',
-      component: <Grades />,
-    },
-    {
-      label: 'University Info',
-      component: <UniversityInfo />,
-    },
+    { label: 'Your Info', component: <YourInfo handleInputChange={handleInputChange} handleDropdownChange={handleDropdownChange} /> },
+    { label: 'Parents Info', component: <ParentsInfo handleInputChange={handleInputChange} handleDropdownChange={handleDropdownChange} /> },
+    { label: 'Are you Human?', component: <AreyouHuman /> },
+    { label: 'Grades', component: <Grades /> },
+    { label: 'University Info', component: <UniversityInfo /> },
   ];
 
   const validateStep = () => {
-    const currentStepData =
-      steps[activeStep];
+    const currentStepData = steps[activeStep];
+    const formFields = Object.keys(formData);
 
-    if (
-      currentStepData.component.props
-    ) {
-      const formFields =
-        Object.keys(formData);
-
-      for (const field in formData) {
-        if (formData[field] === '') {
-          alert(
-            'Please fill in all fields before proceeding!',
-          );
-          return false;
-        }
-      }
-
-      if (activeStep === 4 && !image) {
-        alert(
-          'Please upload your image before proceeding!',
-        );
+    for (const field in formData) {
+      if (formData[field] === '') {
+        alert('Please fill in all fields before proceeding!');
         return false;
       }
     }
+
+    if (activeStep === 4 && !image) {
+      alert('Please upload your image before proceeding!');
+      return false;
+    }
+
     return true;
   };
 
   const handleNext = () => {
     if (validateStep()) {
-      if (
-        activeStep <
-        steps.length - 1
-      ) {
-        setActiveStep(
-          prevStep => prevStep + 1,
-        );
+      if (activeStep < steps.length - 1) {
+        setActiveStep(prevStep => prevStep + 1);
       }
     }
   };
 
   const handlePrevious = () => {
     if (activeStep > 0) {
-      setActiveStep(
-        prevStep => prevStep - 1,
-      );
+      setActiveStep(prevStep => prevStep - 1);
     }
   };
 
@@ -163,9 +103,7 @@ const Steps = () => {
                       ${index <= activeStep ? 'bg-black' : 'bg-[#A0A0A080]'}`}
                     ></div>
                   </div>
-                  {index <
-                    steps.length -
-                      0 && (
+                  {index < steps.length - 0 && (
                     <div
                       className={`flex-grow h-0.5 mx-2 transition-all duration-300 ease-in-out
                       ${index < activeStep ? 'bg-black' : 'bg-[#333333]/30'}`}
@@ -185,11 +123,7 @@ const Steps = () => {
               Picture Upload
             </h1>
             <p className='text-xs text-[#A1A8B4] pt-2'>
-              Submit Your Order
-              Information - Item Name,
-              Decoration Size, Quantity,
-              Due Date, and any other
-              details
+              Submit Your Order Information - Item Name, Decoration Size, Quantity, Due Date, and any other details
             </p>
           </div>
 
@@ -207,19 +141,18 @@ const Steps = () => {
             Upload
           </label>
 
-          {imageUploadSuccess &&
-            image && (
-              <div className='mt-4'>
-                <p className='text-green-500'>
-                  Upload successful!
-                </p>
-                <img
-                  src={image}
-                  alt='Uploaded'
-                  className='mt-2 w-32 h-32 object-cover rounded-md'
-                />
-              </div>
-            )}
+          {imageUploadSuccess && image && (
+            <div className='mt-4'>
+              <p className='text-green-500'>
+                Upload successful!
+              </p>
+              <img
+                src={image}
+                alt='Uploaded'
+                className='mt-2 w-32 h-32 object-cover rounded-md'
+              />
+            </div>
+          )}
         </div>
 
         <div className='flex mt-10 min-[1000px]:mt-0 min-[600px]:flex-row flex-col w-full items-center justify-end gap-5'>
@@ -240,10 +173,7 @@ const Steps = () => {
             onClick={handleNext}
             disabled={isLoading}
           >
-            {activeStep ===
-            steps.length - 1
-              ? 'Submit'
-              : 'Next'}
+            {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
           </button>
         </div>
       </form>

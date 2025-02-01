@@ -10,44 +10,23 @@ const ContactUs = () => {
     .object({
       cName: yup
         .string()
-        .min(
-          5,
-          'Name must be at least 5 characters',
-        )
+        .min(5, 'Name must be at least 5 characters')
         .required('Name is required'),
       cEmail: yup
         .string()
-        .email(
-          'Enter a valid email address',
-        )
+        .email('Enter a valid email address')
         .required('Email is required'),
       cNumber: yup
         .number()
-        .typeError(
-          'Phone number must be a number',
-        )
-        .positive(
-          'Phone number must be positive',
-        )
-        .integer(
-          'Phone number must be an integer',
-        )
-        .required(
-          'Phone number is required',
-        ),
+        .typeError('Phone number must be a number')
+        .positive('Phone number must be positive')
+        .integer('Phone number must be an integer')
+        .required('Phone number is required'),
       cMessage: yup
         .string()
-        .min(
-          10,
-          'Message must be at least 10 characters',
-        )
-        .max(
-          100,
-          'Message must be less than 100 characters',
-        )
-        .required(
-          'Message is required',
-        ),
+        .min(10, 'Message must be at least 10 characters')
+        .max(100, 'Message must be less than 100 characters')
+        .required('Message is required'),
     })
     .required();
 
@@ -59,13 +38,10 @@ const ContactUs = () => {
     resolver: yupResolver(Form_schema),
   });
 
-  let onSubmit = async data => {
+  const onSubmit = async (data) => {
     console.log('data', data);
     try {
-      let response = await axios.post(
-        Contact_EndPoint,
-        data,
-      );
+      const response = await axios.post(Contact_EndPoint, data);
 
       if (response.data.message) {
         Swal.fire({
@@ -74,7 +50,6 @@ const ContactUs = () => {
           text: response.data.message,
         });
       }
-      // if(response)
 
       if (response.data.error) {
         Swal.fire({
@@ -86,24 +61,17 @@ const ContactUs = () => {
 
       console.log('response', response);
     } catch (error) {
-      if (
-        error.response.error ||
-        error
-      ) {
+      if (error.response.error || error) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: error.message
-            ? error.response.data
-                .message
+            ? error.response.data.message
             : 'Something went wrong!',
         });
       }
       console.error('error', error);
-      console.error(
-        'error response',
-        error.response.message,
-      );
+      console.error('error response', error.response.message);
     }
   };
 
@@ -146,24 +114,14 @@ const ContactUs = () => {
         </div>
       </div>
 
-
-      <div className='Container_Right bg-white rounded-[2.5vw] w-[40vw] max-[1179px]:w-[48vw] max-[822px]:w-[90vw]  h-fit p-[2vw] max-[410px]:text-[4.5vw] max-[823px]:p-[4vw] text-[#333333] border-[1.1px] border-[#D7D7D7] shadow-lg shadow-gray-300 mt-[7vh]'>
+      <div className='Container_Right bg-white rounded-[2.5vw] w-[40vw] max-[1179px]:w-[48vw] max-[822px]:w-[90vw] h-fit p-[2vw] max-[410px]:text-[4.5vw] max-[823px]:p-[4vw] text-[#333333] border-[1.1px] border-[#D7D7D7] shadow-lg shadow-gray-300 mt-[7vh]'>
         <h1 className='text-[1.3vw] max-[410px]:text-[4.5vw] max-[823px]:text-[3.5vw] font-semibold'>
           Feel free to ask any query
         </h1>
-        <p className='text-[0.9vw] max-[410px]:text-[2.5vw] max-[823px]:text-[2.2vw]  mt-1 mb-[1vw] font-medium w-[85%]'>
-          Welcome to [Institute Name],
-          an institution dedicated to
-          fostering innovation,
-          knowledge, and personal
-          growth.
+        <p className='text-[0.9vw] max-[410px]:text-[2.5vw] max-[823px]:text-[2.2vw] mt-1 mb-[1vw] font-medium w-[85%]'>
+          Welcome to [Institute Name], an institution dedicated to fostering innovation, knowledge, and personal growth.
         </p>
-        <form
-          className='form flex flex-col gap-[1vh]'
-          onSubmit={handleSubmit(
-            onSubmit,
-          )}
-        >
+        <form className='form flex flex-col gap-[1vh]' onSubmit={handleSubmit(onSubmit)}>
           {errors.cName && (
             <p className='text-red-800 -mb-4 text-[0.9vw] max-[410px]:text-[2.5vw] max-[823px]:text-[2.2vw] font-bold'>
               {errors.cName.message}
@@ -172,7 +130,7 @@ const ContactUs = () => {
           <input
             type='text'
             {...register('cName')}
-            className='peer w-full py-1 text-[0.9vw]  max-[410px]:text-[3vw] max-[830px]:text-[2.5vw] my-[2vh] border-b focus:outline-none transition ease-linear focus:border-[#333333] border-gray-300 shadow-sm'
+            className='peer w-full py-1 text-[0.9vw] max-[410px]:text-[3vw] max-[830px]:text-[2.5vw] my-[2vh] border-b focus:outline-none transition ease-linear focus:border-[#333333] border-gray-300 shadow-sm'
             placeholder='Name:'
           />
 
@@ -189,7 +147,7 @@ const ContactUs = () => {
           />
 
           {errors.cNumber && (
-            <p className='text-red-800  text-[0.9vw] max-[410px]:text-[2.5vw] max-[823px]:text-[2.2vw] font-bold'>
+            <p className='text-red-800 text-[0.9vw] max-[410px]:text-[2.5vw] max-[823px]:text-[2.2vw] font-bold'>
               {errors.cNumber.message}
             </p>
           )}
@@ -197,12 +155,10 @@ const ContactUs = () => {
           <input
             type='text'
             {...register('cNumber')}
-            onInput={e => {
-              let value =
-                e.target.value;
+            onInput={(e) => {
+              let value = e.target.value;
               if (isNaN(value)) {
-                e.target.value =
-                  value.slice(0, -1);
+                e.target.value = value.slice(0, -1);
               }
             }}
             className='border-b p-1 max-[410px]:text-[3vw] text-[0.9vw] mb-[1vh] max-[830px]:text-[2.5vw] w-full border-[#A0A0A0] focus:outline-none'
@@ -214,7 +170,6 @@ const ContactUs = () => {
               {errors.cMessage.message}
             </p>
           )}
-
 
           <textarea
             {...register('cMessage')}

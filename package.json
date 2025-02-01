@@ -14,7 +14,7 @@
     "@barba/core": "^2.10.3",
     "@gsap/react": "^2.1.1",
     "@hookform/resolvers": "^3.10.0",
-    "@reduxjs/toolkit": "^2.5.0",
+    "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.7.9",
     "lenis": "^1.1.19",
     "react": "^18.3.1",
