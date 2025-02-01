@@ -34,4 +34,5 @@ const AdmissionForm = () => {
   );
 };
 
+
 export default AdmissionForm;
