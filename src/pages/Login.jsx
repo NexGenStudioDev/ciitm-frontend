@@ -1,6 +1,73 @@
 import CiitmLogo from '../assets/images/ciitmLogo.png'
 import LoginImage from '../assets/images/loginImage.png'
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { Login_EndPoint } from '../utils/constants';
+
 const Login = () => {
+    const Form_schema = yup
+        .object({
+            uEmail: yup
+                .string()
+                .email('Enter a valid email address')
+                .required('Email is required'),
+            uPassword: yup
+                .string()
+                .min(8, 'Password must be at least 8 characters')
+                .required('Password is required')
+                .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])(?=.*[A-Z])[A-Za-z\d@$!%*?&]{8,}$/,
+                    { message: 'Password must contain at least one letter, one number, one special character, and one uppercase letter' })
+        })
+        .required();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(Form_schema),
+    });
+
+    const onSubmit = async (data) => {
+        console.log('data', data);
+        try {
+            const response = await axios.post(Login_EndPoint, data);
+
+            if (response.data.message) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.data.message,
+                });
+            }
+
+            if (response.data.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: response.data.message,
+                });
+            }
+
+            console.log('response', response);
+        } catch (error) {
+            if (error.response.error || error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error.message
+                        ? error.response.data.message
+                        : 'Something went wrong!',
+                });
+            }
+            console.error('error', error);
+            console.error('error response', error.response.message);
+        }
+    };
+
     return (
         <>
             <div className="flex h-screen flex-1">
@@ -20,16 +87,22 @@ const Login = () => {
 
                         <div className="mt-5">
                             <div>
-                                <form action="#" method="POST" className="space-y-6">
+                                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                     <div>
                                         <label htmlFor="email" className="block text-sm/6 font-medium text-[#5F5F5F]">
                                             Email
                                         </label>
                                         <div className="mt-2">
+                                            {errors.uEmail && (
+                                                <p className='text-red-800 mt-[1vh] text-[0.9vw] max-[410px]:text-[2.5vw] max-[823px]:text-[2.2vw] font-bold'>
+                                                    {errors.uEmail.message}
+                                                </p>
+                                            )}
                                             <input
                                                 id="email"
                                                 name="email"
                                                 type="email"
+                                                {...register('uEmail')}
                                                 required
                                                 autoComplete="email"
                                                 className="border block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#5F5F5F] sm:text-sm/6"
@@ -42,10 +115,16 @@ const Login = () => {
                                             Password
                                         </label>
                                         <div className="mt-2">
+                                            {errors.uPassword && (
+                                                <p className='text-red-800 mt-[1vh] text-[0.9vw] max-[410px]:text-[2.5vw] max-[823px]:text-[2.2vw] font-bold'>
+                                                    {errors.uPassword.message}
+                                                </p>
+                                            )}
                                             <input
                                                 id="password"
                                                 name="password"
                                                 type="password"
+                                                {...register('uPassword')}
                                                 required
                                                 autoComplete="current-password"
                                                 className="border block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#5F5F5F] sm:text-sm/6"

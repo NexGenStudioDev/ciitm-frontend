@@ -9,3 +9,5 @@ export const Album_EndPoint =
 export const Find_Teacher_EndPoint =
   '/api/find/teacher';
 export const Contact_EndPoint = `/api/contact/form/submit`;
+export const Login_EndPoint =
+  `/api/login`;
