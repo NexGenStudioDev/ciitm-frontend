@@ -11,3 +11,5 @@ export const Find_Teacher_EndPoint =
 export const Contact_EndPoint = `/api/contact/form/submit`;
 export const Login_EndPoint =
   `/api/login`;
+export const SignUp_EndPoint =
+  `/api/signup/admin`;

@@ -17,6 +17,7 @@ import ContactUs from './pages/ContactUs';
 import Loader from './components/Loader';
 import Admission from './pages/Admission';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 
 const App = () => {
   useEffect(() => {
@@ -33,10 +34,10 @@ const App = () => {
             path='/login'
             element={<Login />}
           ></Route>
-          {/* <Route
-              path='/album/:name'
-              element={<Album_Image />}
-            ></Route> */}
+          <Route
+              path='/sign-up'
+              element={<SignUp />}
+            ></Route>
           <Route
             path='/'
             element={<Body />}

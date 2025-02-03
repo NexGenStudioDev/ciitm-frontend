@@ -34,7 +34,7 @@ const Login = () => {
     const onSubmit = async (data) => {
         console.log('data', data);
         try {
-            const response = await axios.post(Login_EndPoint, data);
+            const response = await axios.post((Login_EndPoint), data);
 
             if (response.data.message) {
                 Swal.fire({
@@ -190,7 +190,7 @@ const Login = () => {
                             <div className="mt-4">
                                 <a
                                     href="#"
-                                    className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:ring-transparent"
+                                    className="flex items-center gap-5 w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:ring-transparent"
                                 >
                                     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
                                         <path
@@ -217,7 +217,7 @@ const Login = () => {
                             <div className="mt-5 text-sm/6 flex justify-end">
                                 <p>
                                     <span className='text-[#333333]'> Registered?  </span>
-                                    <a href="/signup" className="font-semibold text-[#FF6603] hover:text-[#5F5F5F]">
+                                    <a href="/sign-up" className="font-semibold text-[#FF6603] hover:text-[#5F5F5F]">
                                         Create an account
                                     </a>
                                 </p>
