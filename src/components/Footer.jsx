@@ -1,8 +1,27 @@
 import React from 'react';
 import logo from '../assets/images/ciitmLogo.png';
 import { Link } from 'react-router-dom';
+import useSocialLinks from '../hooks/useSocialLinks';
+
+const SocialLink = ({ href, label, isEmail = false }) => {
+   if (!href) return null;
+
+   return (
+      <a
+         href={isEmail ? `mailto:${href}` : href}
+         target='_blank'
+         rel='noopener noreferrer'
+         className='text-[0.9vw] max-[599px]:text-[3.5vw]'
+      >
+         {label}
+      </a>
+   );
+};
+
 
 const Footer = () => {
+   const socialLinks = useSocialLinks();
+
    return (
       <footer className='w-full flex items-center justify-between p-10 max-[999px]:flex-col'>
          <div className='left w-[50%] max-[599px]:pb-10 max-[999px]:w-full h-full flex items-start max-[999px]:items-center justify-center flex-col gap-4'>
@@ -10,7 +29,7 @@ const Footer = () => {
                <img src={logo} alt='' />
             </Link>
             <p className='w-[47%] text-[1vw] max-[599px]:hidden text-[#333] max-[999px]:text-center max-[999px]:pb-6'>
-               See why students love learning with us and how we’ve
+               See why students love learning with us and how we&apos;ve
                made a difference in their journeys.{' '}
             </p>
          </div>
@@ -91,36 +110,12 @@ const Footer = () => {
                   Social Media
                </p>
                <div className='links flex flex-col max-[599px]:flex-row gap-4 flex-wrap justify-center text-center'>
-                  <Link
-                     to='/'
-                     className='text-[0.9vw] max-[599px]:text-[3.5vw]'
-                  >
-                     Instagram
-                  </Link>
-                  <Link
-                     to='/'
-                     className='text-[0.9vw] max-[599px]:text-[3.5vw]'
-                  >
-                     Facebook
-                  </Link>
-                  <Link
-                     to='/'
-                     className='text-[0.9vw] max-[599px]:text-[3.5vw]'
-                  >
-                     Twitter
-                  </Link>
-                  <Link
-                     to='/'
-                     className='text-[0.9vw] max-[599px]:text-[3.5vw]'
-                  >
-                     Youtube
-                  </Link>
-                  <Link
-                     to='/'
-                     className='text-[0.9vw] max-[599px]:text-[3.5vw]'
-                  >
-                     LinkedIn
-                  </Link>
+                  <SocialLink href={socialLinks?.instagram} label='Instagram' />
+                  <SocialLink href={socialLinks?.facebook} label='Facebook' />
+                  <SocialLink href={socialLinks?.twitter} label='Twitter' />
+                  <SocialLink href={socialLinks?.youtube} label='Youtube' />
+                  <SocialLink href={socialLinks?.linkedin} label='LinkedIn' />
+                  <SocialLink href={socialLinks?.email} label='Email' isEmail />
                </div>
             </div>
          </div>
