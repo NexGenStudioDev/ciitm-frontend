@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import Swal from 'sweetalert2';
 import YourInfo from './YourInfo';
 import ParentsInfo from './ParentsInfo';
@@ -16,10 +15,8 @@ const Steps = () => {
    const [activeStep, setActiveStep] = useState(0);
    const [isLoading, setIsLoading] = useState(false);
    const [image, setImage] = useState(null);
-   const [imageUploadSuccess, setImageUploadSuccess] =
-      useState(false);
+   const [imageUploadSuccess, setImageUploadSuccess] = useState(false);
    const [formData, setFormData] = useState({});
-
    const [Avtor, setAvtor] = useState(null);
 
    let admission = useSelector(state => state.admission.admission);
@@ -35,8 +32,6 @@ const Steps = () => {
          });
       }
    }, [admission]);
-
-   let file = useSelector(state => state.admission.avtar);
 
    let dispatch = useDispatch();
 
@@ -92,7 +87,7 @@ const Steps = () => {
                headers: {
                   'Content-Type': admissionConstant.CONTENT_TYPE,
                },
-            },
+            }
          );
 
          Swal.fire({
@@ -273,21 +268,27 @@ const Steps = () => {
                   </button>
                )}
 
-               <button
-                  type='button'
-                  className='text-center w-full min-[600px]:w-fit bg-[#333333] px-6 text-white py-2.5 text-sm rounded-[8px]'
-                  onClick={
-                     steps.length - 1 === activeStep
-                        ? Handle_From_Submit
-                        : handleNext
-                  }
-                  disabled={isLoading}
-               >
-                  {activeStep === steps.length - 1
-                     ? 'Submit'
-                     : 'Next'}
-               </button>
+<button
+  type='button'
+  className='text-center w-full min-[600px]:w-fit bg-[#333333] px-6 text-white py-2.5 text-sm rounded-[8px]'
+  onClick={steps.length - 1 === activeStep ? Handle_From_Submit : handleNext}
+  disabled={isLoading}
+>
+  {isLoading ? (
+    <div className="flex items-center justify-center">
+      <span className="spinner-border spinner-border-sm text-white mr-2" role="status" aria-hidden="true"></span>
+      <span>Submitting...</span>
+    </div>
+  ) : activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+</button>
+
             </div>
+
+            {isLoading && (
+               <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                  <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white"></div>
+               </div>
+            )}
          </form>
       </>
    );
