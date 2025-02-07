@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Input = (Title) => {
+const Input = Title => {
    return (
       <>
          <label
             htmlFor='email'
             className='text-[1vw] my-2 text-[#5F5F5F] max-[999px]:text-[3vw]'
          >
-            {}
+            {Title}
          </label>
          <input
             type='email'

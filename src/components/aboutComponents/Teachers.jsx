@@ -3,12 +3,15 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import useTeacher from '../../hooks/useTeacher';
 // import {Swiper} from 'swiper';
-import {Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 
 const TeacherCard = React.memo(({ teacher }) => {
-   const socialMedia = teacher.social_media && teacher.social_media[0] ? teacher.social_media[0] : {};
+   const socialMedia =
+      teacher.social_media && teacher.social_media[0]
+         ? teacher.social_media[0]
+         : {};
 
    return (
       <div className='card w-[25%] max-[599px]:w-full h-full bg-white text-black flex items-start p-4 justify-between flex-col gap-2 rounded-xl  max-[1098px]:w-[40%]'>
@@ -89,7 +92,11 @@ const TeacherCard = React.memo(({ teacher }) => {
             </div>
          </div>
          {socialMedia.linkedin && (
-            <Link to={socialMedia.linkedin} target='_blank' className='w-full'>
+            <Link
+               to={socialMedia.linkedin}
+               target='_blank'
+               className='w-full'
+            >
                <button className='bg-[#333] text-[0.95vw] max-[599px]:text-[3.5vw] font-semibold w-full text-white rounded-lg py-2 px-6'>
                   Contact me
                </button>

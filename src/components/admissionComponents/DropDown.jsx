@@ -18,6 +18,7 @@ const Dropdown = ({
    const admission = useSelector(state => state.admission.admission);
    const find_index = admission.findIndex(item => item.name === name);
 
+
    // Initialize with value from Redux if available
    const initialValue = find_index !== -1 ? admission[find_index].value : placeholder;
    const [selectedOption, setSelectedOption] = useState(initialValue);
@@ -31,8 +32,11 @@ const Dropdown = ({
    const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
          setIsOpen(false);
+
       }
    };
+
+
 
    useEffect(() => {
       document.addEventListener('mousedown', handleClickOutside);
@@ -57,7 +61,6 @@ const Dropdown = ({
          setIsError(false);
       }
    };
-
    const handleOptionClick = (option) => {
       setSelectedOption(option);
       setIsOpen(false);

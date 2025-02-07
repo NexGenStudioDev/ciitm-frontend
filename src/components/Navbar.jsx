@@ -36,8 +36,10 @@ const Navbar = () => {
    };
 
    // Close dropdown when clicked outside
+
    const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+
          setIsDropdownOpen(false);
       }
    };
@@ -111,6 +113,7 @@ const Navbar = () => {
                            </div>
                         )}
                      </div>
+
                   )
                ))}
                <div className='btns flex items-center justify-between gap-3 text-[5vw]'>
@@ -135,6 +138,7 @@ const Navbar = () => {
          </div>
 
          <nav className='w-full fixed top-0 left-0 px-10 max-[599px]:px-6 py-3 z-[999] bg-white flex items-center justify-between'>
+
             <NavLink to='/' state={{ scrollToSection: true }} className='logo'>
                <img src={logo} alt='Logo' />
             </NavLink>
@@ -170,13 +174,23 @@ const Navbar = () => {
                               ref={dropdownRef} // Attach ref here
                               className='flex flex-col bg-white text-black w-40 text-[13px] absolute overflow-hidden top-full left-0 shadow-md rounded-md mt-1 border border-gray-200'
                            >
-                              <NavLink to='/admission' className='px-4 py-2 hover:bg-gray-100 hover:font-medium border-b border-gray-300'>
+
+                              <NavLink
+                                 to='/admission'
+                                 className='px-4 py-2 hover:bg-gray-100 hover:font-medium border-b border-gray-300'
+                              >
                                  Admission
                               </NavLink>
-                              <NavLink to='/status' className='px-4 py-2 hover:bg-gray-100 hover:font-medium border-b border-gray-300'>
+                              <NavLink
+                                 to='/status'
+                                 className='px-4 py-2 hover:bg-gray-100 hover:font-medium border-b border-gray-300'
+                              >
                                  Check Status
                               </NavLink>
-                              <NavLink to='/payment' className='px-4 py-2 hover:bg-gray-100 hover:font-medium'>
+                              <NavLink
+                                 to='/payment'
+                                 className='px-4 py-2 hover:bg-gray-100 hover:font-medium'
+                              >
                                  Payment
                               </NavLink>
                            </div>
@@ -184,6 +198,7 @@ const Navbar = () => {
                      </div>
                   )
                ))}
+
             </div>
             <div className='btns flex items-center justify-between gap-3 max-[599px]:hidden'>
                <NavLink

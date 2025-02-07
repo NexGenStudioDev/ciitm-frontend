@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import Body from './Body';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import {
+   BrowserRouter,
+   Route,
+   Routes,
+   useLocation,
+} from 'react-router-dom';
+
 import ErrorPage from './components/ErrorPage';
 import About from './pages/About';
 import Landing from './pages/Home';
@@ -11,6 +17,16 @@ import Loader from './components/Loader';
 import Admission from './pages/Admission';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
+import DOMPurify from 'dompurify'; 
+
+
+
+
+   const userInput = "<img src='x' onerror='alert(1)' />";  
+
+
+   const sanitizedInput = DOMPurify.sanitize(userInput);
+
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -60,6 +76,7 @@ const App = () => {
                </Route>
                <Route path='*' element={<ErrorPage />} />
             </Routes>
+            <div dangerouslySetInnerHTML={{ __html: sanitizedInput }} />
          </BrowserRouter>
       </>
    );
