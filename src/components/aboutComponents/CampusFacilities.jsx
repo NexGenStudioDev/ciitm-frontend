@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import bulletPoint from '../../assets/images/bulletPoint.svg';
 
 export let Facilites_Card = ({ Title, index, isActive, onClick }) => {
+
   return (
     <div
       className={`Facilites_Card flex gap-3 rounded-md cursor-pointer w-full h-full p-2 ${
@@ -17,22 +18,24 @@ export let Facilites_Card = ({ Title, index, isActive, onClick }) => {
       </h1>
     </div>
   );
+
 };
 
 const CampusFacilities = () => {
-  const [Facilities, setFacilities] = useState([]);
-  const [Description, setDescription] = useState({});
-  const [activeTab, setActiveTab] = useState(null);
+   const [Facilities, setFacilities] = useState([]);
+   const [Description, setDescription] = useState({});
+   const [activeTab, setActiveTab] = useState(null);
 
-  let About_Page_Data = useSelector((state) => state.about.aboutPage);
+   let About_Page_Data = useSelector(state => state.about.aboutPage);
 
-  useEffect(() => {
-    if (About_Page_Data) {
-      setFacilities([...About_Page_Data.Facilities]);
-      setDescription({ ...About_Page_Data.Description });
-      setActiveTab(About_Page_Data.Facilities[0]); // Default active tab
-    }
-  }, [About_Page_Data]);
+   useEffect(() => {
+      if (About_Page_Data) {
+         setFacilities([...About_Page_Data.Facilities]);
+         setDescription({ ...About_Page_Data.Description });
+         setActiveTab(About_Page_Data.Facilities[0]); // Default active tab
+      }
+   }, [About_Page_Data]);
+
 
   return (
     <section className="w-full h-full px-8 max-[599px]:px-6 py-12 bg-[#333] flex items-center justify-between gap-2 max-[599px]:gap-10 max-[599px]:flex-col">
@@ -98,6 +101,7 @@ const CampusFacilities = () => {
       </div>
     </section>
   );
+
 };
 
 export default CampusFacilities;

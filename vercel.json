@@ -1,13 +1,12 @@
 {
    "rewrites": [
-     {
-       "source": "/api/(.*)",
-       "destination": "https://ciitm-backend.onrender.com/api/$1"
-     },
-     {
-       "source": "/(.*)",
-       "destination": "/index.html"
-     }
+      {
+         "source": "/api/(.*)",
+         "destination": "https://ciitm-backend.onrender.com/api/$1"
+      },
+      {
+         "source": "/(.*)",
+         "destination": "/index.html"
+      }
    ]
- }
- 
+}

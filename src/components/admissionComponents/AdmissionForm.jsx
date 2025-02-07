@@ -5,10 +5,10 @@ const AdmissionForm = () => {
    return (
       <div className='px-[3vw] text-[#333333] bg-[#D7D7D726] pb-[6vw] pt-[3vw]'>
          <div className='font-[400] lg:w-[60%] text-[18px]'>
-            <span className='font-[700]'>Note:</span> Welcome to
-            CIITM Dhanbad, an institution dedicated to fostering
-            innovation, knowledge, and personal growth. Our mission is
-            to shape tom
+            <span className='font-[700]'>Note:</span> Welcome to CIITM
+            Dhanbad, an institution dedicated to fostering innovation,
+            knowledge, and personal growth. Our mission is to shape
+            tom
          </div>
 
          <div className='bg-white rounded-[16px] border border-[#D7D7D7] shadow-sm mt-5 px-6 pt-4 pb-10'>
@@ -22,8 +22,8 @@ const AdmissionForm = () => {
                </h1>
                <div className='font-[400]  text-sm pt-1'>
                   <span className='font-[700]'>Note:</span> Welcome to
-                  CIITM Dhanbad, an institution dedicated to
-                  fostering innovation,
+                  CIITM Dhanbad, an institution dedicated to fostering
+                  innovation,
                </div>
 
                <Steps />
