@@ -7,8 +7,6 @@ import App from './App';
 import { HelmetProvider } from 'react-helmet-async';
 import Lenis from 'lenis';
 
-
-
 const lenis = new Lenis({
    autoRaf: true,
 });

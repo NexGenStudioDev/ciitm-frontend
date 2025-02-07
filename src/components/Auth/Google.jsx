@@ -20,20 +20,24 @@ const Google = ({ text }) => {
       onSuccess: async credentialResponse => {
          try {
             let token = credentialResponse.access_token;
-         
+
             if (!user) {
-               let res = await axios.post(`/api/auth/google?token=${token}`,{} , {withCredentials: true}); 
+               let res = await axios.post(
+                  `/api/auth/google?token=${token}`,
+                  {},
+                  { withCredentials: true },
+               );
 
                let user = res.data.user;
 
                dispatch(setUser(user));
             }
          } catch (error) {
-            console.log('Login Failed', error); 
+            console.log('Login Failed', error);
          }
       },
       onError: error => {
-         console.log('Login Failed', error); 
+         console.log('Login Failed', error);
       },
    });
 

@@ -37,9 +37,11 @@ const Navbar = () => {
 
    // Close dropdown when clicked outside
 
-   const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-
+   const handleClickOutside = event => {
+      if (
+         dropdownRef.current &&
+         !dropdownRef.current.contains(event.target)
+      ) {
          setIsDropdownOpen(false);
       }
    };
@@ -50,7 +52,10 @@ const Navbar = () => {
 
       // Cleanup on unmount
       return () => {
-         document.removeEventListener('mousedown', handleClickOutside);
+         document.removeEventListener(
+            'mousedown',
+            handleClickOutside,
+         );
       };
    }, []);
 
@@ -69,7 +74,7 @@ const Navbar = () => {
             className='mobile-menu w-full h-screen bg-[#333] text-[6vw] font-semibold text-white hidden max-[599px]:block -translate-y-[100%] fixed top-0 left-0 z-[99]'
          >
             <nav className='w-full h-full flex items-center justify-center gap-6 flex-col'>
-               {navLinks.map((link) => (
+               {navLinks.map(link =>
                   link.label !== 'Students' ? (
                      <NavLink
                         key={link.to}
@@ -101,21 +106,29 @@ const Navbar = () => {
                               ref={dropdownRef} // Attach ref here
                               className='flex flex-col bg-white text-black w-full text-[13px] absolute overflow-hidden top-full left-0 shadow-md rounded-md mt-1 border border-gray-200'
                            >
-                              <NavLink to='/admission' className='px-4 py-2 hover:bg-gray-100 hover:font-medium border-b border-gray-300'>
+                              <NavLink
+                                 to='/admission'
+                                 className='px-4 py-2 hover:bg-gray-100 hover:font-medium border-b border-gray-300'
+                              >
                                  Admission
                               </NavLink>
-                              <NavLink to='/status' className='px-4 py-2 hover:bg-gray-100 hover:font-medium border-b border-gray-300'>
+                              <NavLink
+                                 to='/status'
+                                 className='px-4 py-2 hover:bg-gray-100 hover:font-medium border-b border-gray-300'
+                              >
                                  Check Status
                               </NavLink>
-                              <NavLink to='/payment' className='px-4 py-2 hover:bg-gray-100 hover:font-medium'>
+                              <NavLink
+                                 to='/payment'
+                                 className='px-4 py-2 hover:bg-gray-100 hover:font-medium'
+                              >
                                  Payment
                               </NavLink>
                            </div>
                         )}
                      </div>
-
-                  )
-               ))}
+                  ),
+               )}
                <div className='btns flex items-center justify-between gap-3 text-[5vw]'>
                   <NavLink
                      to='/login'
@@ -138,12 +151,15 @@ const Navbar = () => {
          </div>
 
          <nav className='w-full fixed top-0 left-0 px-10 max-[599px]:px-6 py-3 z-[999] bg-white flex items-center justify-between'>
-
-            <NavLink to='/' state={{ scrollToSection: true }} className='logo'>
+            <NavLink
+               to='/'
+               state={{ scrollToSection: true }}
+               className='logo'
+            >
                <img src={logo} alt='Logo' />
             </NavLink>
             <div className='links flex items-center justify-between gap-6 text-[1vw] font-light font-[Poppins] max-[599px]:hidden'>
-               {navLinks.map((link) => (
+               {navLinks.map(link =>
                   link.label !== 'Students' ? (
                      <NavLink
                         key={link.to}
@@ -174,7 +190,6 @@ const Navbar = () => {
                               ref={dropdownRef} // Attach ref here
                               className='flex flex-col bg-white text-black w-40 text-[13px] absolute overflow-hidden top-full left-0 shadow-md rounded-md mt-1 border border-gray-200'
                            >
-
                               <NavLink
                                  to='/admission'
                                  className='px-4 py-2 hover:bg-gray-100 hover:font-medium border-b border-gray-300'
@@ -196,9 +211,8 @@ const Navbar = () => {
                            </div>
                         )}
                      </div>
-                  )
-               ))}
-
+                  ),
+               )}
             </div>
             <div className='btns flex items-center justify-between gap-3 max-[599px]:hidden'>
                <NavLink

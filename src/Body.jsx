@@ -5,7 +5,6 @@ import Footer from './components/Footer';
 import useHomeUi from './hooks/useHomeUi.js';
 
 const Body = () => {
-   
    useHomeUi();
 
    return (

@@ -17,35 +17,38 @@ import Loader from './components/Loader';
 import Admission from './pages/Admission';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
-import DOMPurify from 'dompurify'; 
+import DOMPurify from 'dompurify';
 
+const userInput = "<img src='x' onerror='alert(1)' />";
 
-
-
-   const userInput = "<img src='x' onerror='alert(1)' />";  
-
-
-   const sanitizedInput = DOMPurify.sanitize(userInput);
-
+const sanitizedInput = DOMPurify.sanitize(userInput);
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
    const location = useLocation();
 
    useEffect(() => {
-      const savedPosition = sessionStorage.getItem(`scroll-${location.pathname}`);
+      const savedPosition = sessionStorage.getItem(
+         `scroll-${location.pathname}`,
+      );
       if (savedPosition) {
          window.scrollTo(0, parseInt(savedPosition, 10));
       }
 
       const handleBeforeUnload = () => {
-         sessionStorage.setItem(`scroll-${location.pathname}`, window.scrollY);
+         sessionStorage.setItem(
+            `scroll-${location.pathname}`,
+            window.scrollY,
+         );
       };
 
       window.addEventListener('beforeunload', handleBeforeUnload);
       return () => {
          handleBeforeUnload(); // Save scroll before leaving
-         window.removeEventListener('beforeunload', handleBeforeUnload);
+         window.removeEventListener(
+            'beforeunload',
+            handleBeforeUnload,
+         );
       };
    }, [location]);
 
@@ -70,13 +73,18 @@ const App = () => {
                   <Route path='/contact' element={<ContactUs />} />
                   <Route path='/student' element={<Student />} />
                   <Route path='/admission' element={<Admission />} />
-                  <Route path='/album/:name' element={<Album_Image />} />
+                  <Route
+                     path='/album/:name'
+                     element={<Album_Image />}
+                  />
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<Signup />} />
                </Route>
                <Route path='*' element={<ErrorPage />} />
             </Routes>
-            <div dangerouslySetInnerHTML={{ __html: sanitizedInput }} />
+            <div
+               dangerouslySetInnerHTML={{ __html: sanitizedInput }}
+            />
          </BrowserRouter>
       </>
    );
