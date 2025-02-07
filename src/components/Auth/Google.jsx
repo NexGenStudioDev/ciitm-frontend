@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../store/AuthSlice';
 
@@ -21,9 +22,7 @@ const Google = ({ text }) => {
             let token = credentialResponse.access_token;
          
             if (!user) {
-               let res = await axios.post(
-                  `/api/auth/google?token=${token}`,
-               ); 
+               let res = await axios.post(`/api/auth/google?token=${token}`,{} , {withCredentials: true}); 
 
                let user = res.data.user;
 

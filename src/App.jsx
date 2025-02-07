@@ -16,6 +16,7 @@ import Loader from './components/Loader';
 import Admission from './pages/Admission';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
+import DOMPurify from 'dompurify'; 
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -49,6 +50,14 @@ const ScrollRestoration = () => {
    return null;
 };
 
+
+   const userInput = "<img src='x' onerror='alert(1)' />";  
+
+
+   const sanitizedInput = DOMPurify.sanitize(userInput);
+
+
+
 const App = () => {
    useEffect(() => {
       window.onload = () => {
@@ -59,7 +68,7 @@ const App = () => {
    return (
       <>
          <BrowserRouter basename='/'>
-            <ScrollRestoration /> {/* ✅ Add Scroll Restoration */}
+            <ScrollRestoration />
             <Routes>
                <Route path='/' element={<Body />}>
                   <Route path='/' element={<Landing />} />
@@ -76,6 +85,8 @@ const App = () => {
                </Route>
                <Route path='*' element={<ErrorPage />} />
             </Routes>
+
+            <div dangerouslySetInnerHTML={{ __html: sanitizedInput }} />
          </BrowserRouter>
       </>
    );

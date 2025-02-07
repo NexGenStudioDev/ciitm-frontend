@@ -7,10 +7,8 @@ import App from './App';
 import { HelmetProvider } from 'react-helmet-async';
 import Lenis from 'lenis';
 
-import dotenv from 'dotenv/config';
-dotenv.config();
 
-// Initialize Lenis
+
 const lenis = new Lenis({
    autoRaf: true,
 });

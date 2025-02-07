@@ -1,15 +1,9 @@
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
-
-
-import React from 'react';
 import Google from './Google';
 
 const Google_Wrapper = ({ text }) => {
-
-    let clientId = REACT_APP_Google_Client_Id;
    return (
-      <GoogleOAuthProvider clientId={clientId}>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
          <Google text={text} />
       </GoogleOAuthProvider>
    );
