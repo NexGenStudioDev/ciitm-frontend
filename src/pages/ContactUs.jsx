@@ -10,7 +10,7 @@ import useSocialLinks from '../hooks/useSocialLinks';
 
 const ContactUs = () => {
    const socialLinks = useSocialLinks();
-   
+
    const Form_schema = yup
       .object({
          cName: yup
@@ -84,8 +84,8 @@ const ContactUs = () => {
             <p className='text-[0.9vw] max-[410px]:text-[2.5vw] max-[823px]:text-[2.2vw] font-medium'>
                Welcome to [Institute Name], an institution dedicated
                to fostering innovation, knowledge, and personal
-               growth. Our mission is to shape tomorrow&apos;s leaders by
-               offering exceptional educational opportunities and
+               growth. Our mission is to shape tomorrow&apos;s leaders
+               by offering exceptional educational opportunities and
                encouraging intellectual exploration.
             </p>
 
@@ -117,21 +117,33 @@ const ContactUs = () => {
             </h2>
             <div className='flex gap-4'>
                {socialLinks?.facebook && (
-                  <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer">
+                  <a
+                     href={socialLinks.facebook}
+                     target='_blank'
+                     rel='noopener noreferrer'
+                  >
                      <button className='p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700'>
                         <FaFacebook size={20} />
                      </button>
                   </a>
                )}
                {socialLinks?.instagram && (
-                  <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer">
+                  <a
+                     href={socialLinks.instagram}
+                     target='_blank'
+                     rel='noopener noreferrer'
+                  >
                      <button className='p-2 rounded-full bg-pink-600 text-white hover:bg-pink-700'>
                         <FaInstagram size={20} />
                      </button>
                   </a>
                )}
                {socialLinks?.linkedin && (
-                  <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
+                  <a
+                     href={socialLinks.linkedin}
+                     target='_blank'
+                     rel='noopener noreferrer'
+                  >
                      <button className='p-2 rounded-full bg-blue-800 text-white hover:bg-blue-900'>
                         <FaLinkedin size={20} />
                      </button>
