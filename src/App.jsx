@@ -6,6 +6,7 @@ import {
    Routes,
    useLocation,
 } from 'react-router-dom';
+
 import ErrorPage from './components/ErrorPage';
 import About from './pages/About';
 import Landing from './pages/Home';
@@ -18,7 +19,7 @@ import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import DOMPurify from 'dompurify'; 
 
-// ✅ Scroll Position Handler
+
 const ScrollRestoration = () => {
    const location = useLocation();
 
@@ -57,7 +58,6 @@ const ScrollRestoration = () => {
    const sanitizedInput = DOMPurify.sanitize(userInput);
 
 
-
 const App = () => {
    useEffect(() => {
       window.onload = () => {
@@ -68,7 +68,9 @@ const App = () => {
    return (
       <>
          <BrowserRouter basename='/'>
-            <ScrollRestoration />
+
+            <ScrollRestoration /> {/* ✅ Add Scroll Restoration */}
+
             <Routes>
                <Route path='/' element={<Body />}>
                   <Route path='/' element={<Landing />} />
@@ -76,16 +78,12 @@ const App = () => {
                   <Route path='/contact' element={<ContactUs />} />
                   <Route path='/student' element={<Student />} />
                   <Route path='/admission' element={<Admission />} />
-                  <Route
-                     path='/album/:name'
-                     element={<Album_Image />}
-                  />
+                  <Route path='/album/:name' element={<Album_Image />} />
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<Signup />} />
                </Route>
                <Route path='*' element={<ErrorPage />} />
             </Routes>
-
             <div dangerouslySetInnerHTML={{ __html: sanitizedInput }} />
          </BrowserRouter>
       </>

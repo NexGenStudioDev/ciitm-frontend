@@ -18,9 +18,9 @@ const Dropdown = ({
    const admission = useSelector(state => state.admission.admission);
    const find_index = admission.findIndex(item => item.name === name);
 
+
    // Initialize with value from Redux if available
-   const initialValue =
-      find_index !== -1 ? admission[find_index].value : placeholder;
+   const initialValue = find_index !== -1 ? admission[find_index].value : placeholder;
    const [selectedOption, setSelectedOption] = useState(initialValue);
    const [isOpen, setIsOpen] = useState(false);
    const [isError, setIsError] = useState(false);
@@ -29,31 +29,24 @@ const Dropdown = ({
 
    const toggleDropdown = () => setIsOpen(prev => !prev);
 
-   const handleClickOutside = event => {
-      if (
-         dropdownRef.current &&
-         !dropdownRef.current.contains(event.target)
-      ) {
+   const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
          setIsOpen(false);
+
       }
    };
 
+
    useEffect(() => {
       document.addEventListener('mousedown', handleClickOutside);
-      return () =>
-         document.removeEventListener(
-            'mousedown',
-            handleClickOutside,
-         );
+      return () => document.removeEventListener('mousedown', handleClickOutside);
    }, []);
 
    // Sync selectedOption with Redux
    useEffect(() => {
       if (selectedOption !== placeholder) {
          if (find_index !== -1) {
-            dispatch(
-               setOneAdmission({ name, value: selectedOption }),
-            );
+            dispatch(setOneAdmission({ name, value: selectedOption }));
          } else {
             dispatch(setAdmission({ name, value: selectedOption }));
          }
@@ -61,17 +54,16 @@ const Dropdown = ({
    }, [selectedOption]);
 
    const validateDropdown = () => {
-      if (
-         isRequired &&
-         (selectedOption === placeholder || !selectedOption)
-      ) {
+      if (isRequired && (selectedOption === placeholder || !selectedOption)) {
+
          setIsError(true);
       } else {
          setIsError(false);
       }
    };
 
-   const handleOptionClick = option => {
+
+   const handleOptionClick = (option) => {
       setSelectedOption(option);
       setIsOpen(false);
       setIsError(false);
@@ -80,10 +72,8 @@ const Dropdown = ({
    const handleBlur = () => validateDropdown();
 
    return (
-      <div
-         className='relative min-[630px]:max-w-[248px] w-full'
-         ref={dropdownRef}
-      >
+      <div className='relative min-[630px]:max-w-[248px] w-full' ref={dropdownRef}>
+
          <div
             tabIndex={0}
             onClick={toggleDropdown}
@@ -122,9 +112,7 @@ const Dropdown = ({
                   >
                      <div
                         className={`w-4 h-4 border-2 bg-white rounded-full flex items-center justify-center ${
-                           selectedOption === option
-                              ? 'border-[#333333]'
-                              : 'border-gray-400'
+                           selectedOption === option ? 'border-[#333333]' : 'border-gray-400'
                         }`}
                      >
                         {selectedOption === option && (

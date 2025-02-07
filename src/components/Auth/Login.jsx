@@ -6,6 +6,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Google_Wrapper from './Google_Wrapper';
 
 const Login = () => {
+
    return (
       <section className='w-full min-h-screen flex items-center justify-center text-[#333] max-[999px]:flex-col'>
          <div className='left w-1/2 max-[999px]:w-full h-full max-[999px]:px-6 px-16 flex flex-col items-center justify-center'>
