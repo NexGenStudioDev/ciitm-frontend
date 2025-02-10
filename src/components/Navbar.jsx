@@ -10,6 +10,11 @@ const Navbar = () => {
    const close = useRef(null);
    const dropdownRef = useRef(null); // Ref for dropdown
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+   //const [isMenuOpen, setIsMenuOpen] = useState(true);
+
+   const windowWidth = window.innerWidth;
+   console.log(windowWidth);
+  
 
    // Open/Close menu methods
    const openMenu = () => {
@@ -17,8 +22,14 @@ const Navbar = () => {
          y: '0%',
          duration: 0.5,
       });
-      open.current.style.display = 'none';
-      close.current.style.display = 'block';
+
+      if (windowWidth > 799) {
+         open.current.style.display = 'none';
+         close.current.style.display = 'none'; 
+      } else {
+         open.current.style.display = 'none';
+         close.current.style.display = 'block';
+      }
    };
 
    const closeMenu = () => {
@@ -26,8 +37,14 @@ const Navbar = () => {
          y: '-100%',
          duration: 0.5,
       });
-      open.current.style.display = 'block';
-      close.current.style.display = 'none';
+
+      if (windowWidth > 799) {
+         open.current.style.display = 'none';
+         close.current.style.display = 'none'; 
+      } else {
+         open.current.style.display = 'block';
+         close.current.style.display = 'none';
+      }
    };
 
    // Toggle dropdown state
