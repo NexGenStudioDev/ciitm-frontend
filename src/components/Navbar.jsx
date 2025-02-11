@@ -14,7 +14,6 @@ const Navbar = () => {
 
    const windowWidth = window.innerWidth;
    console.log(windowWidth);
-  
 
    // Open/Close menu methods
    const openMenu = () => {
@@ -25,7 +24,7 @@ const Navbar = () => {
 
       if (windowWidth > 799) {
          open.current.style.display = 'none';
-         close.current.style.display = 'none'; 
+         close.current.style.display = 'none';
       } else {
          open.current.style.display = 'none';
          close.current.style.display = 'block';
@@ -40,7 +39,7 @@ const Navbar = () => {
 
       if (windowWidth > 799) {
          open.current.style.display = 'none';
-         close.current.style.display = 'none'; 
+         close.current.style.display = 'none';
       } else {
          open.current.style.display = 'block';
          close.current.style.display = 'none';

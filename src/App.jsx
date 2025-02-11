@@ -18,6 +18,7 @@ import Admission from './pages/Admission';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import DOMPurify from 'dompurify';
+import Protected_Stedent from './components/Protected_Stedent';
 
 const userInput = "<img src='x' onerror='alert(1)' />";
 
@@ -80,6 +81,11 @@ const App = () => {
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<Signup />} />
                </Route>
+
+               <Route path='/student' element={<Protected_Stedent />}>
+                  <Route path='/student/' element={<Landing />} />
+               </Route>
+
                <Route path='*' element={<ErrorPage />} />
             </Routes>
             <div
