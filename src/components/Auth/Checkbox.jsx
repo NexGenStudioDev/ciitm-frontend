@@ -43,7 +43,7 @@ const Checkbox = ({ label, name }) => {
                htmlFor='remember'
                className='text-[1.05vw] text-[#5F5F5F] max-[999px]:text-[3.05vw]'
             >
-              {label}
+               {label}
             </label>
          )}
       </>

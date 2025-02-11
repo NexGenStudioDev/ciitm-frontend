@@ -2,29 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInput, UpdateInput } from '../../store/AuthSlice';
 
-
-
 const Input = ({ type, placeholder, label, id, name }) => {
    const [Name, setName] = useState(name);
    const [Value, setValue] = useState(null);
    const [Login_Checkbox, setLogin_Checkbox] = useState(false);
-   const [SignUp_Checkbox, setSignUp_Checkbox] = useState(false)
-
-  
+   const [SignUp_Checkbox, setSignUp_Checkbox] = useState(false);
 
    let array = useSelector(state => state.auth.data);
 
-   if(!array){
+   if (!array) {
       return null;
    }
 
+   let Find_Login_CheckBox = array.find(
+      item => item.name === 'Login_CheckBox',
+   );
 
-   let Find_Login_CheckBox = array.find(item => item.name === 'Login_CheckBox');
-   
-
-   let Find_SignUp_CheckBox = array.find(item => item.name === 'Sign_UP_CHECK');
-
-
+   let Find_SignUp_CheckBox = array.find(
+      item => item.name === 'Sign_UP_CHECK',
+   );
 
    useEffect(() => {
       if (Find_Login_CheckBox) {
@@ -33,21 +29,13 @@ const Input = ({ type, placeholder, label, id, name }) => {
       if (Find_SignUp_CheckBox) {
          setSignUp_Checkbox(Find_SignUp_CheckBox.value);
       }
-   }, [Find_Login_CheckBox , Find_SignUp_CheckBox]);
-   
+   }, [Find_Login_CheckBox, Find_SignUp_CheckBox]);
 
-
-  
    let find_index = array.findIndex(item => item.name === Name);
-
- 
-
-
 
    let dispatch = useDispatch();
 
    let handleInput = e => {
-   
       setValue(e.target.value);
 
       let data = {
@@ -62,23 +50,16 @@ const Input = ({ type, placeholder, label, id, name }) => {
       }
    };
 
-
-
    let Handle_Unchacked = () => {
-
-      
-
-
-      if(Login_Checkbox === true){
+      if (Login_Checkbox === true) {
          return 'text';
       }
 
-      if(SignUp_Checkbox === true){
+      if (SignUp_Checkbox === true) {
          return 'text';
       }
 
       return 'password';
-   
    };
 
    return (

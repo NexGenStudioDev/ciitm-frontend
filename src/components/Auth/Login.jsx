@@ -1,16 +1,20 @@
 import React from 'react';
-import {  Login_EndPoint} from '../../utils/constants';
-import { Link } from 'react-router-dom';
+import { Login_EndPoint } from '../../utils/constants';
+import { Link, useNavigate } from 'react-router-dom';
 import Google_Wrapper from './Google_Wrapper';
 import Input from './Input';
 import loginImage from '../../assets/images/login.png';
 import logo from '../../assets/logo.svg';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import Checkbox from './Checkbox';
 import axios from 'axios';
+import { setUser } from '../../store/AuthSlice';
 
 const Login = () => {
+   let dispatch = useDispatch();
+
+   let navigate = useNavigate();
 
    let find_Email = useSelector(state =>
       state.auth.data.find(item => item.name === 'email'),
@@ -20,45 +24,59 @@ const Login = () => {
    );
 
    let Handle_Login = async e => {
-     try {
+      try {
+         e.preventDefault();
 
-      e.preventDefault();
+         if (!find_Email && !find_Password) {
+            throw new Error('Please Enter Email and Password');
+         }
 
-      if (!find_Email && !find_Password) {
+         if (!find_Email || !find_Password) {
+            throw new Error('Email or Password not found in state');
+         }
 
-         throw new Error('Please Enter Email and Password');
-       
+         // Make sure the data being sent is correct
+         let res = await axios.post(
+            Login_EndPoint,
+            {
+               email: find_Email.value,
+               password: find_Password.value,
+            },
+            {
+               headers: {
+                  'Content-Type': 'application/json',
+               },
+            },
+         );
+
+         console.log(res.data.Find_User);
+
+         let user = res.data.Find_User;
+
+         if (!user) {
+            throw new Error('User not found');
+         }
+
+         dispatch(setUser(user));
+
+         let Check_Role = user.role;
+
+         if (Check_Role === 'student') {
+            navigate('/student/');
+         }
+
+         if (Check_Role === 'admin') {
+            navigate('/admin/');
+         }
+      } catch (error) {
+         Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text:
+               error.response.data.message || 'Something went wrong',
+         });
       }
-
-
-      if (!find_Email || !find_Password) {
-         throw new Error('Email or Password not found in state');
-      }
-
-     // Make sure the data being sent is correct
-     let res = await axios.post('/api/login', {
-      email: find_Email.value,
-      password: find_Password.value,
-   }, {
-      headers: {
-         'Content-Type': 'application/json',
-      },
-   });
-
-   console.log(res.data);  // Check the server response
-      
-     } catch (error) {
-      
-
-      Swal.fire({
-         icon: 'error',
-         title: error.name || 'Error',
-         text: error.message || 'Something went wrong',
-      });
-     }
-
    };
-
 
    return (
       <section className='w-full min-h-screen flex items-center justify-center text-[#333] max-[999px]:flex-col'>
