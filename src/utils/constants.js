@@ -1,4 +1,4 @@
-export const backend_Url = 'http://localhost:3000';
+export const backend_Url = 'https://ciitm-backend.onrender.com/';
 export const Login_EndPoint = '/api/login';
 export const frontend_EndPoint = '/api/frontend';
 export const Testimonital_EndPoint = '/api/find/testimonial';
