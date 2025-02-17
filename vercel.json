@@ -1,5 +1,6 @@
 {
    "rewrites": [
+<<<<<<< HEAD
      {
        "source": "/api/(.*)",
        "destination": "https://ciitm-backend.onrender.com/api/$1"
@@ -8,6 +9,16 @@
        "source": "/(.*)",
        "destination": "/index.html"
      }
+=======
+      {
+         "source": "/api/(.*)",
+         "destination": "https://ciitm-backend.onrender.com/api/$1"
+      },
+      {
+         "source": "/(.*)",
+         "destination": "/index.html"
+      }
+>>>>>>> e9f926bb89c595740ed55874bf60527127a8d24a
    ]
  }
  

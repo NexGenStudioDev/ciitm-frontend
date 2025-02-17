@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -14,53 +14,64 @@ const Dropdown = ({
    isRequired = false,
    errorMessage = 'This field is required.',
 }) => {
-   let admission = useSelector(state => state.admission.admission);
-   let find_index = admission.findIndex(item => item.name === name);
+   const dispatch = useDispatch();
+   const admission = useSelector(state => state.admission.admission);
+   const find_index = admission.findIndex(item => item.name === name);
 
-   let dispatch = useDispatch();
+   // Initialize with value from Redux if available
+   const initialValue =
+      find_index !== -1 ? admission[find_index].value : placeholder;
+   const [selectedOption, setSelectedOption] = useState(initialValue);
+   const [isOpen, setIsOpen] = useState(false);
+   const [isError, setIsError] = useState(false);
 
-   const [selectedOption, setSelectedOption] = useState(placeholder);
+   const dropdownRef = useRef(null);
 
-   if (find_index) {
-      console.log('find_Index 145dfd ', find_index);
-      // setSelectedOption(admission[find_index]?.value)
-   }
+   const toggleDropdown = () => setIsOpen(prev => !prev);
+
+   const handleClickOutside = event => {
+      if (
+         dropdownRef.current &&
+         !dropdownRef.current.contains(event.target)
+      ) {
+         setIsOpen(false);
+      }
+   };
 
    useEffect(() => {
-      if (find_index !== -1) {
-         dispatch(
-            setOneAdmission({
-               name: name,
-               value: selectedOption,
-            }),
+      document.addEventListener('mousedown', handleClickOutside);
+      return () =>
+         document.removeEventListener(
+            'mousedown',
+            handleClickOutside,
          );
+   }, []);
+
+   // Sync selectedOption with Redux
+   useEffect(() => {
+      if (selectedOption !== placeholder) {
+         if (find_index !== -1) {
+            dispatch(
+               setOneAdmission({ name, value: selectedOption }),
+            );
+         } else {
+            dispatch(setAdmission({ name, value: selectedOption }));
+         }
       }
    }, [selectedOption]);
 
-   const [isOpen, setIsOpen] = useState(false);
-
-   const [isError, setIsError] = useState(false);
-
    const validateDropdown = () => {
-      if (isRequired && selectedOption === placeholder) {
+      if (
+         isRequired &&
+         (selectedOption === placeholder || !selectedOption)
+      ) {
          setIsError(true);
       } else {
          setIsError(false);
       }
    };
-
    const handleOptionClick = option => {
-      if (find_index === -1) {
-         dispatch(
-            setAdmission({
-               name: name,
-               value: option,
-            }),
-         );
-      }
-
       setSelectedOption(option);
-
       setIsOpen(false);
       setIsError(false);
    };
@@ -68,12 +79,13 @@ const Dropdown = ({
    const handleBlur = () => validateDropdown();
 
    return (
-      <div className='relative min-[630px]:max-w-[248px] w-full'>
+      <div
+         className='relative min-[630px]:max-w-[248px] w-full'
+         ref={dropdownRef}
+      >
          <div
             tabIndex={0}
-            onClick={() => setIsOpen(!isOpen)}
-            // onChange={(e) => handleOptionChange(e)}
-
+            onClick={toggleDropdown}
             onBlur={handleBlur}
             className={`border cursor-pointer w-full flex items-center justify-between gap-2 rounded-[8px] px-4 py-3 text-xs text-[#333333] ${
                isError ? 'border-red-500' : 'border-[#A0A0A080]'
@@ -118,7 +130,6 @@ const Dropdown = ({
                            <div className='w-2 h-2 rounded-full bg-[#333333]'></div>
                         )}
                      </div>
-
                      {option}
                   </div>
                ))}

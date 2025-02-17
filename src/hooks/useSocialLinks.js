@@ -13,19 +13,16 @@ const useSocialLinks = () => {
          if (!links) {
             const response = await axios.get(Social_Link_EndPoint);
             const data = response.data.link;
-
             dispatch(setSocialLinks(data));
          }
       } catch (error) {
-         console.error('Error fetching social links:', error);
+         console.error('Error fetching social links:', error.message);
       }
    };
 
    useEffect(() => {
       fetchSocialLinks();
-   }, [links]);
-
-   return links;
+   }, []);
 };
 
 export default useSocialLinks;

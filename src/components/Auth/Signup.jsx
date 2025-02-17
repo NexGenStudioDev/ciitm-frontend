@@ -1,69 +1,163 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Google_Wrapper from './Google_Wrapper';
+import Input from './Input';
+import signupImage from '../../assets/images/signup.png';
+import logo from '../../assets/logo.svg';
+import Checkbox from './Checkbox';
+import { Sign_Up_EndPoint } from '../../utils/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { setUser } from '../../store/AuthSlice';
 
 const Signup = () => {
-  return (
-    <section className='w-full min-h-screen flex max-[999px]:flex-col'>
-      <div className='left w-1/2 max-[999px]:w-full h-full '>
-        <img
-          className='w-full h-full object-cover pointer-events-none'
-          src='https://s3-alpha-sig.figma.com/img/9e53/f389/4c758a66dbf9be2bba871477a57a44ff?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=DE2qNFEd3fj5XMZeA4EYhLs4oUXu7VG9IjMEScYw6wkTQPaQtlKJI4o1z5cTda2gxD7HF93P2BX1TFR2ntcbdZj-7yNItn~PXbKmEXAjN4PFrj0S6ume~1t7sXBsf5aGhM9UPz8h76symhPdCE3RZT2wVc0OX9vb3ZsDG0nIXt73UcihxzNEQ5tF9kEN6oX5oCW9WvuQHB7k-PMZP4nAAIRyVO5aXYlRTreqfXh-u~ECWdl6oE2T5xRfUkrYjasdJwi0XQ2-jGg~bfvrNX1WV207krTE0UPECiEJtf5RUCcquoM2IE8CnmFNnODxC-K~I9S1DIdtRgKERQlH7un1qw__'
-          alt=''
-        />
-      </div>
-      <div className='right w-1/2 max-[999px]:w-full h-full max-[999px]:px-6 max-[999px]:py-4 pt-32 px-20 flex flex-col items-start justify-center text-[#333]'>
-        <h1 className='heading text-[1.8vw] max-[999px]:text-[4.5vw] font-semibold my-6'>
-          Let’s Go Started Together
-        </h1>
-        <form className='w-full h-full'>
-          <div className='w-full flex items-center justify-between gap-7'>
-            <input
-              type='text'
-              placeholder='First Name'
-              className='border-[0.83px] border-[#A0A0A080]/50 placeholder:text-[#333] rounded-lg p-3 mb-4 w-1/2 text-[0.8vw] max-[999px]:text-[2.5vw]'
+   let dispatch = useDispatch();
+
+   let First_Name = useSelector(state =>
+      state.auth.data.find(item => item.name === 'firstName'),
+   );
+
+   let Last_Name = useSelector(state =>
+      state.auth.data.find(item => item.name === 'lastName'),
+   );
+
+   let email = useSelector(state =>
+      state.auth.data.find(item => item.name === 'signupEmail'),
+   );
+
+   let password = useSelector(state =>
+      state.auth.data.find(item => item.name === 'password'),
+   );
+
+   let confirm_Password = useSelector(state =>
+      state.auth.data.find(item => item.name === 'confirm_Password'),
+   );
+
+   let Handle_Signup = async e => {
+      e.preventDefault();
+
+      if (!First_Name && !Last_Name && !email && !password && !confirm_Password) {
+         throw new Error('Please Enter all the fields');
+      }
+
+      try {
+         let res = await axios.post(Sign_Up_EndPoint, {
+            name: First_Name.value + ' ' + Last_Name.value,
+            email: email.value,
+            password: password.value,
+            confirm_Password: confirm_Password.value,
+         });
+
+         Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: res.data.message,
+         })
+
+         dispatch(setUser(res.data.user));
+
+
+
+
+        
+      } catch (error) {
+
+         let error_message = error.response.data.message;
+        
+         Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error_message ? error_message : 'Something went wrong',
+         });
+      }
+   };
+
+   return (
+      <section className='w-full min-h-screen flex max-[999px]:flex-col'>
+         <div className='left w-1/2 max-[999px]:hidden h-full'>
+            <img
+               className='w-full h-full object-cover pointer-events-none'
+               src={signupImage}
+               alt='Signup Illustration'
             />
-            <input
-              type='text'
-              placeholder='Last Name'
-              className='border-[0.83px] border-[#A0A0A080]/50 placeholder:text-[#333] rounded-lg p-3 mb-4 w-1/2 text-[0.8vw] max-[999px]:text-[2.5vw]'
-            />
-          </div>
-          <input
-            type='email'
-            placeholder='Enter your Email'
-            className='border-[0.83px] my-2 border-[#A0A0A080]/50 placeholder:text-[#333] rounded-lg p-3 mb-4 w-full text-[0.8vw] max-[999px]:text-[2.5vw]'
-          />
-          <input
-            type='password'
-            placeholder='Create Password'
-            className='border-[0.83px] my-2 border-[#A0A0A080]/50 placeholder:text-[#333] rounded-lg p-3 mb-4 w-full text-[0.8vw] max-[999px]:text-[2.5vw]'
-          />
-          <input
-            type='password'
-            placeholder='Confirm Password'
-            className='border-[0.83px] my-2 border-[#A0A0A080]/50 placeholder:text-[#333] rounded-lg p-3 mb-4 w-full text-[0.8vw] max-[999px]:text-[2.5vw]'
-          />
-          <div className='flex w-full items-center justify-center gap-6 my-2'>
-            <button className='bg-[#333] text-white font-medium rounded-lg p-2.5 w-1/2 text-[1vw] max-[999px]:text-[3vw]'>
-              Sign Up
-            </button>
-            <button className='bg-[#333] text-white font-medium rounded-lg py-2.5 w-1/2 text-[1vw] max-[999px]:text-[3vw]'>
-              Sign up with Google
-            </button>
-          </div>
-        <p className='mt-4 text-[0.85vw] max-[999px]:text-[2.5vw] underline font-semibold'>
-          Already have an account?{' '}
-          <Link
-           to="/login"
-            className='text-[#B83D00]'
-          >
-            Login
-          </Link>
-        </p>
-        </form>
-      </div>
-    </section>
-  );
+         </div>
+
+         <div className='right w-1/2 max-[999px]:w-full h-full max-[999px]:px-6 max-[999px]:pt-[50vw] pt-32 px-16 flex flex-col items-start justify-center text-[#333]'>
+            <form className='w-full h-full bg-[#FAFAFA] p-6'>
+               <div className='logo mb-6'>
+                  <img src={logo} alt='CIITM Logo' className='h-8' />
+               </div>
+
+               <h1 className='heading text-[1.8vw] max-[999px]:text-[4.5vw] font-semibold mb-6'>
+                  Let's Go Started Together
+               </h1>
+
+               <div className='w-full flex items-center justify-between gap-7'>
+                  <Input
+                     type='text'
+                     name='firstName'
+                     placeholder='First Name'
+                     id='firstName'
+                  />
+                  <Input
+                     type='text'
+                     name='lastName'
+                     placeholder='Last Name'
+                     id='lastName'
+                  />
+               </div>
+
+               <Input
+                  type='email'
+                  name='signupEmail'
+                  placeholder='Enter your Email'
+                  id='email'
+               />
+
+               <Input
+                  type='password'
+                  name='password'
+                  placeholder='Create Password'
+                  id='createPassword'
+               />
+
+               <Input
+                  type='password'
+                  name='confirm_Password'
+                  placeholder='Confirm Password'
+                  id='confirmPassword'
+               />
+
+               <div className='flex items-center gap-2 '>
+                  <Checkbox
+                     label='Remember Me'
+                     name='Sign_UP_CHECK'
+                  />
+               </div>
+
+               <div className='flex w-full items-center justify-center gap-6 max-[999px]:gap-4 my-2 max-[999px]:flex-col'>
+                  <button
+                     onClick={e => Handle_Signup(e)}
+                     className='bg-[#333] text-white font-medium rounded-lg p-3.5 w-1/2 text-[1vw] max-[999px]:text-[3vw] max-[999px]:w-full'
+                  >
+                     Sign Up
+                  </button>
+                  <button className='bg-[#333] text-white font-medium rounded-lg p-3.5 w-1/2 text-[1vw] max-[999px]:text-[3vw] max-[999px]:w-full'>
+                     <Google_Wrapper text='Sign up with Google' />
+                  </button>
+               </div>
+
+               <p className='mt-4 text-[0.85vw] max-[999px]:text-[2.5vw] font-semibold'>
+                  Already have an account?{' '}
+                  <Link to='/login' className='text-[#B83D00]'>
+                     Login
+                  </Link>
+               </p>
+            </form>
+         </div>
+      </section>
+   );
 };
 
 export default Signup;

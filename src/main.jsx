@@ -6,9 +6,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import { HelmetProvider } from 'react-helmet-async';
 import Lenis from 'lenis';
-import Loader from './components/Loader';
 
-// Initialize Lenis
 const lenis = new Lenis({
    autoRaf: true,
 });
