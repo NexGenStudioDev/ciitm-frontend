@@ -36,7 +36,7 @@ p {
 
 /* making the empower section responsive */
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 600px) {
    .empower-img-div {
       display: none;
    }

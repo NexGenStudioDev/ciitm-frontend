@@ -8,7 +8,6 @@ export default defineConfig({
    server: {
       proxy: {
          '/api': backend_Url,
-         // '/api': 'http://localhost:3000',
       },
    },
 });

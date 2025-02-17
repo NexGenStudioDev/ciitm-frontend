@@ -34,8 +34,8 @@ function Empower() {
             className='arrow-image absolute top-1/2 left-[39vw] -translate-x-1/2 -translate-y-1/2 h-[13vw]'
          />
 
-         <div className='empower-img-div relative w-1/2 h-full flex justify-center items-center'>
-            <div className='h-[17vw] w-[17vw] bg-black rounded-full absolute left-[3vw] top-[1vw]'>
+         <div className='empower-img-div relative w-1/2 h-full md:flex justify-center items-center'>
+            <div className='max-h-[17vw] max-w-[17vw] bg-black rounded-full absolute left-[3vw] top-[1vw]'>
                {image1 && (
                   <img
                      src={image1}
@@ -44,7 +44,7 @@ function Empower() {
                   />
                )}
             </div>
-            <div className='h-[10vh] md:h-[12vw] w-[12vw] rounded-full absolute left-[22vw] top-[19vh]'>
+            <div className='h-[10vh] w-[10vh] md:h-[12vw]  md:w-[12vw] rounded-full absolute left-[22vw] top-[19vh]'>
                {image2 && (
                   <img
                      src={image2}
@@ -53,7 +53,7 @@ function Empower() {
                   />
                )}
             </div>
-            <div className='h-[16vw] w-[16vw] rounded-full absolute left-[8vw] top-[40vh]'>
+            <div className='h-[16vw] w-[16vw] rounded-full absolute left-[8vw] top-[30vh] md:top-[40vh] bg-red-600 '>
                {image3 && (
                   <img
                      src={image3}
