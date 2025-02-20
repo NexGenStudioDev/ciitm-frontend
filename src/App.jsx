@@ -20,6 +20,7 @@ import Signup from './components/Auth/Signup';
 import DOMPurify from 'dompurify';
 import Protected_Stedent from './components/Protected_Stedent';
 import Student from './components/Student/Student';
+import PaymentPage from './pages/PaymentPage';
 
 const userInput = "<img src='x' onerror='alert(1)' />";
 
@@ -74,6 +75,7 @@ const App = () => {
                   <Route path='/about' element={<About />} />
                   <Route path='/contact' element={<ContactUs />} />
                   <Route path='/admission' element={<Admission />} />
+                  <Route path='/payment' element={<PaymentPage />} />
                   <Route
                      path='/album/:name'
                      element={<Album_Image />}
