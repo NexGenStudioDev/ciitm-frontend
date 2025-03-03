@@ -5,6 +5,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+   width: 10px;
+}
+
+::-webkit-scrollbar-track {
+   background: #f8f9fd;
+   border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+   background: #d7d7d7;
+   border-radius: 10px;
+   border: 2px solid #f8f9fd;
+}
+
+::-webkit-scrollbar-thumb:hover {
+   transition: cubic-bezier(0.645, 0.045, 0.355, 1);
+   background: #bfbfbf;
+}
+
 * {
    font-family: 'Poppins';
 }
