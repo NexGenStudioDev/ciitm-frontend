@@ -4,23 +4,23 @@ import TableRow_Heading from '../../Molecules/table/TableRow_Heading';
 let TableHeading_Data = [
    {
       text: 'S.no',
-      style: 'w-[5vw] text-center text-center align-middle bg-[#090909] border-[#322F2F] text-white max-[553px]:w-[2.5vw] max-[553px]:text-[2.5vw]  max-[775px]:text-[1.8vw] md:text-md',
+      style: 'min-w-[50px] text-center bg-[#090909] border-[#322F2F] text-white text-xs sm:text-sm md:text-base py-2',
    },
    {
       text: 'Name',
-      style: 'w-[18vw]  bg-[#090909] text-white text-center h-[5vh] text-sm p-[0.9vw] max-[553px]:text-[2.5vw] max-[775px]:text-[1.8vw] md:text-md',
+      style: 'min-w-[150px] bg-[#090909] text-white text-center text-xs sm:text-sm md:text-base py-2',
    },
    {
       text: 'Email',
-      style: 'w-[20vw] bg-[#090909] text-white text-center h-[5vh] text-sm p-[0.9vw] md:text-md max-[553px]:text-[2.5vw] max-[775px]:text-[1.8vw]',
+      style: 'min-w-[200px] bg-[#090909] text-white text-center text-xs sm:text-sm md:text-base py-2',
    },
    {
       text: 'Mobile Number',
-      style: 'w-[15vw] bg-[#090909] text-white text-center h-[5vh] text-sm p-[0.9vw] md:text-md max-[553px]:text-[2.5vw] max-[775px]:hidden',
+      style: 'min-w-[140px] bg-[#090909] text-white text-center text-xs sm:text-sm md:text-base py-2 hidden sm:table-cell',
    },
    {
       text: 'Actions',
-      style: 'w-[7vw] bg-[#090909] text-white text-center h-[5vh] text-sm p-[0.9vw] max-[553px]:text-[2.5vw] max-[775px]:text-[1.8vw] md:text-md',
+      style: 'min-w-[100px] bg-[#090909] text-white text-center text-xs sm:text-sm md:text-base py-2',
    },
 ];
 

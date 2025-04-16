@@ -36,7 +36,7 @@ const ViewContactPage = () => {
       <AdminTemplate pageName='Contact View'>
          <FormTemplate_Secondary
             Title='View Contact'
-            TitleClassName='text-white  text-[0.8rem] bg-[#252323] w-full h-[7vh] text-[#C7C0C0]  min-[553px]:text-[1rem]'
+            TitleClassName='text-white  text-[0.8rem] bg-[#252323] w-full h-[7vh] text-[#C7C0C0]  min-[553px]:text-[1rem] lg:text-lg'
          >
             <AdminInputContact_View data={data} />
          </FormTemplate_Secondary>

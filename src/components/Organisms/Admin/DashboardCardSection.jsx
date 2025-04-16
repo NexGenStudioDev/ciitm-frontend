@@ -1,13 +1,10 @@
-import React from 'react';
-import AdminDashBoard_CardPrimary from '../../Molecules/Cards/DashBoard/Admin/AdminDashBoard_CardPrimary';
-
 const DashboardCardSection = React.memo(({ cards }) => {
    return (
-      <div className='bg-black w-full  h-fit flex flex-col'>
-         <div className='Card_Container flex gap-[2vw] w-full max-[1300px]:items-center flex-wrap px-[3vw]'>
-            {cards.map((card, index) => (
+      <div className='bg-black w-full py-4 px-[3vw]'>
+         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {cards.map((card) => (
                <AdminDashBoard_CardPrimary
-                  key={index}
+                  key={card.title}
                   title={card.title}
                   value={card.value}
                   icon={
@@ -23,5 +20,3 @@ const DashboardCardSection = React.memo(({ cards }) => {
       </div>
    );
 });
-
-export default DashboardCardSection;
