@@ -1,3 +1,5 @@
+import React from 'react';
+import AdminDashBoard_CardPrimary from '../../Molecules/Cards/DashBoard/Admin/AdminDashBoard_CardPrimary';
 const DashboardCardSection = React.memo(({ cards }) => {
    return (
       <div className='bg-black w-full py-4 px-[3vw]'>
@@ -20,3 +22,4 @@ const DashboardCardSection = React.memo(({ cards }) => {
       </div>
    );
 });
+export default DashboardCardSection;
