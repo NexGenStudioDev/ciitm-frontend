@@ -1,4 +1,4 @@
-import React from 'react';
+
 import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 
 import QuickLinkSection from '../../components/Organisms/Admin/QuickLinkSection';

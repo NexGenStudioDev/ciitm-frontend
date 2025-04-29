@@ -24,7 +24,7 @@ const links = [
    },
    {
       name: 'Students',
-      link: '/admin/Students',
+      link: '/admin/students',
       icon: <PiStudentBold />,
    },
    { name: 'Courses', link: '/admin/Courses', icon: <SiCoursera /> },

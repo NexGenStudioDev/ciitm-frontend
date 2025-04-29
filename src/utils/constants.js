@@ -13,4 +13,8 @@ export const Sign_Up_EndPoint = ' /api/signup/admin';
 export const Admin_get_ContactData_EndPoint =
    '/api/v1/contact/admin/getContact';
 
+// Student API endpoints
+export const Get_All_Students_EndPoint = '/api/v1/admin/students';
+export const Get_Students_By_Course_Semester_EndPoint = '/api/v1/admin/students/filter';
+
 // https://ciitm-backend.onrender.com

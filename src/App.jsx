@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import Body from './Body';
 import {
    BrowserRouter,
@@ -28,7 +28,7 @@ import ContactPage from './pages/Admin/ContactPage';
 import ViewContactPage from './pages/Admin/ViewContactPage';
 import ProfilePage from './pages/Admin/ProfilePage';
 import ImagePage from './pages/Admin/ImagePage';
-
+import StudentDetailsPage from './pages/Admin/StudentDetailsPage';
 const userInput = "<img src='x' onerror='alert(1)' />";
 
 const sanitizedInput = DOMPurify.sanitize(userInput);
@@ -124,7 +124,14 @@ const App = () => {
                      path='/admin/create/image'
                      element={<ImagePage />}
                   />
+                   <Route
+                     path='/admin/students'
+                     element={<StudentDetailsPage />}
+                  />
                </Route>
+
+              
+              
 
                <Route path='*' element={<ErrorPage />} />
             </Routes>
