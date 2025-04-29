@@ -86,6 +86,8 @@ const StudentDetailsPage = () => {
             const newFilters = { ...prev, [type]: value };
             // Reset page when filters change
             setPagination(prev => ({ ...prev, page: 1 }));
+            // Fetch data immediately when filter is selected
+            fetchStudents(1);
             return newFilters;
         });
         setShowDropdown(prev => ({ ...prev, [type]: false }));
@@ -95,6 +97,8 @@ const StudentDetailsPage = () => {
     const handleClearFilters = () => {
         setFilters({ course: '', semester: '' });
         setPagination(prev => ({ ...prev, page: 1 }));
+        // Fetch all students when filters are cleared
+        fetchStudents(1);
     };
 
     // Handle page change
@@ -166,16 +170,14 @@ const StudentDetailsPage = () => {
                         )}
                     </div>
 
-                    {/* Clear Filters Button */}
-                    {(filters.course || filters.semester) && (
-                        <button 
-                            className="px-4 py-2.5 bg-[#1C1C1C] rounded hover:bg-[#2D2D2D] disabled:opacity-50"
-                            onClick={handleClearFilters}
-                            disabled={loading}
-                        >
-                            Clear Filters
-                        </button>
-                    )}
+                    {/* Dynamic Button */}
+                    <button 
+                        className="px-4 py-2.5 bg-[#1C1C1C] rounded hover:bg-[#2D2D2D] disabled:opacity-50"
+                        onClick={filters.course || filters.semester ? handleClearFilters : () => fetchStudents(1)}
+                        disabled={loading}
+                    >
+                        {filters.course || filters.semester ? 'Clear Filter' : 'Search'}
+                    </button>
                 </div>
 
                 {/* Filter Status */}
@@ -196,7 +198,13 @@ const StudentDetailsPage = () => {
 
                 {/* Error Message */}
                 {error && (
-                    <div className="bg-red-500 text-white p-4 rounded mb-4">
+                    <div className="bg-red-500 text-white p-4 rounded mb-4 relative">
+                        <button 
+                            onClick={() => setError(null)}
+                            className="absolute top-2 right-2 text-white hover:text-gray-200"
+                        >
+                            ×
+                        </button>
                         <div className="font-bold">{error.message}</div>
                         {error.code && (
                             <div className="text-sm mt-1">Error Code: {error.code}</div>
