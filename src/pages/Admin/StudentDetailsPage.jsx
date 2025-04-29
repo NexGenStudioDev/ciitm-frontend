@@ -1,53 +1,61 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import axios from 'axios';
 import { Get_All_Students_EndPoint, Get_Students_By_Course_Semester_EndPoint } from '../../utils/constants';
 
 const StudentDetailsPage = () => {
-    const [selectedCourse, setSelectedCourse] = useState('');
-    const [selectedSemester, setSelectedSemester] = useState('');
+    // Pagination and filtering state
+    const [pagination, setPagination] = useState({
+        page: 1,
+        limit: 10,
+        total: 0,
+        totalPages: 0
+    });
+    
+    // Data and UI state
+    const [filters, setFilters] = useState({
+        course: '',
+        semester: ''
+    });
+    const [students, setStudents] = useState([]);
     const [showDropdown, setShowDropdown] = useState({ course: false, semester: false });
-    const [filteredStudents, setFilteredStudents] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [retryCount, setRetryCount] = useState(0);
-    const ITEMS_PER_PAGE = 10;
 
-    // Sample data - replace with API calls later
+    // Sample data
     const courses = ['BCA', 'MCA', 'BTech', 'MTech'];
     const semesters = ['Semester 1', 'Semester 2', 'Semester 3', 'Semester 4'];
 
-    useEffect(() => {
-        fetchAllStudents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page]); // Refetch when page changes
-
-    const handleRetry = () => {
-        setRetryCount(prev => prev + 1);
-        setError(null);
-        if (!selectedCourse && !selectedSemester) {
-            fetchAllStudents();
-        } else {
-            handleSearch();
-        }
-    };
-
-    const fetchAllStudents = async () => {
+    // Memoized fetch function to prevent unnecessary re-renders
+    const fetchStudents = useCallback(async (pageNum = pagination.page) => {
         try {
             setLoading(true);
-            const response = await axios.get(Get_All_Students_EndPoint, {
-                params: {
-                    page,
-                    limit: ITEMS_PER_PAGE
-                }
-            });
-            setFilteredStudents(response.data.students);
-            setTotalPages(Math.ceil(response.data.total / ITEMS_PER_PAGE));
             setError(null);
+
+            const endpoint = filters.course || filters.semester 
+                ? Get_Students_By_Course_Semester_EndPoint 
+                : Get_All_Students_EndPoint;
+
+            const params = {
+                page: pageNum,
+                limit: pagination.limit,
+                ...(filters.course && { course: filters.course }),
+                ...(filters.semester && { semester: filters.semester })
+            };
+
+            const response = await axios.get(endpoint, { params });
+            
+            // Update state with new data
+            setStudents(response.data.students);
+            setPagination(prev => ({
+                ...prev,
+                page: pageNum,
+                total: response.data.total,
+                totalPages: Math.ceil(response.data.total / prev.limit)
+            }));
+
         } catch (err) {
             const errorMessage = err.response?.data?.message || 'Failed to fetch students';
             setError({
@@ -55,54 +63,44 @@ const StudentDetailsPage = () => {
                 code: err.response?.status,
                 details: err.message
             });
-            // Log to monitoring service (e.g., Sentry)
             console.error('Error fetching students:', {
                 error: err,
-                retryCount,
+                filters,
+                pagination: { page: pageNum, limit: pagination.limit },
                 timestamp: new Date().toISOString()
             });
         } finally {
             setLoading(false);
         }
+    }, [filters, pagination.limit, pagination.page]);
+
+    // Initial load and page changes
+    useEffect(() => {
+        fetchStudents();
+  
+    }, [fetchStudents]);
+
+    // Handle filter changes
+    const handleFilterChange = (type, value) => {
+        setFilters(prev => {
+            const newFilters = { ...prev, [type]: value };
+            // Reset page when filters change
+            setPagination(prev => ({ ...prev, page: 1 }));
+            return newFilters;
+        });
+        setShowDropdown(prev => ({ ...prev, [type]: false }));
     };
 
-    const handleSearch = async () => {
-        // Reset to first page when searching
-        setPage(1);
+    // Handle filter reset
+    const handleClearFilters = () => {
+        setFilters({ course: '', semester: '' });
+        setPagination(prev => ({ ...prev, page: 1 }));
+    };
 
-        if (!selectedCourse && !selectedSemester) {
-            await fetchAllStudents();
-            return;
-        }
-
-        try {
-            setLoading(true);
-            const response = await axios.get(Get_Students_By_Course_Semester_EndPoint, {
-                params: {
-                    course: selectedCourse,
-                    semester: selectedSemester,
-                    page,
-                    limit: ITEMS_PER_PAGE
-                }
-            });
-            setFilteredStudents(response.data.students);
-            setTotalPages(Math.ceil(response.data.total / ITEMS_PER_PAGE));
-            setError(null);
-        } catch (err) {
-            const errorMessage = err.response?.data?.message || 'Failed to filter students';
-            setError({
-                message: `${errorMessage}. Please try again later.`,
-                code: err.response?.status,
-                details: err.message
-            });
-            console.error('Error filtering students:', {
-                error: err,
-                filters: { course: selectedCourse, semester: selectedSemester },
-                retryCount,
-                timestamp: new Date().toISOString()
-            });
-        } finally {
-            setLoading(false);
+    // Handle page change
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= pagination.totalPages && !loading) {
+            fetchStudents(newPage);
         }
     };
 
@@ -111,24 +109,18 @@ const StudentDetailsPage = () => {
         setShowModal(true);
     };
 
-    const handlePageChange = (newPage) => {
-        if (newPage >= 1 && newPage <= totalPages) {
-            setPage(newPage);
-        }
-    };
-
-    const studentsToDisplay = filteredStudents || [];
-
     return (
         <AdminTemplate pageName='Student Details'>
             <div className="p-6 bg-[#000000] min-h-screen text-white relative">
+                {/* Filters */}
                 <div className="flex gap-4 mb-8">
+                    {/* Course Dropdown */}
                     <div className="relative w-64">
                         <div 
                             className="w-full p-2.5 bg-[#1C1C1C] rounded flex justify-between items-center cursor-pointer"
                             onClick={() => setShowDropdown(prev => ({ ...prev, course: !prev.course }))}
                         >
-                            <span>{selectedCourse || 'Select Course'}</span>
+                            <span>{filters.course || 'Select Course'}</span>
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                             </svg>
@@ -139,10 +131,7 @@ const StudentDetailsPage = () => {
                                     <div
                                         key={course}
                                         className="p-2 hover:bg-[#2D2D2D] cursor-pointer"
-                                        onClick={() => {
-                                            setSelectedCourse(course);
-                                            setShowDropdown(prev => ({ ...prev, course: false }));
-                                        }}
+                                        onClick={() => handleFilterChange('course', course)}
                                     >
                                         {course}
                                     </div>
@@ -151,12 +140,13 @@ const StudentDetailsPage = () => {
                         )}
                     </div>
 
+                    {/* Semester Dropdown */}
                     <div className="relative w-64">
                         <div 
                             className="w-full p-2.5 bg-[#1C1C1C] rounded flex justify-between items-center cursor-pointer"
                             onClick={() => setShowDropdown(prev => ({ ...prev, semester: !prev.semester }))}
                         >
-                            <span>{selectedSemester || 'Select Semester'}</span>
+                            <span>{filters.semester || 'Select Semester'}</span>
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                             </svg>
@@ -167,10 +157,7 @@ const StudentDetailsPage = () => {
                                     <div
                                         key={semester}
                                         className="p-2 hover:bg-[#2D2D2D] cursor-pointer"
-                                        onClick={() => {
-                                            setSelectedSemester(semester);
-                                            setShowDropdown(prev => ({ ...prev, semester: false }));
-                                        }}
+                                        onClick={() => handleFilterChange('semester', semester)}
                                     >
                                         {semester}
                                     </div>
@@ -179,22 +166,12 @@ const StudentDetailsPage = () => {
                         )}
                     </div>
 
-                    <button 
-                        className="px-6 py-2.5 bg-[#1C1C1C] rounded hover:bg-[#2D2D2D] disabled:opacity-50 disabled:cursor-not-allowed"
-                        onClick={handleSearch}
-                        disabled={loading}
-                    >
-                        {loading ? 'Loading...' : 'Search'}
-                    </button>
-
-                    {(selectedCourse || selectedSemester) && (
+                    {/* Clear Filters Button */}
+                    {(filters.course || filters.semester) && (
                         <button 
-                            className="px-4 py-2.5 bg-[#1C1C1C] rounded hover:bg-[#2D2D2D]"
-                            onClick={() => {
-                                setSelectedCourse('');
-                                setSelectedSemester('');
-                                fetchAllStudents();
-                            }}
+                            className="px-4 py-2.5 bg-[#1C1C1C] rounded hover:bg-[#2D2D2D] disabled:opacity-50"
+                            onClick={handleClearFilters}
+                            disabled={loading}
                         >
                             Clear Filters
                         </button>
@@ -202,17 +179,22 @@ const StudentDetailsPage = () => {
                 </div>
 
                 {/* Filter Status */}
-                <div className="mb-4 text-sm text-gray-400">
-                    {!selectedCourse && !selectedSemester ? (
-                        'Showing all students'
-                    ) : (
-                        `Filtered by: ${[
-                            selectedCourse && `Course: ${selectedCourse}`,
-                            selectedSemester && `Semester: ${selectedSemester}`
-                        ].filter(Boolean).join(', ')}`
-                    )}
+                <div className="mb-4 text-sm text-gray-400 flex justify-between items-center">
+                    <div>
+                        {!filters.course && !filters.semester 
+                            ? 'Showing all students' 
+                            : `Filtered by: ${[
+                                filters.course && `Course: ${filters.course}`,
+                                filters.semester && `Semester: ${filters.semester}`
+                            ].filter(Boolean).join(', ')}`
+                        }
+                    </div>
+                    <div>
+                        Total: {pagination.total} students
+                    </div>
                 </div>
 
+                {/* Error Message */}
                 {error && (
                     <div className="bg-red-500 text-white p-4 rounded mb-4">
                         <div className="font-bold">{error.message}</div>
@@ -220,7 +202,7 @@ const StudentDetailsPage = () => {
                             <div className="text-sm mt-1">Error Code: {error.code}</div>
                         )}
                         <button 
-                            onClick={handleRetry}
+                            onClick={() => fetchStudents(pagination.page)}
                             className="mt-2 bg-white text-red-500 px-4 py-1 rounded text-sm hover:bg-red-100"
                         >
                             Retry
@@ -228,6 +210,7 @@ const StudentDetailsPage = () => {
                     </div>
                 )}
 
+                {/* Students Table */}
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead>
@@ -249,19 +232,15 @@ const StudentDetailsPage = () => {
                                         </div>
                                     </td>
                                 </tr>
-                            ) : studentsToDisplay.length === 0 ? (
+                            ) : students.length === 0 ? (
                                 <tr>
                                     <td colSpan="5" className="text-center py-8">
                                         <div className="text-gray-400">
                                             No students found
-                                            {(selectedCourse || selectedSemester) && (
+                                            {(filters.course || filters.semester) && (
                                                 <div className="mt-2">
                                                     <button 
-                                                        onClick={() => {
-                                                            setSelectedCourse('');
-                                                            setSelectedSemester('');
-                                                            fetchAllStudents();
-                                                        }}
+                                                        onClick={handleClearFilters}
                                                         className="text-white underline"
                                                     >
                                                         Clear filters
@@ -272,10 +251,10 @@ const StudentDetailsPage = () => {
                                     </td>
                                 </tr>
                             ) : (
-                                studentsToDisplay.map((student, index) => (
+                                students.map((student, index) => (
                                     <tr key={student.id} className="border-b text-center text-sm text-[#FFFFFFA6] border-[#1E1E1E] bg-[#1C1C1C]">
                                         <td className="px-4 py-3 border border-l-0 border-[#2D2D2D]">
-                                            {((page - 1) * ITEMS_PER_PAGE) + index + 1}
+                                            {((pagination.page - 1) * pagination.limit) + index + 1}
                                         </td>
                                         <td className="px-4 py-3 border border-[#2D2D2D]">{student.name}</td>
                                         <td className="px-4 py-3 border border-[#2D2D2D]">{student.studentId}</td>
@@ -296,25 +275,25 @@ const StudentDetailsPage = () => {
                 </div>
 
                 {/* Pagination */}
-                {!loading && studentsToDisplay.length > 0 && (
+                {!loading && students.length > 0 && (
                     <div className="flex justify-between items-center mt-4">
                         <div className="text-sm text-gray-400">
-                            Page {page} of {totalPages}
+                            Page {pagination.page} of {pagination.totalPages}
                         </div>
                         <div className="flex gap-2">
                             <button 
-                                className="p-2 bg-[#1E1E1E] rounded hover:bg-[#2D2D2D] disabled:opacity-50 disabled:cursor-not-allowed"
-                                onClick={() => handlePageChange(page - 1)}
-                                disabled={page === 1 || loading}
+                                className="p-2 bg-[#1E1E1E] rounded hover:bg-[#2D2D2D] disabled:opacity-50"
+                                onClick={() => handlePageChange(pagination.page - 1)}
+                                disabled={pagination.page === 1 || loading}
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                                 </svg>
                             </button>
                             <button 
-                                className="p-2 bg-[#1E1E1E] rounded hover:bg-[#2D2D2D] disabled:opacity-50 disabled:cursor-not-allowed"
-                                onClick={() => handlePageChange(page + 1)}
-                                disabled={page === totalPages || loading}
+                                className="p-2 bg-[#1E1E1E] rounded hover:bg-[#2D2D2D] disabled:opacity-50"
+                                onClick={() => handlePageChange(pagination.page + 1)}
+                                disabled={pagination.page === pagination.totalPages || loading}
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
@@ -324,6 +303,7 @@ const StudentDetailsPage = () => {
                     </div>
                 )}
 
+                {/* Student Details Modal */}
                 {showModal && selectedStudent && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                         <div className="bg-[#1E1E1E] p-6 rounded-lg w-[500px] max-w-[90%]">
