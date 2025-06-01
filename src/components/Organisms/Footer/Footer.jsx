@@ -5,6 +5,7 @@ import useSocialLinks from '../../../hooks/useSocialLinks';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+
 const SocialLink = React.memo(
    ({ href = '', label, isEmail = false }) => {
       if (!href) return null;
@@ -98,6 +99,24 @@ const Footer = React.memo(() => {
                   />
                </div>
             </div>
+         </div>
+
+         {/* DMCA Protection Badge - No Script Version */}
+         <div className='dmca-badge-container w-full flex justify-center mt-6 pt-4 border-t border-gray-200'>
+            <a 
+               href="https://www.dmca.com/Protection/Status.aspx?ID=638734f7-8b37-47af-b022-7b03a77295f2" 
+               title="DMCA.com Protection Status" 
+               className="dmca-badge transition-opacity hover:opacity-80"
+               target="_blank"
+               rel="noopener noreferrer"
+            >
+               <img 
+                  src="https://images.dmca.com/Badges/DMCA_badge_grn_60w.png?ID=638734f7-8b37-47af-b022-7b03a77295f2"  
+                  alt="DMCA.com Protection Status"
+                  className="h-auto max-w-full"
+                  loading="lazy"
+               />
+            </a>
          </div>
       </footer>
    );
