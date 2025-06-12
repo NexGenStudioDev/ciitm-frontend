@@ -2,18 +2,19 @@ import React, { memo, useEffect, useState } from 'react';
 import Input_Primary from '../../../Atoms/Input/Input_Primary';
 import H3 from '../../../Atoms/Heading/H3';
 import { useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
 
-const ProfileInfo = memo(({ admin }) => {
-   let [ReadOnlyValue, setReadOnlyValue] = useState(true);
+const ProfileInfo = memo(({ admin = {} }) => {
+   const [readOnlyValue, setReadOnlyValue] = useState(true);
    const data = useSelector(state => state.Input.inputs);
 
    useEffect(() => {
       if (data.length > 0) {
-         const ReadOnly = data.find(
-            input => input.name === 'Profile_Edit',
-         ).value;
-         setReadOnlyValue(ReadOnly);
+         const profileEditInput = data.find(
+            input => input.name === 'Profile_Edit'
+         );
+         if (profileEditInput) {
+            setReadOnlyValue(profileEditInput.value);
+         }
       }
    }, [data]);
 
@@ -24,18 +25,17 @@ const ProfileInfo = memo(({ admin }) => {
          </H3>
          <Input_Primary
             className='w-[97%] h-full bg-black text-white rounded-lg px-[1.5vw] focus:outline-none focus:ring-1 focus:ring-[#3FEF9D] focus:border-transparent'
-            name={'Personal_Name'}
-            PlaceHolder='Your Name'
-            ReadOnly={ReadOnlyValue}
-            Value={admin.name}
+            name='Personal_Name'
+            placeholder='Your Name'
+            readOnly={readOnlyValue}
+            value={admin?.name}
          />
-
          <Input_Primary
             className='w-[97%] h-full bg-black text-white rounded-lg px-[1.5vw] focus:outline-none focus:ring-1 focus:ring-[#3FEF9D] focus:border-transparent'
-            name={'Personal_Email'}
-            PlaceHolder='Your Email'
-            ReadOnly={ReadOnlyValue}
-            Value={admin.email}
+            name='Personal_Email'
+            placeholder='Your Email'
+            readOnly={readOnlyValue}
+            value={admin?.email}
          />
       </div>
    );

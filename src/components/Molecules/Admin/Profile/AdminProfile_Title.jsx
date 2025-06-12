@@ -21,7 +21,7 @@ const AdminProfile_Title = () => {
          const ReadOnly = inputs.find(
             input => input.name === 'Profile_Edit',
          ).value;
-         console.log('ReadOnly title', ReadOnly);
+
 
          setTitle('Profile');
 
@@ -39,11 +39,11 @@ const AdminProfile_Title = () => {
 
          <Input_Primary
             name={'Profile_Edit'}
-            PlaceHolder='EditMode'
-            ReadOnly={false}
+            placeholder='EditMode'
+            readOnly={false}
             className='hidden'
-            Type='hidden'
-            Value={EditMode}
+            type='hidden'
+            value={EditMode}
          />
 
          <MdEditSquare

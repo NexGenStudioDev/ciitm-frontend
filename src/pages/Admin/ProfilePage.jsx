@@ -5,29 +5,26 @@ import FormTemplate from '../../components/Templates/Admin/form/FormTemplate';
 import AdminProfile_Title from '../../components/Molecules/Admin/Profile/AdminProfile_Title';
 import ProfileInfo from '../../components/Molecules/Admin/Profile/ProfileInfo';
 import Profile__Image__Container from '../../components/Molecules/Admin/Profile/Profile__Image__Container';
-import { RiInstagramFill } from 'react-icons/ri';
-import Social_Input from '../../components/Molecules/Admin/Profile/Social_Input';
 import Social_info from '../../components/Molecules/Admin/Profile/Social_info';
 
 const ProfilePage = memo(() => {
    const fileInputRef = useRef(null);
    const admin = useSelector(state => state.auth.user);
    const links = useSelector(state => state.socialLink.links);
-   const [Image, setImage] = useState(admin.picture);
+   const [image, setImage] = useState(admin?.picture || '');
 
-   let File_Profile_Controller = e => {
+   const handleProfileFileChange = e => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
       const reader = new FileReader();
+      reader.onload = () => setImage(reader.result);
+      reader.onerror = () => console.log('Error: ', reader.error);
+      reader.readAsDataURL(file);
+   };
 
-      reader.onload = () => {
-         setImage(reader.result);
-      };
-
-      reader.onerror = () => {
-         console.log('Error: ', reader.error);
-      };
-
-      console.log('image rendered', Image);
-      reader.readAsDataURL(e.target.files[0]);
+   // Optional: trigger file input on image click
+   const handleImageClick = () => {
+      if (fileInputRef.current) fileInputRef.current.click();
    };
 
    return (
@@ -35,18 +32,19 @@ const ProfilePage = memo(() => {
          <FormTemplate Navigator={false}>
             <AdminProfile_Title />
             <div className='flex flex-col h-[110vh] w-full mb-[5vh]'>
-               <Profile__Image__Container
-                  ImageUrl={Image}
-                  AltImageUrl='https://png.pngtree.com/png-clipart/20230102/original/pngtree-business-man-avatar-png-image_8855195.png'
-                  fileInputRef={fileInputRef}
-               />
-
+               <div onClick={handleImageClick} className="cursor-pointer">
+                  <Profile__Image__Container
+                     ImageUrl={image}
+                     AltImageUrl='https://png.pngtree.com/png-clipart/20230102/original/pngtree-business-man-avatar-png-image_8855195.png'
+                     fileInputRef={fileInputRef}
+                  />
+               </div>
                <input
                   type='file'
                   name='Profile'
                   id='Profile'
                   className='hidden'
-                  onChange={e => File_Profile_Controller(e)}
+                  onChange={handleProfileFileChange}
                   accept='image/webp, image/png, image/jpeg'
                   ref={fileInputRef}
                />

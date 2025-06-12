@@ -17,13 +17,13 @@ const Social_Input = ({
          </div>
          <div className='Input_Container w-[92%] h-full flex items-center justify-center'>
             <Input_Primary
-               Type={'text'}
+               type={'text'}
                className='w-[97%] h-[6vh] bg-black text-white rounded-lg  focus:outline-none focus:ring-1 focus:ring-[#3FEF9D] focus:border-transparent'
-               Value={Link}
+               value={Link}
                name={Name}
-               ReadOnly={ReadOnly}
+               readOnly={ReadOnly}
                onChange={e => setLink(e.target.value)}
-               PlaceHolder={PlaceHolder}
+               placeholder={PlaceHolder}
             />
          </div>
       </div>
