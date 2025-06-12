@@ -1,106 +1,100 @@
 import React, { useRef, useState } from 'react';
 import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTemplate_Secondary';
-import FormTemplate from '../../components/Templates/Admin/form/FormTemplate';
-import Image_Form_Title from '../../components/Molecules/Admin/image/Image_Form_Title';
 import { MdOutlineArrowDropDown } from 'react-icons/md';
+import Image_Form_Title from '../../components/Molecules/Admin/image/Image_Form_Title';
 
 const ImagePage = () => {
-   let OptionRef = useRef(null);
-   let OptionContainerRef = useRef(null);
-   //    let [Option, setOption] = useState(false);
+   const [isOptionOpen, setIsOptionOpen] = useState(false);
+   const [selectedOption, setSelectedOption] = useState(null);
+   const [focusedIndex, setFocusedIndex] = useState(-1);
 
-   let [is_OptionSelected, set_Is_OptionSelected] = useState(false);
-   let [selectedOption, set_SelectedOption] = useState(null);
-
-   let Album_Name = [
-      {
-         id: 1,
-         name: 'Album 1',
-      },
-      {
-         id: 2,
-         name: 'Album 2',
-      },
-      {
-         id: 3,
-         name: 'Album 3',
-      },
-      {
-         id: 4,
-         name: 'Album 4',
-      },
-      {
-         id: 5,
-         name: 'Album 5',
-      },
+   const Album_Name = [
+      { id: 1, name: 'Album 1' },
+      { id: 2, name: 'Album 2' },
+      { id: 3, name: 'Album 3' },
+      { id: 4, name: 'Album 4' },
+      { id: 5, name: 'Album 5' },
    ];
 
-   let Handle_Option_Click = e => {
-      let option = e.target.innerText;
-
-      set_SelectedOption(option);
-      set_Is_OptionSelected(false);
+   const handleOptionClick = (option) => {
+      setSelectedOption(option.name);
+      setIsOptionOpen(false);
+      setFocusedIndex(-1);
    };
 
-   let Handle_Key_Down = e => {
-      console.log(e);
+   const handleDropdownClick = () => {
+      setIsOptionOpen((prev) => !prev);
+      setFocusedIndex(-1);
+   };
 
+   const handleKeyDown = (e) => {
+      if (!isOptionOpen) return;
       if (e.key === 'Escape') {
-         set_Is_OptionSelected(false);
+         setIsOptionOpen(false);
+         setFocusedIndex(-1);
       }
       if (e.key === 'ArrowDown') {
-         let nextOption = e.target.nextElementSibling;
-         if (nextOption) {
-            nextOption.focus();
-         }
+         setFocusedIndex((prev) => (prev < Album_Name.length - 1 ? prev + 1 : 0));
       }
-      if (e.key === 'Enter') {
-         let option = e.target.innerText;
-
-         set_SelectedOption(option);
-         set_Is_OptionSelected(false);
+      if (e.key === 'ArrowUp') {
+         setFocusedIndex((prev) => (prev > 0 ? prev - 1 : Album_Name.length - 1));
       }
-   };
-
-   let Handle_Option_Container_Click = e => {
-      let option = !is_OptionSelected;
-
-      set_Is_OptionSelected(option);
+      if (e.key === 'Enter' && focusedIndex !== -1) {
+         setSelectedOption(Album_Name[focusedIndex].name);
+         setIsOptionOpen(false);
+         setFocusedIndex(-1);
+      }
    };
 
    return (
       <AdminTemplate pageName='Create Image'>
          <FormTemplate_Secondary>
-            <div className='Select_Album_DropDown flex items-center justify-center flex-col w-[80%] h-[10%] bg-[#ca2c2c] mt-[5vh] rounded-2xl'>
+         <Image_Form_Title Title="Create Image" />
+            <div className='Select_Album_DropDown flex flex-col items-center justify-center w-full max-w-xl mx-auto mt-8'>
                <div
-                  className='title w-full rounded-2xl bg-orange-500 flex items-center justify-between'
-                  onClick={Handle_Option_Container_Click}
+                  className='title w-full rounded-2xl bg-black flex items-center justify-between px-6 py-4 cursor-pointer select-none'
+                  onClick={handleDropdownClick}
+                  tabIndex={0}
+                  onKeyDown={handleKeyDown}
+                  aria-haspopup="listbox"
+                  aria-expanded={isOptionOpen}
                >
-                  <h1>
-                     {selectedOption
-                        ? selectedOption
-                        : 'Select Album'}
+                  <h1 className='text-white text-lg font-semibold truncate'>
+                     {selectedOption ? selectedOption : 'Select Album'}
                   </h1>
-                  <MdOutlineArrowDropDown className='text-white text-7xl' />
+                  <MdOutlineArrowDropDown className={`text-white text-3xl transition-transform duration-200 ${isOptionOpen ? 'rotate-180' : ''}`} />
                </div>
-
-               <div
-                  className='options w-full rounded-2xl  bg-blue-500 flex flex-col items-center justify-between'
-                  ref={OptionContainerRef}
-                  onKeyDown={e => Handle_Key_Down(e)}
-               >
-                  {is_OptionSelected &&
-                     Album_Name.map(option => (
+               {isOptionOpen && (
+                  <div
+                     className='options w-full rounded-b-2xl bg-white shadow-lg flex flex-col items-stretch z-10 max-h-60 overflow-y-auto'
+                     tabIndex={-1}
+                     role="listbox"
+                     onKeyDown={handleKeyDown}
+                  >
+                     {Album_Name.map((option, idx) => (
                         <div
                            key={option.id}
-                           className='option hover:bg-red-700 w-full h-full flex items-center justify-center'
-                           ref={OptionRef}
-                           onClick={e => Handle_Option_Click(e)}
+                           className={`option px-6 py-3 cursor-pointer text-gray-800 hover:bg-orange-100 focus:bg-orange-200 outline-none transition 
+                              ${focusedIndex === idx ? 'bg-orange-200' : ''}`}
+                           tabIndex={0}
+                           role="option"
+                           aria-selected={selectedOption === option.name}
+                           onClick={() => handleOptionClick(option)}
+                           onMouseEnter={() => setFocusedIndex(idx)}
                         >
-                           <h1>{option.name}</h1>
+                           <h1 className='truncate'>{option.name}</h1>
                         </div>
                      ))}
+                  </div>
+               )}
+
+               <div className='Image_Upload_Container w-full mt-6'>
+                  <input
+                     type='file'
+                     accept='image/*'
+                     className='w-full bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#3FEF9D] focus:border-transparent'
+                  />
                </div>
             </div>
          </FormTemplate_Secondary>

@@ -31,7 +31,7 @@ const DashboardPage = () => {
       }
 
       // Attach listener BEFORE emitting request
-      socket.on('DashBoard_Data', handleDashboardData);
+      socket.once('DashBoard_Data', handleDashboardData);
 
       // Emit request after listener is attached
       socket.emit('Request_DashBoard_Data');
