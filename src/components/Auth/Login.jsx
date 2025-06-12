@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Login_EndPoint } from '../../utils/constants';
 import { Link, useNavigate } from 'react-router-dom';
 import Google_Wrapper from './Google_Wrapper';
@@ -10,11 +10,12 @@ import Swal from 'sweetalert2';
 import Checkbox from './Checkbox';
 import axios from 'axios';
 import { setUser } from '../../store/AuthSlice';
+import Loader from '../Molecules/Loader/Loader';
 
 const Login = () => {
    let dispatch = useDispatch();
-
    let navigate = useNavigate();
+   const [loading, setLoading] = useState(false);
 
    let find_Email = useSelector(state =>
       state.auth.data.find(item => item.name === 'email'),
@@ -26,6 +27,7 @@ const Login = () => {
    let Handle_Login = async e => {
       try {
          e.preventDefault();
+         setLoading(true);
 
          if (!find_Email && !find_Password) {
             throw new Error('Please Enter Email and Password');
@@ -35,7 +37,8 @@ const Login = () => {
             throw new Error('Email or Password not found in state');
          }
 
-         // Make sure the data being sent is correct
+       
+
          let res = await axios.post(
             Login_EndPoint,
             {
@@ -48,8 +51,6 @@ const Login = () => {
                },
             },
          );
-
-         console.log(res.data);
 
          let user = res.data.data;
 
@@ -69,13 +70,14 @@ const Login = () => {
             navigate('/admin/DashBoard');
          }
       } catch (error) {
-         console.log(error);
          Swal.fire({
             icon: 'error',
             title: 'Error',
             text:
-               error.response.data.message || 'Something went wrong',
+               error?.response?.data?.message || error.message || 'Something went wrong',
          });
+      } finally {
+         setLoading(false);
       }
    };
 
@@ -83,6 +85,13 @@ const Login = () => {
       <section className='w-full min-h-screen flex items-center justify-center text-[#333] max-[999px]:flex-col'>
          <div className='left w-1/2 max-[999px]:w-full h-full max-[999px]:px-6 px-16 flex flex-col items-center justify-center'>
             <form className='w-full h-full bg-[#FAFAFA]  p-6'>
+                 {loading && (
+                  <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-50">
+                     <Loader />
+                  </div>
+               )}
+
+               
                <div className='logo mb-6'>
                   <img src={logo} alt='CIITM Logo' className='h-8' />
                </div>
@@ -125,11 +134,14 @@ const Login = () => {
                   </a>
                </div>
 
+              
+
                <button
                   onClick={e => Handle_Login(e)}
                   className='bg-[#333] text-white rounded-lg p-3.5 w-full text-[1.05vw] max-[999px]:text-[3.05vw] font-semibold mb-4'
+                  disabled={loading}
                >
-                  Log In
+                  {loading ? 'Logging in...' : 'Log In'}
                </button>
 
                <button className='bg-white border border-gray-300 rounded-lg p-2 w-full text-[1.05vw] max-[999px]:text-[3.05vw]'>
@@ -144,6 +156,7 @@ const Login = () => {
                      </Link>
                   </p>
                </div>
+            
             </form>
          </div>
 

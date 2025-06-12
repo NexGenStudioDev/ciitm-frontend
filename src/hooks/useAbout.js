@@ -6,57 +6,61 @@ import axios from 'axios';
 import { frontend_EndPoint } from '../utils/constants';
 
 const useAbout = () => {
-   let About = useSelector(state => state.about.aboutPage);
-
-   let dispatch = useDispatch();
+   const About = useSelector(state => state.about.aboutPage);
+   const dispatch = useDispatch();
 
    const fetchData = async () => {
       try {
-         if (!About) {
-            const response = await axios.get(frontend_EndPoint);
-
-            let data = response.data.data;
-
-            dispatch(setAboutPage(data.aboutPage));
-         }
+         const response = await axios.get(frontend_EndPoint);
+         const data = response.data.data;
+         dispatch(setAboutPage(data.aboutPage));
       } catch (error) {
          console.error(error);
       }
    };
 
    useEffect(() => {
+      let didFallback = false;
+
+
       if (!socket.connected) {
          socket.connect();
       }
-   
-      const handleConnectError = error => {
-         console.log('Socket connection error:', error);
-         fetchData();
-      };
 
-   
-      const handleFrontendData = data => {
-         console.log('data from server frontend', data);
-         if (!data) {
-            fetchData();
+      const handleFrontendData = (data) => {
+         if (!data || !data.aboutPage) {
+            if (!didFallback) {
+               didFallback = true;
+               fetchData();
+            }
          } else {
             dispatch(setAboutPage(data.aboutPage));
          }
-
-
       };
-   
-      socket.on('connect_error', handleConnectError);
-      
+
+      const handleConnectError = () => {
+         if (!didFallback) {
+            didFallback = true;
+            fetchData();
+         }
+      };
+
       if (!About) {
-         socket.emit('requestFrontend')
-         socket.on('frontend', handleFrontendData);
-      
+         socket.emit('requestFrontend');
+         socket.once('frontend', handleFrontendData);
+         socket.once('connect_error', handleConnectError);
+         socket.once('disconnect', () => {
+        
+            if (!socket.connected) {
+               socket.connect();
+            }
+         });
       }
- 
+
       return () => {
-         socket.off('connect_error', handleConnectError);
          socket.off('frontend', handleFrontendData);
+         socket.off('connect_error', handleConnectError);
+         socket.off('disconnect');
       };
    }, [About, dispatch]);
 };

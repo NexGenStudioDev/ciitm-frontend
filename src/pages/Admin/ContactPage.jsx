@@ -31,7 +31,7 @@ const ContactPage = memo(() => {
    const [isError, setIsError] = useState(false);
    
    const [contactData, setContactData] = useState([]);
-   const [StartIndex, setStartIndex] = useState(contactData.length -1)
+
 
    const GetContactData = async () => {
       try {
@@ -72,7 +72,6 @@ const ContactPage = memo(() => {
                <AdminContactData_Table
                   Data={contactData}
                   isLoading={isLoading}
-                  StartIndex={(2 - 1) * 10} 
                />
             )}
          </FormTemplate>

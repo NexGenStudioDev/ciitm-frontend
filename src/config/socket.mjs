@@ -1,5 +1,11 @@
 import { io } from 'socket.io-client';
 
+
+
+if(!import.meta.env.VITE_BACKEND_URL) {
+   throw new Error('VITE_BACKEND_URL is not defined in environment variables');
+}
+
 // 👇 Initialize socket connection
 const socket = io(import.meta.env.VITE_BACKEND_URL, {
    autoConnect: false, // Automatically connect on load (set to false if you want manual control)
@@ -17,10 +23,17 @@ socket.on('connect', () => {
 });
 
 socket.on('disconnect', () => {
-   console.log('❌ Disconnected from server');
+
+   console.log('❌ Disconnected from server')
+  
+   if (socket.connected) {
+      console.log('✅ Reconnected to server');
+      socket.connect();
+   }
 });
 
 socket.on('connect_error', error => {
+   console.error('❌ Connection error:', error);
    throw new Error(`Connection error: ${error.message}`);
 });
 

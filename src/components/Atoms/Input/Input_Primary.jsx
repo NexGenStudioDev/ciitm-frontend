@@ -2,55 +2,58 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
    addInput,
-   setInputValueByIndex,
    setInputValueByName,
 } from '../../../store/InputSlice';
 
 const Input_Primary = ({
-   Type = 'text',
-   PlaceHolder = '',
-   Value = '',
-   ReadOnly = false,
+   type = 'text',
+   placeholder = '',
+   value = '',
+   readOnly = false,
    className = '',
    name,
-   index,
 }) => {
    const dispatch = useDispatch();
    const inputs = useSelector(state => state.Input.inputs);
 
    useEffect(() => {
-      const exists = inputs.some(input => input.name === name);
-      if (!exists) {
-         dispatch(
-            addInput({
-               type: Type,
-               label: PlaceHolder,
-               name: name,
-               value: Value,
-               readOnly: ReadOnly,
-            }),
-         );
+      if (!readOnly && name) {
+         const exists = inputs.some(input => input.name === name);
+         if (!exists) {
+            dispatch(
+               addInput({
+                  type,
+                  label: placeholder,
+                  name,
+                  value,
+                  readOnly,
+               }),
+            );
+         }
       }
-   }, [dispatch, inputs, name, Type, PlaceHolder, Value, ReadOnly]);
+   }, [dispatch, inputs, name, type, placeholder, value, readOnly]);
 
    const handleChange = e => {
-      const newValue = e.target.value;
-
-      if (!ReadOnly) {
-         dispatch(setInputValueByName({ name, value: newValue }));
+      if (!readOnly && name) {
+         dispatch(setInputValueByName({ name, value: e.target.value }));
       }
    };
 
-   const currentInput = inputs.find(input => input.name === name);
-   const valueToDisplay = currentInput ? currentInput.value : Value;
+   // If readOnly, always show the passed value prop.
+   // Otherwise, use Redux state if available, else fallback to value prop.
+   let valueToDisplay = value;
+   if (!readOnly && name) {
+      const currentInput = inputs.find(input => input.name === name);
+      valueToDisplay = currentInput ? currentInput.value : value;
+   }
 
    return (
-      <input
-         type={Type}
-         readOnly={ReadOnly}
-         placeholder={PlaceHolder}
+      <input  
+         type={type}
+         readOnly={readOnly}
+         placeholder={placeholder}
          value={valueToDisplay}
-         onChange={ReadOnly ? undefined : handleChange}
+         onChange={readOnly ? undefined : handleChange}
          className={className}
          name={name}
       />
