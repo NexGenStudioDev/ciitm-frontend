@@ -22,12 +22,11 @@ const useAbout = () => {
    useEffect(() => {
       let didFallback = false;
 
-
       if (!socket.connected) {
          socket.connect();
       }
 
-      const handleFrontendData = (data) => {
+      const handleFrontendData = data => {
          if (!data || !data.aboutPage) {
             if (!didFallback) {
                didFallback = true;
@@ -50,7 +49,6 @@ const useAbout = () => {
          socket.once('frontend', handleFrontendData);
          socket.once('connect_error', handleConnectError);
          socket.once('disconnect', () => {
-        
             if (!socket.connected) {
                socket.connect();
             }

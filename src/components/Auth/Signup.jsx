@@ -13,6 +13,7 @@ import { setUser } from '../../store/AuthSlice';
 
 const Signup = () => {
    let dispatch = useDispatch();
+   let [isLoading, setIsLoading] = React.useState(false);
 
    let First_Name = useSelector(state =>
       state.auth.data.find(item => item.name === 'firstName'),
@@ -55,6 +56,10 @@ const Signup = () => {
             confirm_Password: confirm_Password.value,
          });
 
+         if (res.data) {
+            console.log('Signup Response:', res.data);
+         }
+
          Swal.fire({
             icon: 'success',
             title: 'Success',
@@ -72,6 +77,8 @@ const Signup = () => {
                ? error_message
                : 'Something went wrong',
          });
+      } finally {
+         setIsLoading(false);
       }
    };
 

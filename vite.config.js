@@ -6,15 +6,15 @@ export default defineConfig({
    plugins: [react()],
    server: {
       proxy: {
-        '/api': {
-          target: 'https://ciitm-backend.onrender.com',
-          changeOrigin: true,
-          secure: false, // <<< VERY IMPORTANT
-        },
+         '/api': {
+            target: 'https://ciitm-backend.onrender.com',
+            changeOrigin: true,
+            secure: false, // <<< VERY IMPORTANT
+         },
       },
-    }
+   },
 });
 
-// 
+//
 
 // http://localhost:8000/api/v1/frontend

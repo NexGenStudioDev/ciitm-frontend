@@ -27,7 +27,8 @@ const Loader_Component = () => {
 const DashboardCardSection = memo(({ Cards = [] }) => {
    return (
       <div className=' bg-black w-full  h-fit flex flex-col'>
-         <div className='Card_Container  flex gap-[2vw] w-full max-[376px]:justify-center max-[1300px]:items-center flex-wrap px-[3vw]'>
+         <h2 className='text-white text-center mt-[8vh]'>The Dashboard is under development ✅</h2>
+         {/* <div className='Card_Container  flex gap-[2vw] w-full max-[376px]:justify-center max-[1300px]:items-center flex-wrap px-[3vw]'>
             {Cards?.length === 0 && <Loader_Component />}
 
             {Cards.map((card, index) => (
@@ -44,7 +45,7 @@ const DashboardCardSection = memo(({ Cards = [] }) => {
                   }
                />
             ))}
-         </div>
+         </div> */}
       </div>
    );
 });
