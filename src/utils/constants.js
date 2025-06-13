@@ -9,7 +9,7 @@ export const Delete_Album_EndPoint = '/api/albums';
 export const Delete_Testimonial_EndPoint =
    '/api/admin/delete/testimonial/';
 
-export const Sign_Up_EndPoint = ' /api/signup/admin';
+export const Sign_Up_EndPoint = '/api/v1/auth/Admin/SignUp';
 export const Admin_get_ContactData_EndPoint =
    '/api/v1/contact/admin/getContact';
 

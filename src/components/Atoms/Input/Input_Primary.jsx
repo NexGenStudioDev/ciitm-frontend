@@ -35,7 +35,9 @@ const Input_Primary = ({
 
    const handleChange = e => {
       if (!readOnly && name) {
-         dispatch(setInputValueByName({ name, value: e.target.value }));
+         dispatch(
+            setInputValueByName({ name, value: e.target.value }),
+         );
       }
    };
 
@@ -48,7 +50,7 @@ const Input_Primary = ({
    }
 
    return (
-      <input  
+      <input
          type={type}
          readOnly={readOnly}
          placeholder={placeholder}

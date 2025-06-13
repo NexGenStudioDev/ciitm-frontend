@@ -14,8 +14,12 @@ const override = {
    margin: '0 auto',
 };
 
-const AdminContactData_Table = ({ Data = [], isLoading = false, StartIndex = 0 }) => {
-   let [lastIndex, setLastIndex] = React.useState(Data.length -1);
+const AdminContactData_Table = ({
+   Data = [],
+   isLoading = false,
+   StartIndex = 0,
+}) => {
+   let [lastIndex, setLastIndex] = React.useState(Data.length - 1);
    if (Data.length <= 0 && isLoading) {
       return (
          <Loader
@@ -32,7 +36,6 @@ const AdminContactData_Table = ({ Data = [], isLoading = false, StartIndex = 0 }
    return (
       <>
          {Data.map((item, index) => (
-        
             <TableRow
                key={index}
                Tailwind_utility_Class='w-full h-[7vh]  text-white'

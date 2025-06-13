@@ -10,7 +10,7 @@ const ProfileInfo = memo(({ admin = {} }) => {
    useEffect(() => {
       if (data.length > 0) {
          const profileEditInput = data.find(
-            input => input.name === 'Profile_Edit'
+            input => input.name === 'Profile_Edit',
          );
          if (profileEditInput) {
             setReadOnlyValue(profileEditInput.value);

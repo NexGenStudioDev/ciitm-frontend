@@ -32,7 +32,10 @@ const ProfilePage = memo(() => {
          <FormTemplate Navigator={false}>
             <AdminProfile_Title />
             <div className='flex flex-col h-[110vh] w-full mb-[5vh]'>
-               <div onClick={handleImageClick} className="cursor-pointer">
+               <div
+                  onClick={handleImageClick}
+                  className='cursor-pointer'
+               >
                   <Profile__Image__Container
                      ImageUrl={image}
                      AltImageUrl='https://png.pngtree.com/png-clipart/20230102/original/pngtree-business-man-avatar-png-image_8855195.png'

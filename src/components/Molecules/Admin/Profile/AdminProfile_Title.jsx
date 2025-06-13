@@ -22,7 +22,6 @@ const AdminProfile_Title = () => {
             input => input.name === 'Profile_Edit',
          ).value;
 
-
          setTitle('Profile');
 
          if (!ReadOnly) {

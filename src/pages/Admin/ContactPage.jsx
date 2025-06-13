@@ -29,9 +29,8 @@ const ContactPage = memo(() => {
    const [Message, setMessage] = useState('');
    const [isLoading, setIsLoading] = useState(true);
    const [isError, setIsError] = useState(false);
-   
-   const [contactData, setContactData] = useState([]);
 
+   const [contactData, setContactData] = useState([]);
 
    const GetContactData = async () => {
       try {
@@ -41,11 +40,7 @@ const ContactPage = memo(() => {
                `?perPage=${findNavigator.parPage}&limit=${findNavigator.limit}`,
          );
 
-         
-
          setContactData(res.data.data);
-
-      
 
          dispatch(setContact(res.data.data));
       } catch (error) {

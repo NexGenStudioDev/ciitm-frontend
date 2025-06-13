@@ -30,7 +30,7 @@ const useHomeUi = () => {
       }
 
       // Handler for socket data
-      const handleFrontend = (data) => {
+      const handleFrontend = data => {
          console.log('Received frontend data from socket:', data);
          // If no data or landingPage is not present, fallback to HTTP fetch
          if (!data || !data.landingPage) {
@@ -62,7 +62,6 @@ const useHomeUi = () => {
          socket.off('connect_error', handleConnectError);
       };
    }, [landingPage, dispatch]);
-
 };
 
 export default useHomeUi;

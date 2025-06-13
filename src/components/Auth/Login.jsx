@@ -37,8 +37,6 @@ const Login = () => {
             throw new Error('Email or Password not found in state');
          }
 
-       
-
          let res = await axios.post(
             Login_EndPoint,
             {
@@ -74,7 +72,9 @@ const Login = () => {
             icon: 'error',
             title: 'Error',
             text:
-               error?.response?.data?.message || error.message || 'Something went wrong',
+               error?.response?.data?.message ||
+               error.message ||
+               'Something went wrong',
          });
       } finally {
          setLoading(false);
@@ -85,13 +85,12 @@ const Login = () => {
       <section className='w-full min-h-screen flex items-center justify-center text-[#333] max-[999px]:flex-col'>
          <div className='left w-1/2 max-[999px]:w-full h-full max-[999px]:px-6 px-16 flex flex-col items-center justify-center'>
             <form className='w-full h-full bg-[#FAFAFA]  p-6'>
-                 {loading && (
-                  <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-50">
+               {loading && (
+                  <div className='absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-50'>
                      <Loader />
                   </div>
                )}
 
-               
                <div className='logo mb-6'>
                   <img src={logo} alt='CIITM Logo' className='h-8' />
                </div>
@@ -134,8 +133,6 @@ const Login = () => {
                   </a>
                </div>
 
-              
-
                <button
                   onClick={e => Handle_Login(e)}
                   className='bg-[#333] text-white rounded-lg p-3.5 w-full text-[1.05vw] max-[999px]:text-[3.05vw] font-semibold mb-4'
@@ -156,7 +153,6 @@ const Login = () => {
                      </Link>
                   </p>
                </div>
-            
             </form>
          </div>
 
