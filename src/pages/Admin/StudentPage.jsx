@@ -4,12 +4,7 @@ import FormTemplate from '../../components/Templates/Admin/form/FormTemplate';
 import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
 import StudentDataTable from '../../components/Organisms/Admin/StudentDataTable';
 
-const studentOptions = [
-   'Bca',
-   'Mca',
-   'Bcom',
-   'Bba',
-];
+const studentOptions = ['Bca', 'Mca', 'Bcom', 'Bba'];
 
 const semisterOptions = [
    'Semister 1',
@@ -20,20 +15,13 @@ const semisterOptions = [
    'Semister 6',
 ];
 
-
-
 let Handle_Student_Search = e => {
    e.preventDefault();
    alert('Search functionality is not implemented yet.');
-  
-}
+};
 
 const StudentPage = () => {
-
-    const [isStudentFind , setIsStudentFind] = React.useState(false);
-
-
-
+   const [isStudentFind, setIsStudentFind] = React.useState(false);
 
    return (
       <AdminTemplate pageName={'Students'}>
@@ -48,10 +36,7 @@ const StudentPage = () => {
                border='2px solid #2C2C2C'
             />
 
-
-         
-
-              <Dropdown_Primary
+            <Dropdown_Primary
                options={semisterOptions}
                backgroundColor='#1C1C1C'
                textColor='#FFFFFF'
@@ -61,15 +46,15 @@ const StudentPage = () => {
                border='2px solid #2C2C2C'
             />
 
-
-
-
-            <button className='p-[2vh] bg-gray-500 text-white rounded-md' onClick={(e)=> Handle_Student_Search(e)}>Search</button>
+            <button
+               className='p-[2vh] bg-gray-500 text-white rounded-md'
+               onClick={e => Handle_Student_Search(e)}
+            >
+               Search
+            </button>
          </div>
-           <FormTemplate PageName={'Students'} >
+         <FormTemplate PageName={'Students'}>
             <StudentDataTable />
-
-           
          </FormTemplate>
       </AdminTemplate>
    );

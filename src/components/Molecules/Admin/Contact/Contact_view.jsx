@@ -33,13 +33,11 @@ const Contact_view = ({ data = {} }) => {
             readOnly={true}
             className='w-full bg-black border-2 border-white rounded-md text-[#C7C0C0] h-[20vh] p-[1vh] pl-[2vw] max-[553px]:text-[1rem] lg:text-md'
          />
-      
-        <div className="Contact_btn_Container flex flex-wrap gap-4 mt-6 items-center justify-center">
-    
 
-          <Link_btn
-            link="/admin/contact"
-            className="
+         <div className='Contact_btn_Container flex flex-wrap gap-4 mt-6 items-center justify-center'>
+            <Link_btn
+               link='/admin/contact'
+               className='
               flex items-center gap-2
               px-[2vw] py-[1.2vh]
               bg-gradient-to-r from-gray-700 to-gray-900
@@ -48,15 +46,13 @@ const Contact_view = ({ data = {} }) => {
               hover:scale-105 active:scale-95 transition-all duration-200
               focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2
               text-[1.1rem] md:text-[1.15vw]
-            "
-            buttonText="⬅️ Back"
-          />
-        
-        
+            '
+               buttonText='⬅️ Back'
+            />
 
-          {/* Reply Button */}
-          <button
-            className="
+            {/* Reply Button */}
+            <button
+               className='
               flex items-center gap-2
               px-[2vw] py-[1.2vh]
               bg-gradient-to-r from-blue-500 to-blue-700
@@ -65,15 +61,17 @@ const Contact_view = ({ data = {} }) => {
               hover:scale-105 active:scale-95 transition-all duration-200
               focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
               text-[1.1rem] md:text-[1.15vw]
-            "
-            onClick={() => window.location.href = `mailto:${data?.cEmail}`}
-          >
-            💬 Reply
-          </button>
+            '
+               onClick={() =>
+                  (window.location.href = `mailto:${data?.cEmail}`)
+               }
+            >
+               💬 Reply
+            </button>
 
-          {/* Delete Button */}
-          <button
-            className="
+            {/* Delete Button */}
+            <button
+               className='
               flex items-center gap-2
               px-[2vw] py-[1.2vh]
               bg-gradient-to-r from-red-500 to-red-700
@@ -82,14 +80,14 @@ const Contact_view = ({ data = {} }) => {
               hover:scale-105 active:scale-95 transition-all duration-200
               focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2
               text-[1.1rem] md:text-[1.15vw]
-            "
-            onClick={() => {
-               alert('Delete functionality not implemented yet.');
-            }}
-          >
-            🗑️ Delete
-          </button>
-        </div>
+            '
+               onClick={() => {
+                  alert('Delete functionality not implemented yet.');
+               }}
+            >
+               🗑️ Delete
+            </button>
+         </div>
       </div>
    );
 };
