@@ -5,6 +5,7 @@ import StudentPersonalInfo from '../../components/Templates/Admin/StudentView/St
 import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTemplate_Secondary';
 import AdminStudentTitle from '../../components/Molecules/Admin/Student/AdminStudentTitle';
 import StudentParentInfo from '../../components/Templates/Admin/StudentView/StudentParrentInfo';
+import StudentGradeInfo from '../../components/Templates/Admin/StudentView/StudentGradeInfo';
 
 const StudentViewPage_DataArray = [
    {
@@ -14,6 +15,8 @@ const StudentViewPage_DataArray = [
                Name: 'Abhishek Kumar',
                Email: 'abhishek.nexgen.dev@gmail.com',
                PhoneNumber: '123-456-7890',
+               Gender: 'Male',
+               DateOfBirth: '2000-01-01',
             }}
          />
       ),
@@ -34,6 +37,21 @@ const StudentViewPage_DataArray = [
       imageUrl:
          'https://th.bing.com/th/id/OIP.fcM05M_wuoA_1mpwD-_dDgHaHa?w=626&h=626&rs=1&pid=ImgDetMain',
       title: 'Parent Information',
+   },
+   {
+      element: (
+         <StudentGradeInfo
+            data={{
+               TenthBoardName: 'CBSE',
+               TenthMarks: '455/500',
+               TwelfthBoardName: 'CBSE',
+               TwelfthMarks: '300/500',
+            }}
+         />
+      ),
+      imageUrl:
+         'https://th.bing.com/th/id/OIP.S7E9E3bNjlS4QaNMpqwQ7wHaHc?rs=1&pid=ImgDetMain',
+      title: 'Grade Information',
    },
 ];
 
@@ -73,7 +91,7 @@ const StudentViewPage = () => {
                </div>
                {currentData.element}
             </div>
-            <div className='w-full flex justify-between items-center px-[2vw] py-[2vh] mt-8'>
+            <div className='w-full h-fit flex justify-between items-center px-[2vw] py-[2vh] mt-2'>
                <button
                   onClick={handlePrevious}
                   disabled={index === 0}

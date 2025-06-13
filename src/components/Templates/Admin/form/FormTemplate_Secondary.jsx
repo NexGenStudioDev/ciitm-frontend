@@ -8,7 +8,7 @@ const FormTemplate_Secondary = ({
    children,
 }) => {
    return (
-      <div className='w-[90%] h-[80%] flex flex-col items-center  bg-[#1C1C1C]  rounded-xl border-[#322F2F] border-[1px] '>
+      <div className='w-[90%] h-[100%] flex flex-col items-center  bg-[#1C1C1C]  rounded-xl border-[#322F2F] border-[1px] '>
          <div
             className={`Title_Container flex items-center justify-center rounded-tr-xl rounded-tl-xl  ${TitleClassName}`}
          >

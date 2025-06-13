@@ -18,7 +18,7 @@ const ProfilePage = memo(() => {
       console.log('Selected file:', file);
       if (!file) return;
       const reader = new FileReader();
-//  setImage(reader.result)
+      //  setImage(reader.result)
       reader.onload = () => setImage(reader.result);
       reader.onerror = () => console.log('Error: ', reader.error);
       reader.readAsText(file);
@@ -26,13 +26,16 @@ const ProfilePage = memo(() => {
 
    // Optional: trigger file input on image click
    const handleImageClick = () => {
-      console.log('Image clicked, opening file input' , fileInputRef.current);
+      console.log(
+         'Image clicked, opening file input',
+         fileInputRef.current,
+      );
       if (fileInputRef.current) fileInputRef.current.click();
    };
 
    return (
       <AdminTemplate pageName='Profile'>
-         <FormTemplate Navigator={false} >
+         <FormTemplate Navigator={false}>
             <AdminProfile_Title />
             <div className='flex flex-col h-[110vh] w-full mb-[5vh]'>
                <div
@@ -47,7 +50,6 @@ const ProfilePage = memo(() => {
                </div>
                <input
                   type='file'
-     
                   ref={fileInputRef}
                   name='Profile'
                   id='Profile'

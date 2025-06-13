@@ -4,6 +4,7 @@ import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTe
 import { MdOutlineArrowDropDown } from 'react-icons/md';
 import Image_Form_Title from '../../components/Molecules/Admin/image/Image_Form_Title';
 import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
+import { Helmet } from 'react-helmet-async';
 
 const ImagePage = () => {
    const [isOptionOpen, setIsOptionOpen] = useState(false);
@@ -19,30 +20,40 @@ const ImagePage = () => {
    ];
 
    return (
-      <AdminTemplate pageName='Create Image'>
-         <FormTemplate_Secondary>
-            <Image_Form_Title Title='Create Image' />
-
-            <Dropdown_Primary
-               width='70%'
-               height='[8vh]'
-               marginTop='2.8vh'
-               options={[...Album_Name.map(album => album.name)]}
-               backgroundColor='#1C1C1C'
-               value='Select Album'
-               border='2px solid #2C2C2C'
-               textColor='#FFFFFF'
+      <>
+         <Helmet>
+            <title>Create Image - CIITM Admin</title>
+            <meta
+               name='description'
+               content="CIITM Admin Create Image Page - Manage your institution's image data efficiently."
             />
+         </Helmet>
 
-            <div className='Image_Upload_Container w-full mt-6'>
-               <input
-                  type='file'
-                  accept='image/*'
-                  className='w-full bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#3FEF9D] focus:border-transparent'
+         <AdminTemplate pageName='Create Image'>
+            <FormTemplate_Secondary>
+               <Image_Form_Title Title='Create Image' />
+
+               <Dropdown_Primary
+                  width='70%'
+                  height='[8vh]'
+                  marginTop='2.8vh'
+                  options={[...Album_Name.map(album => album.name)]}
+                  backgroundColor='#1C1C1C'
+                  value='Select Album'
+                  border='2px solid #2C2C2C'
+                  textColor='#FFFFFF'
                />
-            </div>
-         </FormTemplate_Secondary>
-      </AdminTemplate>
+
+               <div className='Image_Upload_Container w-full mt-6'>
+                  <input
+                     type='file'
+                     accept='image/*'
+                     className='w-full bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#3FEF9D] focus:border-transparent'
+                  />
+               </div>
+            </FormTemplate_Secondary>
+         </AdminTemplate>
+      </>
    );
 };
 
