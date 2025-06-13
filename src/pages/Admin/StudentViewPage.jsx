@@ -6,6 +6,8 @@ import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTe
 import AdminStudentTitle from '../../components/Molecules/Admin/Student/AdminStudentTitle';
 import StudentParentInfo from '../../components/Templates/Admin/StudentView/StudentParrentInfo';
 import StudentGradeInfo from '../../components/Templates/Admin/StudentView/StudentGradeInfo';
+import StudentUniversityInfo from '../../components/Templates/Admin/StudentView/StudentUniversityInfo';
+import FeeUniversityInfo from '../../components/Templates/Admin/StudentView/FeeUniversityInfo';
 
 const StudentViewPage_DataArray = [
    {
@@ -53,6 +55,34 @@ const StudentViewPage_DataArray = [
          'https://th.bing.com/th/id/OIP.S7E9E3bNjlS4QaNMpqwQ7wHaHc?rs=1&pid=ImgDetMain',
       title: 'Grade Information',
    },
+   {
+      element: (
+         <StudentUniversityInfo data={{
+           UniversityName: 'NexGen University',
+            CourseName: 'Bca',
+            CourseMode: 'Online',
+         }}
+      />
+      ),
+      imageUrl:
+         'https://th.bing.com/th/id/R.82328cdfccac1533bc3d727f5a6894b8?rik=G2UDr9e%2bjaqq%2bg&riu=http%3a%2f%2fclipartix.com%2fwp-content%2fuploads%2f2016%2f06%2fCollege-campus-clipart-clipart-kid.jpg&ehk=gyRnGdIW1juXjTalcJGjGfxVM6%2fUo5KUtaQNBJKEfDU%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1',
+      title: 'University Information',
+   }
+   ,{
+      element: (
+         <FeeUniversityInfo data={{
+
+            TotalCourseFee: '10000',
+            TotalAmountPaid: '5000',
+            TotalAmountDue: '5000',
+         }}
+         />
+
+      ),
+      imageUrl:
+         'https://png.pngtree.com/png-vector/20190110/ourmid/pngtree-vector-payment-icon-png-image_312637.jpg',
+      title: 'Fee Information',
+   }
 ];
 
 const fallbackImage = 'https://via.placeholder.com/150';
