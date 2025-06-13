@@ -2,6 +2,7 @@ import React from 'react';
 import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import FormTemplate from '../../components/Templates/Admin/form/FormTemplate';
 import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
+import StudentDataTable from '../../components/Organisms/Admin/StudentDataTable';
 
 const studentOptions = [
    'Bca',
@@ -19,7 +20,21 @@ const semisterOptions = [
    'Semister 6',
 ];
 
+
+
+let Handle_Student_Search = e => {
+   e.preventDefault();
+   alert('Search functionality is not implemented yet.');
+  
+}
+
 const StudentPage = () => {
+
+    const [isStudentFind , setIsStudentFind] = React.useState(false);
+
+
+
+
    return (
       <AdminTemplate pageName={'Students'}>
          <div className='findStudent_Container px-[2vw] h-[10vh] w-[93%] flex items-center justify-stretch  gap-4 bg-[#1C1C1C] rounded-lg mb-[3vh]'>
@@ -47,9 +62,15 @@ const StudentPage = () => {
             />
 
 
-            <button className='p-[2vh] bg-gray-500 text-white rounded-md' >Search</button>
+
+
+            <button className='p-[2vh] bg-gray-500 text-white rounded-md' onClick={(e)=> Handle_Student_Search(e)}>Search</button>
          </div>
-         <FormTemplate PageName={'Students'} />
+           <FormTemplate PageName={'Students'} >
+            <StudentDataTable />
+
+           
+         </FormTemplate>
       </AdminTemplate>
    );
 };

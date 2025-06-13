@@ -43,6 +43,8 @@ const Dropdown_Primary = ({
       setIsDropdownOpen(!false);
    };
 
+  //  use redux to manage the selected option if needed
+
    return (
       <div
          ref={dropdownRef}
