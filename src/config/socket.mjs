@@ -8,7 +8,7 @@ if (!import.meta.env.VITE_BACKEND_URL) {
 
 // 👇 Initialize socket connection
 const socket = io(import.meta.env.VITE_BACKEND_URL, {
-   autoConnect: false, // Automatically connect on load (set to false if you want manual control)
+   autoConnect: true, // Automatically connect on load (set to false if you want manual control)
    transports: ['websocket'], // Prefer WebSocket
    reconnectionAttempts: 5, // Retry 5 times if connection fails
    timeout: 20000, // Max time to wait for connection
