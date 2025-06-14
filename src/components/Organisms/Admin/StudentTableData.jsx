@@ -21,7 +21,7 @@ const StudentTableData = ({ students = [] }) => {
 
             <TableData Tailwind_utility_Class='text-center w-full h-full overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F] max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'>
                <Link_btn
-                  link={`/admin/view/student/${'Ciitm-Bca-48759'}`}
+                  link={`/admin/view/student/${'CIITM_BCA_497898'}`}
                   className='flex items-center justify-center w-full h-full text-white bg-blue-500 hover:bg-blue-600 rounded-md transition duration-200'
                   buttonText='View'
                />
