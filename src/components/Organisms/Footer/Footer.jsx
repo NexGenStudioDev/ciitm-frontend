@@ -32,7 +32,7 @@ const Footer = React.memo(() => {
    const socialLinks = useSelector(state => state.socialLink.links);
 
    return (
-      <footer className='w-full flex items-center justify-between px-4 md:p-10 max-[999px]:flex-col'>
+      <footer className='relative w-full flex items-center justify-between px-4 md:p-10 max-[999px]:flex-col'>
          <div className='left w-[50%] max-[599px]:pb-10 max-[999px]:w-full flex items-start max-[999px]:items-center justify-center flex-col gap-4'>
             <Link to='/'>
                <img src={logo} alt='Logo' />
@@ -43,7 +43,7 @@ const Footer = React.memo(() => {
             </p>
          </div>
 
-         <div className='right w-[50%] max-[999px]:w-full flex items-start justify-center gap-10 flex-wrap'>
+         <div className='right w-full flex items-start justify-center gap-10 flex-wrap'>
             <div className='flex max-[599px]:w-[25%] items-start justify-evenly flex-col gap-4 mb-4 mx-8'>
                <p className='text-base text-[#333] font-bold'>
                   Navigation
@@ -101,7 +101,7 @@ const Footer = React.memo(() => {
          </div>
 
          {/* DMCA Protection Badge - No Script Version */}
-         <div className='dmca-badge-container w-full flex justify-center mt-6 pt-4 border-t border-gray-200'>
+         <div className='relative min-[1000px]:absolute bottom-0 left-0 h-fit  w-full   dmca-badge-container  flex justify-center  pt-4 border-t border-gray-200'>
             <a
                href='https://www.dmca.com/Protection/Status.aspx?ID=638734f7-8b37-47af-b022-7b03a77295f2'
                title='DMCA.com Protection Status'

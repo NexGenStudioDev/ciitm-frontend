@@ -11,7 +11,7 @@ const Dropdown_Primary = ({
    marginBottom = '1vh',
    marginLeft = '1vw',
    marginRight = '1vw',
-   border= '1px solid red',
+   border = '1px solid red',
    value = 'Select an option',
 }) => {
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -43,7 +43,7 @@ const Dropdown_Primary = ({
       setIsDropdownOpen(!false);
    };
 
-  //  use redux to manage the selected option if needed
+   //  use redux to manage the selected option if needed
 
    return (
       <div
@@ -60,7 +60,6 @@ const Dropdown_Primary = ({
             marginLeft,
             marginRight,
          }}
-
          className='relative flex items-center justify-between rounded-lg cursor-pointer'
          tabIndex={0}
          onClick={toggleDropdown}
@@ -77,7 +76,7 @@ const Dropdown_Primary = ({
          {isDropdownOpen && (
             <div
                className='absolute top-full left-0 w-full rounded-lg border border-[#1C1C1C] z-20 shadow-lg'
-               style={{ backgroundColor , border }}
+               style={{ backgroundColor, border }}
             >
                {options.length === 0 ? (
                   <div className='p-2 text-gray-400'>No options</div>

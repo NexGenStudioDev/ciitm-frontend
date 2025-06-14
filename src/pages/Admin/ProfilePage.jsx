@@ -15,15 +15,21 @@ const ProfilePage = memo(() => {
 
    const handleProfileFileChange = e => {
       const file = e.target.files && e.target.files[0];
+      console.log('Selected file:', file);
       if (!file) return;
       const reader = new FileReader();
+      //  setImage(reader.result)
       reader.onload = () => setImage(reader.result);
       reader.onerror = () => console.log('Error: ', reader.error);
-      reader.readAsDataURL(file);
+      reader.readAsText(file);
    };
 
    // Optional: trigger file input on image click
    const handleImageClick = () => {
+      console.log(
+         'Image clicked, opening file input',
+         fileInputRef.current,
+      );
       if (fileInputRef.current) fileInputRef.current.click();
    };
 
@@ -39,17 +45,17 @@ const ProfilePage = memo(() => {
                   <Profile__Image__Container
                      ImageUrl={image}
                      AltImageUrl='https://png.pngtree.com/png-clipart/20230102/original/pngtree-business-man-avatar-png-image_8855195.png'
-                     fileInputRef={fileInputRef}
+                     // fileInputRef={fileInputRef}
                   />
                </div>
                <input
                   type='file'
+                  ref={fileInputRef}
                   name='Profile'
                   id='Profile'
                   className='hidden'
                   onChange={handleProfileFileChange}
                   accept='image/webp, image/png, image/jpeg'
-                  ref={fileInputRef}
                />
 
                <ProfileInfo admin={admin} />
