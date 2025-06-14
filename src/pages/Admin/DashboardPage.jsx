@@ -19,6 +19,8 @@ let QuickLinkData = [
 
 const DashboardPage = () => {
    const [Cards, setCard] = useState();
+   const [isError, setIsError] = useState(false);
+   const [ErrorMessage, setErrorMessage] = useState('');
 
    useEffect(() => {
       const handleDashboardData = data => {
@@ -31,15 +33,20 @@ const DashboardPage = () => {
          socket.connect();
       }
 
-      // Attach listener BEFORE emitting request
-      socket.once('DashBoard_Data', handleDashboardData);
-
-      // Emit request after listener is attached
       socket.emit('Request_DashBoard_Data');
+      socket.on('DashBoard_Data', handleDashboardData);
 
-      // Clean up
+      socket.on('error', error => {
+         console.error('Socket error:', error.message);
+         setErrorMessage(error.message);
+         setIsError(true);
+      });
+
+      
+
       return () => {
          socket.off('DashBoard_Data', handleDashboardData);
+         socket.off('error');
       };
    }, []);
 
@@ -54,7 +61,17 @@ const DashboardPage = () => {
          </Helmet>
 
          <AdminTemplate pageName={'Dashboard'}>
-            <DashboardCardSection Cards={Cards} />
+            {isError && (
+               <div className='text-red-500 text-center mb-4'>
+                  Error: {ErrorMessage}
+               </div>
+            )}
+
+          
+
+            {!isError && <DashboardCardSection Cards={Cards} />}
+
+            
 
             <QuickLinkSection links={QuickLinkData} />
          </AdminTemplate>

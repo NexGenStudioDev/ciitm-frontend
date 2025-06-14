@@ -27,6 +27,36 @@ const StudentViewPage = () => {
       PhoneNumber: '',
       DateOfBirth: '',
    });
+
+   const [ParentData, setParentData] = useState({
+      FatherName: '',
+      MotherName: '',
+      GuardianNumber: '',
+      AvtarImage: fallbackImage,
+   });
+
+
+const [GradeData, setGradeData] = useState({
+   TenthBoardName: '',
+   TenthMarks: '',
+   TwelfthBoardName: '',
+   TwelfthMarks: '',
+});
+
+
+const [UniversityData, setUniversityData] = useState({
+   UniversityName: '',
+   CourseName: '',
+   CourseMode: '',
+});
+
+const [FeeData, setFeeData] = useState({
+   TotalCourseFee: '',
+   TotalAmountPaid: '',
+   TotalAmountDue: '',
+   LateFine: '',
+});
+
    const [index, setIndex] = React.useState(0);
    const [isError, setIsError] = useState(false);
 
@@ -51,6 +81,34 @@ const StudentViewPage = () => {
                Email: Array.isArray(data.student.email) ? data.student.email[0] : data.student.email || '',
                PhoneNumber: data.student.contactNumber || '',
                DateOfBirth: data.student.dateOfBirth ? data.student.dateOfBirth.slice(0, 10) :  '',
+               AvtarImage: data.student.avtar || fallbackImage,
+            });
+
+            setParentData({
+               FatherName: data.student.fatherName || '',
+               MotherName: data.student.motherName || '',
+               GuardianNumber: data.guardian?.GcontactNumber || '',
+            });
+
+            setGradeData({
+               TenthBoardName: data.tenth?.tenthBoard || '',
+               TenthMarks: data.tenth?.tenthMarks || '',
+               TwelfthBoardName: data.twelfth?.twelfthBoard || '',
+               TwelfthMarks: data.twelfth?.twelfthMarks || '',
+            })
+
+            setUniversityData({
+               UniversityName: data.university || '',
+               CourseName: data.student.course_Id?.name || '', // If populated, else fallback to ''
+               CourseMode: data.mode || '',
+            });
+
+
+            setFeeData({
+               TotalCourseFee: data.fee?.course_Fee || '',
+               TotalAmountPaid: data.fee?.amount_paid || '',
+               TotalAmountDue: data.fee?.amount_due || '',
+               LateFine: data.fee?.late_Fine || '',
             });
 
             //   setStudentData({
@@ -112,7 +170,7 @@ const StudentViewPage = () => {
          });
       };
 
-      socket.on('studentFound', handleStudentFound);
+      socket.once('studentFound', handleStudentFound);
       socket.on('error', handleError);
 
       return () => {
@@ -137,16 +195,16 @@ const StudentViewPage = () => {
             />
          ),
          imageUrl:
-            'https://avatars.githubusercontent.com/u/122656682?v=4',
+            studentPersonalData.AvtarImage || fallbackImage,
          title: 'Personal Information',
       },
       {
          element: (
             <StudentParentInfo
                data={{
-                  FatherName: 'Ramesh Kumar',
-                  MotherName: 'Sita Devi',
-                  GuardianNumber: '987-654-3210',
+                  FatherName: ParentData.FatherName,
+                  MotherName: ParentData.MotherName,
+                  GuardianNumber: ParentData.GuardianNumber,
                }}
             />
          ),
@@ -158,10 +216,12 @@ const StudentViewPage = () => {
          element: (
             <StudentGradeInfo
                data={{
-                  TenthBoardName: 'CBSE',
-                  TenthMarks: '455/500',
-                  TwelfthBoardName: 'CBSE',
-                  TwelfthMarks: '300/500',
+                  TenthBoardName: GradeData.TenthBoardName,
+                  TenthMarks: GradeData.TenthMarks + '/500',
+                  TenthGrade: GradeData.TenthGrade,
+                  TwelfthBoardName: GradeData.TwelfthBoardName,
+                  TwelfthMarks: GradeData.TwelfthMarks + '/500',
+                  TwelfthGrade: GradeData.TwelfthGrade,
                }}
             />
          ),
@@ -173,9 +233,9 @@ const StudentViewPage = () => {
          element: (
             <StudentUniversityInfo
                data={{
-                  UniversityName: 'NexGen University',
-                  CourseName: 'Bca',
-                  CourseMode: 'Online',
+                  UniversityName: UniversityData.UniversityName,
+                  CourseName: UniversityData.CourseName,
+                  CourseMode: UniversityData.CourseMode,
                }}
             />
          ),
@@ -187,9 +247,10 @@ const StudentViewPage = () => {
          element: (
             <FeeUniversityInfo
                data={{
-                  TotalCourseFee: '10000',
-                  TotalAmountPaid: '5000',
-                  TotalAmountDue: '5000',
+                  TotalCourseFee: '₹  ' + FeeData.TotalCourseFee,
+                  TotalAmountPaid: '₹  ' + FeeData.TotalAmountPaid || '₹ 0',
+                  TotalAmountDue: '₹  ' + FeeData.TotalAmountDue || '₹ 0',
+                  LateFine: '₹  ' + FeeData.LateFine || '₹ 0',
                }}
             />
          ),
@@ -216,6 +277,17 @@ const StudentViewPage = () => {
 
    return (
       <AdminTemplate pageName={`Student View :- ${studentId}`}>
+
+      {isError && (
+         <div className='w-full h-full flex items-center justify-center'>
+            <div className='text-red-500 text-xl font-semibold'>
+               Error: Student not found or data unavailable.
+            </div>
+         </div>
+      )}
+
+      {!isError && (
+
          <FormTemplate_Secondary>
             <AdminStudentTitle title={currentData.title} />
             <div className='w-full rounded-lg shadow-md flex flex-col items-center'>
@@ -225,7 +297,7 @@ const StudentViewPage = () => {
                      alt='Student'
                      onError={onImageError}
                      className='w-40 h-40 object-cover object-center rounded-full bg-green-600 border-4 border-white shadow-lg'
-                  />
+               />
                </div>
                {currentData.element}
             </div>
@@ -268,6 +340,7 @@ const StudentViewPage = () => {
                </button>
             </div>
          </FormTemplate_Secondary>
+      )}
       </AdminTemplate>
    );
 };
