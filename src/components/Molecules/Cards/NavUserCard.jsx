@@ -18,13 +18,16 @@ const UserProfileCard = ({
    showMenu = true,
 }) => {
    const reduxUser = useSelector(state => state.auth.user);
+   console.log('Redux User:', reduxUser);
    const actualUser = user || reduxUser;
+
+   console.log('UserProfileCard', actualUser);
 
    const [img, setImg] = useState('');
 
    useEffect(() => {
-      if (actualUser?.picture) {
-         setImg(actualUser.picture);
+      if (actualUser?.profile_image) {
+         setImg(actualUser.profile_image);
       }
    }, [actualUser]);
 
