@@ -8,6 +8,10 @@ if (!import.meta.env.VITE_BACKEND_URL) {
 
 // 👇 Initialize socket connection
 const socket = io(import.meta.env.VITE_BACKEND_URL, {
+   auth: {
+    token: localStorage.getItem('token'), // or sessionStorage
+    },
+   withCredentials: true, // Allow cookies to be sent with requests
    autoConnect: true, // Automatically connect on load (set to false if you want manual control)
    transports: ['websocket'], // Prefer WebSocket
    reconnectionAttempts: 5, // Retry 5 times if connection fails

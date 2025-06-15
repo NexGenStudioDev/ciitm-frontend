@@ -11,7 +11,7 @@ const ProfilePage = memo(() => {
    const fileInputRef = useRef(null);
    const admin = useSelector(state => state.auth.user);
    const links = useSelector(state => state.socialLink.links);
-   const [image, setImage] = useState(admin?.picture || '');
+   const [image, setImage] = useState(admin?.profile_image || '');
 
    const handleProfileFileChange = e => {
       const file = e.target.files && e.target.files[0];
