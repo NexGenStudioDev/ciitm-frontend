@@ -15,6 +15,10 @@ let QuickLinkData = [
       path: '/admin/Contact',
       text: 'Contact',
    },
+   {
+      path: '/admin/create/Album',
+      text: 'Create Album',
+   },
 ];
 
 const DashboardPage = () => {

@@ -30,6 +30,8 @@ import ProfilePage from './pages/Admin/ProfilePage';
 import ImagePage from './pages/Admin/ImagePage';
 import StudentPage from './pages/Admin/StudentPage';
 import StudentViewPage from './pages/Admin/StudentViewPage';
+import AlbumPage from './pages/Admin/AlbumPage';
+import FeePay from './pages/Admin/FeePay';
 
 const userInput = "<img src='x' onerror='alert(1)' />";
 
@@ -136,9 +138,19 @@ const App = () => {
                      path='/admin/create/image'
                      element={<ImagePage />}
                   />
-               </Route>
+
+                  <Route
+                     path='/admin/create/Album'
+                     element={<AlbumPage />}
+                  />
+
+                  <Route
+                     path='/admin/student/pay/fee'
+                     element={<FeePay />}
+                  />
 
                <Route path='*' element={<ErrorPage />} />
+               </Route>
             </Routes>
             <div
                dangerouslySetInnerHTML={{ __html: sanitizedInput }}

@@ -5,6 +5,7 @@ import { MdOutlineArrowDropDown } from 'react-icons/md';
 import Image_Form_Title from '../../components/Molecules/Admin/image/Image_Form_Title';
 import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
 import { Helmet } from 'react-helmet-async';
+import { IoIosCloudUpload } from 'react-icons/io';
 
 const ImagePage = () => {
    const [isOptionOpen, setIsOptionOpen] = useState(false);
@@ -44,11 +45,24 @@ const ImagePage = () => {
                   textColor='#FFFFFF'
                />
 
+
+               <label htmlFor='image-upload' className="bg-[#090909] w-[85%] h-[40%] rounded-md flex flex-col items-center justify-center mx-auto mt-6 relative">
+                 <IoIosCloudUpload className='text-white text-4xl mb-2' />
+                  <p className='text-white text-center'>Drag or Upload Image</p>
+               </label>
+
+               <div className="btn_container flex justify-center mt-4">
+                  <button className='bg-[#322F2F] text-white rounded-lg px-4 py-2'>
+                     Upload Image
+                  </button>
+               </div>
+
                <div className='Image_Upload_Container w-full mt-6'>
                   <input
                      type='file'
+                     id='image-upload'
                      accept='image/*'
-                     className='w-full bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#3FEF9D] focus:border-transparent'
+                     className='hidden'
                   />
                </div>
             </FormTemplate_Secondary>

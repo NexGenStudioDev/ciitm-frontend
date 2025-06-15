@@ -7,6 +7,7 @@ import { SiCoursera } from 'react-icons/si';
 import { FaImage } from 'react-icons/fa';
 import { GoBellFill } from 'react-icons/go';
 import { PiStudentBold } from 'react-icons/pi';
+import { GiCash } from "react-icons/gi";
 import gsap from 'gsap';
 import AdminSidebarLink from '../../../Atoms/Links/AdminSidebarLink';
 
@@ -29,6 +30,7 @@ const links = [
    },
    { name: 'Courses', link: '/admin/Courses', icon: <SiCoursera /> },
    { name: 'Image', link: '/admin/create/Image', icon: <FaImage /> },
+   { name: 'Fee Payment', link: '/admin/student/pay/fee', icon: <GiCash /> }
 ];
 
 const Admin_SideBar = () => {
