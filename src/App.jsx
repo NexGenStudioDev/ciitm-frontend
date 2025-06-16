@@ -32,6 +32,7 @@ import StudentPage from './pages/Admin/StudentPage';
 import StudentViewPage from './pages/Admin/StudentViewPage';
 import AlbumPage from './pages/Admin/AlbumPage';
 import FeePay from './pages/Admin/FeePay';
+import CreateCourse from './pages/Admin/CreateCourse';
 
 const userInput = "<img src='x' onerror='alert(1)' />";
 
@@ -112,6 +113,12 @@ const App = () => {
                   <Route
                      path='/admin/Contact'
                      element={<ContactPage />}
+                  />
+
+                  
+                  <Route
+                     path='/admin/Create/Contact'
+                     element={<CreateCourse />}
                   />
 
                   <Route

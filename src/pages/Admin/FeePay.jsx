@@ -14,14 +14,14 @@ const FeePay = () => {
 
   // Dummy fetch function, replace with real API/socket call
   const fetchStudentData = () => {
-    // Simulate fetching data
-    if (studentId.trim() === "") {
-      setError("Please enter a Student ID.");
-      setStudentData(null);
-      return;
-    }
-    setError('');
-    // Replace this with your real fetch logic
+    // // Simulate fetching data
+    // if (studentId.trim() === "") {
+    //   setError("Please enter a Student ID.");
+    //   setStudentData(null);
+    //   return;
+    // }
+    // setError('');
+    // // Replace this with your real fetch logic
     setStudentData({
       profileImage: fallbackImage,
       name: "Abhishek Kumar",
@@ -45,7 +45,7 @@ const FeePay = () => {
 
   return (
     <AdminTemplate pageName="Fee Pay">
-      <div className='findStudent_Container w-[90%] px-[2vw] h-[10vh] flex items-center justify-stretch gap-4 bg-[#1C1C1C] rounded-lg mb-[3vh]'>
+      <div className='findStudent_Container  w-[90%] px-[2vw] h-[10vh] flex items-center justify-stretch gap-4 bg-[#1C1C1C] rounded-lg mb-[3vh]'>
         <Input_Primary
           name="studentId"
           type="text"
@@ -68,35 +68,37 @@ const FeePay = () => {
 
       <FormTemplate_Secondary>
         {studentData && (
-          <div className="w-full flex flex-col items-center gap-6">
+          <div className="w-full  flex flex-col items-center gap-6">
             {/* Profile Picture */}
             <img
               src={studentData.profileImage}
               alt="Profile"
-              className="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg mb-2"
+              className="w-32 mt-[6vh] h-32 object-cover rounded-full border-4 border-white shadow-lg mb-2"
               onError={e => (e.target.src = fallbackImage)}
             />
-            {/* Student Info */}
+          <div className="StudentFee_Info_Container w-full flex flex-col items-center justify-center gap-4">
+              {/* Student Info */}
             <div className="w-full flex flex-col items-center gap-2">
               <div className="text-white text-xl font-bold">{studentData.name}</div>
               <div className="text-[#C7C0C0]">{studentData.email}</div>
               <div className="text-[#C7C0C0]">Semester: <span className="font-semibold">{studentData.semester}</span></div>
             </div>
             {/* Fee Info */}
-            <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 mt-4">
-              <div className="flex flex-col items-center bg-[#2B2C2B] rounded-lg p-4 w-full md:w-[30%]">
+            <div className="w-full flex flex-col justify-center px-[2.5vw] md:flex-row  items-center gap-[3vw] mt-4">
+              <div className="flex flex-col items-center bg-[#2B2C2B] rounded-lg p-4 w-full md:w-fit">
                 <span className="text-[#C7C0C0]">Total Course Fee</span>
                 <span className="text-white font-semibold text-lg">₹ {studentData.totalCourseFee}</span>
               </div>
-              <div className="flex flex-col items-center bg-[#2B2C2B] rounded-lg p-4 w-full md:w-[30%]">
+              <div className="flex flex-col items-center bg-[#2B2C2B] rounded-lg p-4 w-full md:w-fit">
                 <span className="text-[#C7C0C0]">Total Amount Paid</span>
                 <span className="text-white font-semibold text-lg">₹ {studentData.totalAmountPaid}</span>
               </div>
-              <div className="flex flex-col items-center bg-[#2B2C2B] rounded-lg p-4 w-full md:w-[30%]">
+              <div className="flex flex-col items-center bg-[#2B2C2B] rounded-lg p-4 w-full md:w-fit">
                 <span className="text-[#C7C0C0]">Total Amount Due</span>
                 <span className="text-white font-semibold text-lg">₹ {studentData.totalAmountDue}</span>
               </div>
             </div>
+          </div>
             {/* Pay Section */}
             <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4 mt-6">
               <Input_Primary
