@@ -7,6 +7,7 @@ if (!import.meta.env.VITE_BACKEND_URL) {
 }
 
 // 👇 Initialize socket connection
+console.log('token', localStorage.getItem('token')); // or sessionStorage  
 const socket = io(import.meta.env.VITE_BACKEND_URL, {
    auth: {
     token: localStorage.getItem('token'), // or sessionStorage
