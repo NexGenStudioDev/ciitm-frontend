@@ -9,7 +9,7 @@ let HeadingArray = ['S.no', 'Name', 'Mobile No', 'Actions'];
 
 const StudentDataTable = ({ students = [] }) => {
    return (
-      <div className='overflow-x-auto'>
+      <div className='overflow-x-auto h-[80vh] w-full bg-red-600 '>
          <StudentTableHeading HeadingArray={HeadingArray} />
          <StudentTableData />
       </div>

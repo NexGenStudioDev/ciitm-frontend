@@ -19,14 +19,14 @@ const CreateCourse = () => {
   };
 
   return (
-    <AdminTemplate>
+    <AdminTemplate pageName="Create Course">
       <FormTemplate_Secondary>
         <div className="Form_title_Container w-full flex flex-col items-center justify-center text-white bg-[#090909] rounded-md p-4 shadow-lg">
-          <h1 className="Form_title text-[1.3vw]">Create Course</h1>
+          <h1 className="Form_title max-[300px]:text-[4vw] max-[500px]:text-[2.8vw] max-[995px]:text-[2vw] text-[1.3vw]">Create Course</h1>
         </div>
 
         <form
-          className="w-full flex flex-col items-center justify-center mt-4 px-[2vw]"
+          className="w-full flex flex-col items-center justify-center mt-4 px-[2vw] max-[300px]:text-[4vw] max-[995px]:text-[2vw] max-[500px]:text-[2.8vw] text-[1.3vw]"
           onSubmit={handleSubmit}
         >
           <div className="Form_input_Container w-full flex flex-col justify-center mb-4">
@@ -123,8 +123,10 @@ const CreateCourse = () => {
               hover:from-green-600 hover:to-green-800
               hover:scale-105 active:scale-95 transition-all duration-200
               focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2
-              text-[1.1rem] md:text-[1.15vw]
+             
+              max-[300px]:text-[4.5vw] max-[500px]:text-[3vw] max-[995px]:text-[2.3vw] text-[1.5vw]
               w-[40%]
+              mb-[3.5vh]
             "
           >
             Create Course

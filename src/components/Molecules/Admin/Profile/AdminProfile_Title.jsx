@@ -20,7 +20,7 @@ const AdminProfile_Title = () => {
    useEffect(() => {
       if (inputs.length > 0) {
          const ReadOnly = inputs.find(
-            input => input.name === 'Profile_Edit',
+            input => input?.name === 'Profile_Edit',
          ).value;
 
          setTitle('Profile');
@@ -53,7 +53,7 @@ const AdminProfile_Title = () => {
                setEditMode(newEditMode);
 
                let data = inputs.findIndex(
-                  i => i.name === 'Profile_Edit',
+                  i => i?.name === 'Profile_Edit',
                );
                console.log('data', data);
                dispatch(

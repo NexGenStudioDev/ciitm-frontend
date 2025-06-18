@@ -290,7 +290,7 @@ const [FeeData, setFeeData] = useState({
 
          <FormTemplate_Secondary>
             <AdminStudentTitle title={currentData.title} />
-            <div className='w-full rounded-lg shadow-md flex flex-col items-center'>
+            <div className='w-full rounded-lg shadow-md flex flex-col items-center  max-[300px]:text-[4vw] max-[500px]:text-[2.8vw] max-[995px]:text-[2vw] text-[1.3vw]'>
                <div className='flex items-center justify-center w-full my-6'>
                   <img
                      src={currentData.imageUrl}
