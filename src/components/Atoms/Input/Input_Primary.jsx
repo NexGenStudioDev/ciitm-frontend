@@ -12,7 +12,7 @@ const Input_Primary = ({
    readOnly = false,
    className = '',
    name,
-   onInput
+   onInput,
 }) => {
    const dispatch = useDispatch();
    const inputs = useSelector(state => state.Input.inputs);

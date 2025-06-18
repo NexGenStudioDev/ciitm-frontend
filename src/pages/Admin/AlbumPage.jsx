@@ -26,26 +26,31 @@ const AlbumPage = () => {
                <Image_Form_Title Title='Create Album' />
 
                <Input_Primary
-                  className="w-[85%] mx-auto mt-6 bg-[#090909] text-white rounded-md p-4"
-                  placeholder="Enter Album Name"
+                  className='w-[85%] mx-auto mt-6 bg-[#090909] text-white rounded-md p-4'
+                  placeholder='Enter Album Name'
                   value={albumName}
                   onChange={e => setAlbumName(e.target.value)}
                />
 
                <TextArea_Primary
-                  className="w-[85%] mx-auto mt-6 bg-[#090909] text-white rounded-md p-4"
-                  placeholder="Enter Your Album Description Here"
+                  className='w-[85%] mx-auto mt-6 bg-[#090909] text-white rounded-md p-4'
+                  placeholder='Enter Your Album Description Here'
                   value={albumDescription}
                   onChange={e => setAlbumDescription(e.target.value)}
                   rows={5}
                />
 
-               <label htmlFor='album-upload' className="bg-[#090909] w-[85%] h-[40%] rounded-md flex flex-col items-center justify-center mx-auto mt-6 relative">
+               <label
+                  htmlFor='album-upload'
+                  className='bg-[#090909] w-[85%] h-[40%] rounded-md flex flex-col items-center justify-center mx-auto mt-6 relative'
+               >
                   <IoIosCloudUpload className='text-white text-4xl mb-2' />
-                  <p className='text-white text-center'>Drag or Upload Album Cover</p>
+                  <p className='text-white text-center'>
+                     Drag or Upload Album Cover
+                  </p>
                </label>
 
-               <div className="btn_container flex justify-center mt-4">
+               <div className='btn_container flex justify-center mt-4'>
                   <button className='bg-[#322F2F] text-white rounded-lg px-4 py-2'>
                      Create Album
                   </button>

@@ -1,24 +1,35 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import axios from 'axios';
+import { setCources } from '../../../store/AboutSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-const CourseCard = memo(() => {
+const CourseCard = memo(({ data }) => {
+   console.log('CourseCard data:', data?.courseName.split('('));
    return (
       <div className='card-1 h-full w-[25%] max-[599px]:w-full px-2 py-3 border-[1px] border-black rounded-xl max-[1098px]:w-[40%]'>
-         <div className='div w-full h-[35vh] rounded-xl bg-[#d9d9d9]'></div>
+         <div className='div w-full h-[35vh] rounded-xl bg-[#d9d9d9]'   style={{
+               backgroundImage: `url('https://courses.msqfon.com/wp-content/uploads/2021/03/program-bachelor-of-science-in-computer-science-1920x1080-1.jpg')`,
+               backgroundSize: 'cover',
+               backgroundPosition: 'center',
+               backgroundRepeat: 'no-repeat',
+            }} >
+          
+         </div>
          <h1 className='py-2 text-[1.25vw] max-[599px]:text-[4.8vw] font-bold'>
-            Masters of Communication Application
+            {data?.courseName}
          </h1>
          <div className='flex items-center justify-between'>
-            <p className='text-[0.95vw] max-[599px]:text-[3.5vw] font-medium'>
-               Duration
-            </p>
+           
             <p className='text-[#FF0000] underline text-[1vw] max-[599px]:text-[3.5vw] font-semibold'>
-               4-Years
+              {data?.duration}
             </p>
+
+
             <button className='border-[1px] text-[1vw] max-[599px]:text-[3.5vw] border-[#d7d7d7] bg-[#F9F9F9] text-[#333] py-[7px] px-[27px] rounded-lg'>
                Details
             </button>
@@ -28,7 +39,46 @@ const CourseCard = memo(() => {
 });
 
 const Courses = () => {
-   const courseList = [1, 2, 3, 4]; // replace with actual dynamic course data if available
+   let [Error, setError] = useState(null);
+   let [courseData, setCourseData] = useState([]);
+   let dispatch = useDispatch();
+
+   let courseSlice = useSelector(state => state.about.courses);
+
+   
+
+   let fetchAllCourse = async () => {
+      try {
+         let res = await axios.get('/api/v1/user/findAllCourse');
+         let data = res.data?.data;
+
+         dispatch(setCources(data || []));
+       
+         setCourseData(data || []);
+         setError(null);
+         console.log('Course data:', courseSlice);
+         // console.log('Courses fetched successfully:', res.data?.data);
+      } catch (error) {
+         console.error(
+            'Error fetching courses:',
+            error.response ? error.response.data : error.message,
+         );
+         setError(
+            error.response
+               ? error.response.data
+               : 'An unexpected error occurred',
+         );
+      }
+   };
+
+   useState(() => {
+      if (courseSlice && courseSlice.length > 0) {
+         setCourseData(courseSlice);
+      } else {
+    
+         fetchAllCourse();
+      }
+   }, [courseData]);
 
    return (
       <section className='w-full px-10 py-20 max-[599px]:py-10 flex items-center justify-between flex-col gap-4'>
@@ -42,9 +92,21 @@ const Courses = () => {
          </p>
 
          <div className='cards w-full flex items-center justify-center max-[599px]:flex-col gap-4 max-[599px]:hidden max-[1103px]:flex-wrap'>
-            {courseList.map((_, index) => (
-               <CourseCard key={index} />
-            ))}
+            {Error ? (
+               <p className='text-red-500'>{Error}</p>
+            ) : (
+               courseData.map((data, index) => (
+                  <CourseCard
+                     key={index}
+                     data={{
+                        courseName: data?.courseName || 'Course Name',
+                        duration: data?.courseDuration || 'Course Duration',
+                        imageUrl: data?.courseThumbnail || '',
+                        price: data?.coursePrice || 'Course Price',
+                     }}
+                  />
+               ))
+            )}
          </div>
 
          <div className='w-full h-full hidden max-[599px]:block py-5'>
@@ -56,11 +118,25 @@ const Courses = () => {
                modules={[Autoplay]}
                className='mySwiper'
             >
-               {courseList.map((_, index) => (
-                  <SwiperSlide key={index}>
-                     <CourseCard />
-                  </SwiperSlide>
-               ))}
+               {Error ? (
+                  <p className='text-red-500'>{Error}</p>
+               ) : (
+                  courseData.map((data, index) => (
+                     <SwiperSlide key={index}>
+                        <div className='w-full h-full flex items-center justify-center'>
+                          <CourseCard
+                     key={index}
+                     data={{
+                        courseName: data?.courseName || 'Course Name',
+                        duration: data?.courseDuration || 'Course Duration',
+                        imageUrl: data?.courseThumbnail || '',
+                        price: data?.coursePrice || 'Course Price',
+                     }}
+                  />
+                        </div>
+                     </SwiperSlide>
+                  ))
+               )}
             </Swiper>
          </div>
       </section>

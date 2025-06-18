@@ -5,7 +5,7 @@ const TextAreaPrimary = ({
    value,
    readOnly = false,
    className,
-   onInput
+   onInput,
 }) => {
    return (
       <textarea

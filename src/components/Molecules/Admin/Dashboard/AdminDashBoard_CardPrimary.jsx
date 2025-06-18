@@ -22,8 +22,10 @@ const AdminDashBoard_CardPrimary = React.memo(
             <div
                className={`TextContainer ${textContainerClassName}`}
             >
-               <h3 className='max-[376px]:text-[4vw] max-[640px]:text-[2.5vw] max-[1300px]:text-[1.1
-               vw] text-[1vw] font-semibold'>
+               <h3
+                  className='max-[376px]:text-[4vw] max-[640px]:text-[2.5vw] max-[1300px]:text-[1.1
+               vw] text-[1vw] font-semibold'
+               >
                   {title}
                </h3>
                <p className='max-[376px]:text-[3.5vw] max-[997px]:text-[2vw]  max-[640px]:text-[2.5vw] max-[1300px]:text-[1.2vw] text-[1vw] font-bold'>
