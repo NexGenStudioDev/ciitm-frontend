@@ -15,13 +15,13 @@ const AdminProfile_Title = () => {
    let [EditMode, setEditMode] = useState(true);
    const dispatch = useDispatch();
 
-   const inputs = useSelector(state => state.Input.inputs);
+   const inputs = useSelector(state => state.Input?.inputs);
 
    useEffect(() => {
       if (inputs.length > 0) {
-         const ReadOnly = inputs.find(
+         const ReadOnly = inputs?.find(
             input => input?.name === 'Profile_Edit',
-         ).value;
+         )?.value;
 
          setTitle('Profile');
 

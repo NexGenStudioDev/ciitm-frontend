@@ -3,19 +3,58 @@ import AdminTemplate from "../../components/Templates/Admin/AdminTemplate";
 import FormTemplate_Secondary from "../../components/Templates/Admin/form/FormTemplate_Secondary";
 import Input_Primary from "../../components/Atoms/Input/Input_Primary";
 import TextArea_Primary from "../../components/Atoms/Textarea/TextArea_Primary";
+import axios from "axios";
+import { createCourse_EndPoint } from "../../utils/constants";
+import Swal from "sweetalert2";
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
-  const [courseFee, setCourseFee] = useState('');
+  const [coursePrice, setCoursePrice] = useState('');
   const [courseDuration, setCourseDuration] = useState('');
   const [courseEligibility, setCourseEligibility] = useState('');
   const [courseThumbnail, setCourseThumbnail] = useState('');
   const [courseDescription, setCourseDescription] = useState('');
+  const [courseCode, setCourseCode] = useState('');
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle course creation logic here
-    alert("Course Created!");
+   try {
+
+
+    
+
+
+
+     let res = await axios.post(createCourse_EndPoint, {
+        courseName,
+        coursePrice,
+        courseDuration,
+        courseEligibility,
+        courseThumbnail,
+        courseDescription,
+        courseCode,
+      });
+      console.log('Course created successfully' , res.data);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: res.data.message || 'Course created successfully!',
+        confirmButtonText: 'OK',
+      });
+    
+    } catch (error) {
+      console.error('Error creating course:', error.response ? error.response.data : error.message);
+  
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response ? error.response.data.message : 'An unexpected error occurred while creating the course.',
+        confirmButtonText: 'OK',
+      });
+    }
+
   };
 
   return (
@@ -38,7 +77,7 @@ const CreateCourse = () => {
               name="courseName"
               placeholder="Enter course name"
               value={courseName}
-              onChange={e => setCourseName(e.target.value)}
+              onInput={(e)=>  setCourseName(e.target.value)}
               required
             />
           </div>
@@ -51,8 +90,8 @@ const CreateCourse = () => {
               id="courseFee"
               name="courseFee"
               placeholder="Enter course fee"
-              value={courseFee}
-              onChange={e => setCourseFee(e.target.value)}
+              value={coursePrice}
+              onInput={(e) => setCoursePrice(e.target.value)}
               required
             />
           </div>
@@ -66,7 +105,21 @@ const CreateCourse = () => {
               name="courseDuration"
               placeholder="Enter course duration"
               value={courseDuration}
-              onChange={e => setCourseDuration(e.target.value)}
+            onInput={(e) => setCourseDuration(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="Form_input_Container w-full flex flex-col justify-center mb-4">
+            <label htmlFor="courseCode" className="text-white mb-2">Course Code</label>
+            <Input_Primary
+              className="p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]"
+              type="text"
+              id="courseCode"
+              name="courseCode"
+              placeholder="Enter course code"
+              value={courseCode}
+              onInput={(e) => setCourseCode(e.target.value)}
               required
             />
           </div>
@@ -80,7 +133,7 @@ const CreateCourse = () => {
               name="courseEligibility"
               placeholder="Enter course eligibility"
               value={courseEligibility}
-              onChange={e => setCourseEligibility(e.target.value)}
+            onInput={(e) => setCourseEligibility(e.target.value)}
               required
             />
           </div>
@@ -94,7 +147,7 @@ const CreateCourse = () => {
               name="courseThumbnail"
               placeholder="Enter course thumbnail URL"
               value={courseThumbnail}
-              onChange={e => setCourseThumbnail(e.target.value)}
+             onInput={(e) => setCourseThumbnail(e.target.value)}
               required
             />
           </div>
@@ -107,7 +160,7 @@ const CreateCourse = () => {
               name="courseDescription"
               placeholder="Enter course description"
               value={courseDescription}
-              onChange={e => setCourseDescription(e.target.value)}
+              onInput={(e) => setCourseDescription(e.target.value)}
               rows={5}
               required
             />
@@ -115,6 +168,7 @@ const CreateCourse = () => {
 
           <button
             type="submit"
+            onClick={handleSubmit}
             className="
               mt-4
               px-[2vw] py-[1.2vh]
@@ -123,7 +177,6 @@ const CreateCourse = () => {
               hover:from-green-600 hover:to-green-800
               hover:scale-105 active:scale-95 transition-all duration-200
               focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2
-             
               max-[300px]:text-[4.5vw] max-[500px]:text-[3vw] max-[995px]:text-[2.3vw] text-[1.5vw]
               w-[40%]
               mb-[3.5vh]
