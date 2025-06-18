@@ -52,7 +52,7 @@ const Login = () => {
          );
 
          let user = res.data.data.user;
-        
+
          localStorage.setItem('token', user.token);
          console.log('Token:', user.token);
 

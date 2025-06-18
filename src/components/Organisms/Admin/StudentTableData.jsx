@@ -8,7 +8,7 @@ const StudentTableData = ({ students = [] }) => {
       <div className='overflow-x-auto'>
          <TableRow Tailwind_utility_Class='w-full  h-[7vh]  text-white flex items-center justify-between'>
             <TableData Tailwind_utility_Class='flex item-center justify-center w-full h-full text-center overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F] max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'>
-              CIITM_BCA_497898
+               CIITM_BCA_497898
             </TableData>
 
             <TableData Tailwind_utility_Class='flex item-center justify-center w-full h-full text-center overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F] max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'>
@@ -28,9 +28,9 @@ const StudentTableData = ({ students = [] }) => {
             </TableData>
          </TableRow>
 
-           <TableRow Tailwind_utility_Class='w-full  h-[7vh]  text-white flex items-center justify-between'>
+         <TableRow Tailwind_utility_Class='w-full  h-[7vh]  text-white flex items-center justify-between'>
             <TableData Tailwind_utility_Class='flex item-center justify-center w-full h-full text-center overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F] max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'>
-              CIITM_BCA_497890
+               CIITM_BCA_497890
             </TableData>
 
             <TableData Tailwind_utility_Class='flex item-center justify-center w-full h-full text-center overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F] max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'>

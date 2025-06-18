@@ -12,6 +12,7 @@ const Input_Primary = ({
    readOnly = false,
    className = '',
    name,
+   onInput,
 }) => {
    const dispatch = useDispatch();
    const inputs = useSelector(state => state.Input.inputs);
@@ -54,6 +55,7 @@ const Input_Primary = ({
          type={type}
          readOnly={readOnly}
          placeholder={placeholder}
+         onInput={onInput}
          value={valueToDisplay}
          onChange={readOnly ? undefined : handleChange}
          className={className}

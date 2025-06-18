@@ -115,7 +115,6 @@ const App = () => {
                      element={<ContactPage />}
                   />
 
-                  
                   <Route
                      path='/admin/Create/Contact'
                      element={<CreateCourse />}
@@ -156,7 +155,7 @@ const App = () => {
                      element={<FeePay />}
                   />
 
-               <Route path='*' element={<ErrorPage />} />
+                  <Route path='*' element={<ErrorPage />} />
                </Route>
             </Routes>
             <div

@@ -6,48 +6,56 @@ import H3 from '../../../Atoms/Heading/H3';
 
 const Contact_view = ({ data = {} }) => {
    return (
-      <div className='relative flex flex-col gap-4'>
-         <div className="Name_Container flex flex-col gap-2  px-[1.8vw]">
-            <label htmlFor="contact_name" className='text-white text-[0.8rem]'>Contact Name</label>
+      <div className='relative flex flex-col gap-4 max-[300px]:text-[4vw] max-[500px]:text-[2.8vw] max-[995px]:text-[2vw] text-[1.3vw]'>
+         <div className='Name_Container flex flex-col gap-2  px-[1.8vw]'>
+            <label htmlFor='contact_name' className='text-white'>
+               Contact Name
+            </label>
             <Input_Primary
                type='text'
                id='contact_name'
                placeholder='Contact Name'
                readOnly={true}
                value={data?.cName || ''}
-               className='w-[95%] bg-[#2B2C2B] rounded-md text-[#C7C0C0] h-[6.5vh] p-[0.5vh] pl-[1vw] max-[553px]:text-[0.8rem] lg:text-md'
+               className='w-[95%] bg-[#2B2C2B] rounded-md text-[#C7C0C0] h-fit p-[1vh] pl-[1vw]'
             />
          </div>
-         <div className="flex flex-col gap-2 px-[1.8vw]">
-            <label htmlFor="contact_email" className='text-white text-[0.8rem]'>Contact Email</label>
+         <div className='flex flex-col gap-2 px-[1.8vw]'>
+            <label htmlFor='contact_email' className='text-white'>
+               Contact Email
+            </label>
             <Input_Primary
                type='text'
                id='contact_email'
                placeholder='Contact Email'
                value={data?.cEmail || ''}
                readOnly={true}
-               className='w-[95%] bg-[#2B2C2B] rounded-md text-[#C7C0C0] h-[6.5vh] p-[0.5vh] pl-[1vw] max-[553px]:text-[0.8rem] lg:text-md'
+               className='w-[95%] bg-[#2B2C2B] rounded-md text-[#C7C0C0] h-fit p-[1vh] pl-[1vw]'
             />
          </div>
-         <div className="flex flex-col gap-2 px-[1.8vw]">
-            <label htmlFor="contact_number" className='text-white text-[0.8rem]'>Contact Mobile Number</label>
+         <div className='flex flex-col gap-2 px-[1.8vw]'>
+            <label htmlFor='contact_number' className='text-white'>
+               Contact Mobile Number
+            </label>
             <Input_Primary
                type='text'
                id='contact_number'
                placeholder='Contact Mobile Number'
                readOnly={true}
                value={data?.cNumber || ''}
-               className='w-[95%] bg-[#2B2C2B] rounded-md text-[#C7C0C0] h-[6.5vh] p-[0.5vh] pl-[1vw] max-[553px]:text-[0.8rem] lg:text-md'
+               className='w-[95%] bg-[#2B2C2B] rounded-md text-[#C7C0C0] h-fit p-[1vh] pl-[1vw]'
             />
          </div>
-         <div className="flex flex-col gap-2 px-[1.8vw]">
-            <label htmlFor="contact_message" className='text-white text-[0.8rem]'>Contact Message</label>
+         <div className='flex flex-col gap-2 px-[1.8vw]'>
+            <label htmlFor='contact_message' className='text-white'>
+               Contact Message
+            </label>
             <TextArea_Primary
-               id="contact_message"
+               id='contact_message'
                value={data?.cMessage || ''}
                readOnly={true}
-               placeholder="Contact Message"
-               className='w-[95%] bg-[#2B2C2B] rounded-md text-[#C7C0C0] h-[20vh] p-[1vh] pl-[1vw] max-[553px]:text-[0.8rem] lg:text-md'
+               placeholder='Contact Message'
+               className='w-[95%] bg-[#2B2C2B] rounded-md text-[#C7C0C0] h-[20vh] p-[1vh] pl-[1vw]'
             />
          </div>
 
@@ -62,7 +70,7 @@ const Contact_view = ({ data = {} }) => {
               hover:from-gray-800 hover:to-black
               hover:scale-105 active:scale-95 transition-all duration-200
               focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2
-              text-[1.1rem] md:text-[1.15vw]
+            max-[300px]:text-[4vw] max-[500px]:text-[2.8vw] max-[995px]:text-[2vw] text-[1.3vw]
             '
                buttonText='⬅️ Back'
             />
@@ -77,7 +85,7 @@ const Contact_view = ({ data = {} }) => {
               hover:from-blue-600 hover:to-blue-800
               hover:scale-105 active:scale-95 transition-all duration-200
               focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
-              text-[1.1rem] md:text-[1.15vw]
+              max-[300px]:text-[4vw] max-[500px]:text-[2.8vw] max-[995px]:text-[2vw] text-[1.3vw]
             '
                onClick={() =>
                   (window.location.href = `mailto:${data?.cEmail}`)
@@ -96,7 +104,7 @@ const Contact_view = ({ data = {} }) => {
               hover:from-red-600 hover:to-red-800
               hover:scale-105 active:scale-95 transition-all duration-200
               focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2
-              text-[1.1rem] md:text-[1.15vw]
+             max-[300px]:text-[4vw] max-[500px]:text-[2.8vw] max-[995px]:text-[2vw] text-[1.3vw]
             '
                onClick={() => {
                   alert('Delete functionality not implemented yet.');

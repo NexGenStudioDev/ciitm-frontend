@@ -46,8 +46,6 @@ const DashboardPage = () => {
          setIsError(true);
       });
 
-      
-
       return () => {
          socket.off('DashBoard_Data', handleDashboardData);
          socket.off('error');
@@ -71,11 +69,7 @@ const DashboardPage = () => {
                </div>
             )}
 
-          
-
             {!isError && <DashboardCardSection Cards={Cards} />}
-
-            
 
             <QuickLinkSection links={QuickLinkData} />
          </AdminTemplate>

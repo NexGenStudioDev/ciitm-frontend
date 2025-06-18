@@ -11,17 +11,17 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const AdminProfile_Title = () => {
    let [Title, setTitle] = useState('Profile');
-   console.log('AdminProfile_Title rendered' , Title);
+   console.log('AdminProfile_Title rendered', Title);
    let [EditMode, setEditMode] = useState(true);
    const dispatch = useDispatch();
 
-   const inputs = useSelector(state => state.Input.inputs);
+   const inputs = useSelector(state => state.Input?.inputs);
 
    useEffect(() => {
       if (inputs.length > 0) {
-         const ReadOnly = inputs.find(
-            input => input.name === 'Profile_Edit',
-         ).value;
+         const ReadOnly = inputs?.find(
+            input => input?.name === 'Profile_Edit',
+         )?.value;
 
          setTitle('Profile');
 
@@ -53,7 +53,7 @@ const AdminProfile_Title = () => {
                setEditMode(newEditMode);
 
                let data = inputs.findIndex(
-                  i => i.name === 'Profile_Edit',
+                  i => i?.name === 'Profile_Edit',
                );
                console.log('data', data);
                dispatch(

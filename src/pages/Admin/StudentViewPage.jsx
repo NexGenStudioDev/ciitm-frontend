@@ -35,27 +35,25 @@ const StudentViewPage = () => {
       AvtarImage: fallbackImage,
    });
 
+   const [GradeData, setGradeData] = useState({
+      TenthBoardName: '',
+      TenthMarks: '',
+      TwelfthBoardName: '',
+      TwelfthMarks: '',
+   });
 
-const [GradeData, setGradeData] = useState({
-   TenthBoardName: '',
-   TenthMarks: '',
-   TwelfthBoardName: '',
-   TwelfthMarks: '',
-});
+   const [UniversityData, setUniversityData] = useState({
+      UniversityName: '',
+      CourseName: '',
+      CourseMode: '',
+   });
 
-
-const [UniversityData, setUniversityData] = useState({
-   UniversityName: '',
-   CourseName: '',
-   CourseMode: '',
-});
-
-const [FeeData, setFeeData] = useState({
-   TotalCourseFee: '',
-   TotalAmountPaid: '',
-   TotalAmountDue: '',
-   LateFine: '',
-});
+   const [FeeData, setFeeData] = useState({
+      TotalCourseFee: '',
+      TotalAmountPaid: '',
+      TotalAmountDue: '',
+      LateFine: '',
+   });
 
    const [index, setIndex] = React.useState(0);
    const [isError, setIsError] = useState(false);
@@ -72,15 +70,18 @@ const [FeeData, setFeeData] = useState({
             // const s = data.student;
             // console.log('Student Data: s', s);
 
-
             setStudentPersonalData({
                FirstName: data.student.firstName || '',
                MiddleName: data.student.middleName || '',
                LastName: data.student.lastName || '',
                Gender: data.student.gender || '',
-               Email: Array.isArray(data.student.email) ? data.student.email[0] : data.student.email || '',
+               Email: Array.isArray(data.student.email)
+                  ? data.student.email[0]
+                  : data.student.email || '',
                PhoneNumber: data.student.contactNumber || '',
-               DateOfBirth: data.student.dateOfBirth ? data.student.dateOfBirth.slice(0, 10) :  '',
+               DateOfBirth: data.student.dateOfBirth
+                  ? data.student.dateOfBirth.slice(0, 10)
+                  : '',
                AvtarImage: data.student.avtar || fallbackImage,
             });
 
@@ -95,14 +96,13 @@ const [FeeData, setFeeData] = useState({
                TenthMarks: data.tenth?.tenthMarks || '',
                TwelfthBoardName: data.twelfth?.twelfthBoard || '',
                TwelfthMarks: data.twelfth?.twelfthMarks || '',
-            })
+            });
 
             setUniversityData({
                UniversityName: data.university || '',
                CourseName: data.student.course_Id?.name || '', // If populated, else fallback to ''
                CourseMode: data.mode || '',
             });
-
 
             setFeeData({
                TotalCourseFee: data.fee?.course_Fee || '',
@@ -155,7 +155,7 @@ const [FeeData, setFeeData] = useState({
             //       TotalAmountDue: data.fee?.amount_due || '',
             //       LateFine: data.fee?.late_Fine || '',
             //     },
-            //   }); 
+            //   });
          } else {
             setIsError(true);
          }
@@ -179,14 +179,17 @@ const [FeeData, setFeeData] = useState({
       };
    }, [studentId]);
 
-
-
    const StudentViewPage_DataArray = [
       {
          element: (
             <StudentPersonalInfo
                data={{
-                  Name: studentPersonalData.FirstName + " " + studentPersonalData.MiddleName + " " + studentPersonalData.LastName,
+                  Name:
+                     studentPersonalData.FirstName +
+                     ' ' +
+                     studentPersonalData.MiddleName +
+                     ' ' +
+                     studentPersonalData.LastName,
                   Email: studentPersonalData.Email,
                   PhoneNumber: studentPersonalData.PhoneNumber,
                   Gender: studentPersonalData.Gender,
@@ -194,8 +197,7 @@ const [FeeData, setFeeData] = useState({
                }}
             />
          ),
-         imageUrl:
-            studentPersonalData.AvtarImage || fallbackImage,
+         imageUrl: studentPersonalData.AvtarImage || fallbackImage,
          title: 'Personal Information',
       },
       {
@@ -248,8 +250,10 @@ const [FeeData, setFeeData] = useState({
             <FeeUniversityInfo
                data={{
                   TotalCourseFee: '₹  ' + FeeData.TotalCourseFee,
-                  TotalAmountPaid: '₹  ' + FeeData.TotalAmountPaid || '₹ 0',
-                  TotalAmountDue: '₹  ' + FeeData.TotalAmountDue || '₹ 0',
+                  TotalAmountPaid:
+                     '₹  ' + FeeData.TotalAmountPaid || '₹ 0',
+                  TotalAmountDue:
+                     '₹  ' + FeeData.TotalAmountDue || '₹ 0',
                   LateFine: '₹  ' + FeeData.LateFine || '₹ 0',
                }}
             />
@@ -277,35 +281,33 @@ const [FeeData, setFeeData] = useState({
 
    return (
       <AdminTemplate pageName={`Student View :- ${studentId}`}>
-
-      {isError && (
-         <div className='w-full h-full flex items-center justify-center'>
-            <div className='text-red-500 text-xl font-semibold'>
-               Error: Student not found or data unavailable.
-            </div>
-         </div>
-      )}
-
-      {!isError && (
-
-         <FormTemplate_Secondary>
-            <AdminStudentTitle title={currentData.title} />
-            <div className='w-full rounded-lg shadow-md flex flex-col items-center'>
-               <div className='flex items-center justify-center w-full my-6'>
-                  <img
-                     src={currentData.imageUrl}
-                     alt='Student'
-                     onError={onImageError}
-                     className='w-40 h-40 object-cover object-center rounded-full bg-green-600 border-4 border-white shadow-lg'
-               />
+         {isError && (
+            <div className='w-full h-full flex items-center justify-center'>
+               <div className='text-red-500 text-xl font-semibold'>
+                  Error: Student not found or data unavailable.
                </div>
-               {currentData.element}
             </div>
-            <div className='w-full h-fit flex justify-between items-center px-[2vw] py-[2vh] mt-2'>
-               <button
-                  onClick={handlePrevious}
-                  disabled={index === 0}
-                  className={`
+         )}
+
+         {!isError && (
+            <FormTemplate_Secondary>
+               <AdminStudentTitle title={currentData.title} />
+               <div className='w-full rounded-lg shadow-md flex flex-col items-center  max-[300px]:text-[4vw] max-[500px]:text-[2.8vw] max-[995px]:text-[2vw] text-[1.3vw]'>
+                  <div className='flex items-center justify-center w-full my-6'>
+                     <img
+                        src={currentData.imageUrl}
+                        alt='Student'
+                        onError={onImageError}
+                        className='w-40 h-40 object-cover object-center rounded-full bg-green-600 border-4 border-white shadow-lg'
+                     />
+                  </div>
+                  {currentData.element}
+               </div>
+               <div className='w-full h-fit flex justify-between items-center px-[2vw] py-[2vh] mt-2'>
+                  <button
+                     onClick={handlePrevious}
+                     disabled={index === 0}
+                     className={`
                      flex items-center gap-2
                      px-[2vw] py-[1.2vh]
                      bg-gradient-to-r from-gray-700 to-gray-900
@@ -316,15 +318,15 @@ const [FeeData, setFeeData] = useState({
                      text-[1.1rem] md:text-[1.15vw]
                      ${index === 0 ? 'opacity-50 cursor-not-allowed' : ''}
                   `}
-               >
-                  ⏮️ Previous
-               </button>
-               <button
-                  onClick={handleNext}
-                  disabled={
-                     index === StudentViewPage_DataArray.length - 1
-                  }
-                  className={`
+                  >
+                     ⏮️ Previous
+                  </button>
+                  <button
+                     onClick={handleNext}
+                     disabled={
+                        index === StudentViewPage_DataArray.length - 1
+                     }
+                     className={`
                      flex items-center gap-2
                      px-[2vw] py-[1.2vh]
                      bg-gradient-to-r from-gray-700 to-gray-900
@@ -335,12 +337,12 @@ const [FeeData, setFeeData] = useState({
                      text-[1.1rem] md:text-[1.15vw]
                      ${index === StudentViewPage_DataArray.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}
                   `}
-               >
-                  Next ⏭️
-               </button>
-            </div>
-         </FormTemplate_Secondary>
-      )}
+                  >
+                     Next ⏭️
+                  </button>
+               </div>
+            </FormTemplate_Secondary>
+         )}
       </AdminTemplate>
    );
 };
