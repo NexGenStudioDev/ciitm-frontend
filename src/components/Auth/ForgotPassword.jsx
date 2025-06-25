@@ -22,9 +22,7 @@ const ForgotPassword = () => {
    const onSubmit = async data => {
       try {
          setLoading(true);
-         await axios.post('/forgot-password', {
-            email: data.email,
-         });
+         await axios.post(`/forgot-password/${data.email}`);
          toast.success('Success');
       } catch (error) {
          toast.error(
@@ -35,8 +33,8 @@ const ForgotPassword = () => {
       }
    };
    return (
-      <section className='w-full min-h-screen flex max-[999px]:flex-col'>
-         <div className='left w-1/2 max-[999px]:hidden h-screen'>
+      <section className='w-full min-h-screen flex flex-col md:items-start justify-center lg:flex-row'>
+         <div className='hidden lg:block w-1/2 h-screen'>
             <img
                className='w-full h-full object-cover pointer-events-none'
                src={forgotImage}
@@ -44,47 +42,48 @@ const ForgotPassword = () => {
             />
          </div>
 
-         <div className='right w-1/2 max-[999px]:w-full h-full max-[999px]:px-6 max-[999px]:pt-[50vw] pt-32 px-16 flex flex-col items-start justify-center text-[#333]'>
+         <div className='w-full lg:w-1/2 h-full px-[5vw] pt-[10vh] flex flex-col items-start justify-center text-[#333]'>
             <form
                onSubmit={handleSubmit(onSubmit)}
-               className='w-full max-[999px]:h-[500px] bg-[#FAFAFA] p-6 flex flex-col justify-center'
+               className='w-full bg-[#FAFAFA] p-[clamp(1rem,4vw,2rem)] flex flex-col justify-center'
             >
-               <div className='logo mb-6'>
+               <div className='logo mb-[clamp(1rem,2vw,1.5rem)]'>
                   <img src={logo} alt='CIITM Logo' className='h-8' />
                </div>
 
-               <h1 className='heading text-[1.8vw] max-[999px]:text-[4.5vw] font-semibold mb-6'>
+               <h1 className='text-[clamp(1.2rem,2vw,2rem)] font-semibold mb-[clamp(1rem,2vw,1.5rem)]'>
                   Forgot your password?
                </h1>
 
-               <p className='text-[0.9vw] max-[999px]:text-[2.5vw] text-gray-600 mb-6'>
+               <p className='text-[clamp(0.85rem,1.5vw,1rem)] text-gray-600 mb-[clamp(1rem,2vw,1.5rem)]'>
                   Enter your email address and we will send you a
                   one-time password (OTP) to reset your password.
                </p>
 
                <input
-                  type={'email'}
+                  type='email'
                   autoComplete='off'
                   {...register('email')}
-                  placeholder={'Email'}
-                  className='border-[0.83px] border-[#A0A0A080]/50 placeholder:text-[#333] rounded-lg p-3 w-full text-[0.8vw] max-[999px]:text-[2.5vw]'
+                  placeholder='Email'
+                  className='border border-[#A0A0A080]/50 placeholder:text-[#333] rounded-lg p-[clamp(0.6rem,1.2vw,1rem)] w-full text-[clamp(0.9rem,1.2vw,1rem)]'
                />
                {errors?.email?.message && (
-                  <span className='text-red-400 '>
+                  <span className='text-red-400 text-sm'>
                      {errors?.email?.message}
                   </span>
                )}
-               <div className='flex w-full items-center justify-center gap-6 max-[999px]:gap-4 my-4 max-[999px]:flex-col'>
+
+               <div className='flex w-full items-center justify-center gap-6 my-[clamp(1rem,2vw,1.5rem)] flex-col md:flex-row'>
                   <button
                      disabled={loading}
                      type='submit'
-                     className='bg-[#333] text-white font-medium rounded-lg p-3.5 w-1/2 text-[1vw] max-[999px]:text-[3vw] max-[999px]:w-full disabled:bg-gray-200'
+                     className='bg-[#333] text-white font-medium rounded-lg p-[clamp(0.8rem,1.5vw,1.2rem)] w-full md:w-1/2 text-[clamp(1rem,1.3vw,1.2rem)] disabled:bg-gray-200'
                   >
                      {loading ? 'Loading...' : 'Reset Now'}
                   </button>
                </div>
 
-               <p className='mt-4 text-[0.85vw] max-[999px]:text-[2.5vw] font-semibold'>
+               <p className='mt-4 text-[clamp(0.8rem,1vw,1rem)] font-semibold'>
                   Remember your password?{' '}
                   <Link to='/login' className='text-[#B83D00]'>
                      Login
