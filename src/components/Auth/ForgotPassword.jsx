@@ -22,12 +22,14 @@ const ForgotPassword = () => {
    const onSubmit = async data => {
       try {
          setLoading(true);
-         const response = await axios.post('/forgot-password', {
+         await axios.post('/forgot-password', {
             email: data.email,
          });
-         toast.success('Success:', response.data);
+         toast.success('Success');
       } catch (error) {
-         toast.error('Error:', error);
+         toast.error(
+            error.response?.data?.message || 'An error occurred',
+         );
       } finally {
          setLoading(false);
       }
@@ -61,10 +63,10 @@ const ForgotPassword = () => {
                </p>
 
                <input
-                  type={"text"}
+                  type={'text'}
                   autoComplete='off'
-                  {...register("email")}
-                  placeholder={"Email"}
+                  {...register('email')}
+                  placeholder={'Email'}
                   className='border-[0.83px] border-[#A0A0A080]/50 placeholder:text-[#333] rounded-lg p-3 w-full text-[0.8vw] max-[999px]:text-[2.5vw]'
                />
                {errors?.email?.message && (
@@ -74,7 +76,7 @@ const ForgotPassword = () => {
                )}
                <div className='flex w-full items-center justify-center gap-6 max-[999px]:gap-4 my-4 max-[999px]:flex-col'>
                   <button
-                  disabled={loading}
+                     disabled={loading}
                      type='submit'
                      className='bg-[#333] text-white font-medium rounded-lg p-3.5 w-1/2 text-[1vw] max-[999px]:text-[3vw] max-[999px]:w-full disabled:bg-gray-200'
                   >

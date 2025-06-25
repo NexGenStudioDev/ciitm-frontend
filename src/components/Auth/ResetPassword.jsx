@@ -27,15 +27,15 @@ const ResetPassword = () => {
    const onSubmit = async data => {
       try {
          setLoading(true);
-         const response = await axios.post('/validate/password', {
+          await axios.post('/validate/password', {
             email: data.email,
             otp: data.otp,
             newPassword: data.password,
          });
-         toast.log('Password reset successful:', response.data);
+         toast.success('Password reset successful');
          navigate('/login');
       } catch (error) {
-         toast.error('Reset failed:', error);
+         toast.error(error.response?.data?.message || 'An error occurred');
       } finally {
          setLoading(false);
       }
