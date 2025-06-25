@@ -6,6 +6,7 @@ import { axios } from '../../utils/apiUrl';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { forgotPasswordSchema } from '../../validation/forgotPassword.schema';
+import { toast } from 'react-toastify';
 
 const ForgotPassword = () => {
    const [loading, setLoading] = useState(false);
@@ -24,9 +25,9 @@ const ForgotPassword = () => {
          const response = await axios.post('/forgot-password', {
             email: data.email,
          });
-         console.log('Success:', response.data);
+         toast.success('Success:', response.data);
       } catch (error) {
-         console.error('Error:', error);
+         toast.error('Error:', error);
       } finally {
          setLoading(false);
       }
