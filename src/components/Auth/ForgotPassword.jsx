@@ -74,8 +74,9 @@ const ForgotPassword = () => {
                )}
                <div className='flex w-full items-center justify-center gap-6 max-[999px]:gap-4 my-4 max-[999px]:flex-col'>
                   <button
+                  disabled={loading}
                      type='submit'
-                     className='bg-[#333] text-white font-medium rounded-lg p-3.5 w-1/2 text-[1vw] max-[999px]:text-[3vw] max-[999px]:w-full'
+                     className='bg-[#333] text-white font-medium rounded-lg p-3.5 w-1/2 text-[1vw] max-[999px]:text-[3vw] max-[999px]:w-full disabled:bg-gray-200'
                   >
                      {loading ? 'Loading...' : 'Reset Now'}
                   </button>

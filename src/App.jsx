@@ -35,6 +35,7 @@ import FeePay from './pages/Admin/FeePay';
 import CreateCourse from './pages/Admin/CreateCourse';
 import ViewCourseDetail from './pages/ViewCourseDetail';
 import ForgotPassword from './components/Auth/ForgotPassword';
+import ResetPassword from './components/Auth/ResetPassword';
 const userInput = "<img src='x' onerror='alert(1)' />";
 
 const sanitizedInput = DOMPurify.sanitize(userInput);
@@ -100,9 +101,13 @@ const App = () => {
                   />
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<Signup />} />
-                    <Route
+                  <Route
                      path='/forgot-password'
                      element={<ForgotPassword />}
+                  />
+                  <Route
+                     path='/reset-password'
+                     element={<ResetPassword />}
                   />
                </Route>
 
@@ -163,8 +168,6 @@ const App = () => {
                      path='/admin/student/pay/fee'
                      element={<FeePay />}
                   />
-
-                  
 
                   <Route path='*' element={<ErrorPage />} />
                </Route>
