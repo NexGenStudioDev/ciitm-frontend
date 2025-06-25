@@ -16,6 +16,7 @@ createRoot(document.getElementById('root')).render(
       <HelmetProvider>
          <Provider store={appStore}>
             <App />
+           
          </Provider>
       </HelmetProvider>
    </StrictMode>,
