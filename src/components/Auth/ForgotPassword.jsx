@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import signupImage from '../../assets/images/signup.png';
+import forgotImage from '../../assets/images/forgot.jpg';
 import logo from '../../assets/logo.svg';
 import { axios } from '../../utils/apiUrl';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
          <div className='left w-1/2 max-[999px]:hidden h-screen'>
             <img
                className='w-full h-full object-cover pointer-events-none'
-               src={signupImage}
+               src={forgotImage}
                alt='Forgot Password Illustration'
             />
          </div>

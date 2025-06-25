@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { resetPasswordSchema } from '../../validation/resetPassword.schema';
 import { axios } from '../../utils/apiUrl';
 
-import signupImage from '../../assets/images/signup.png';
+import resetImage from '../../assets/images/reset.jpg';
 import logo from '../../assets/logo.svg';
 import { toast } from 'react-toastify';
 
@@ -46,7 +46,7 @@ const ResetPassword = () => {
          <div className='left w-1/2 max-[999px]:hidden h-screen'>
             <img
                className='w-full h-full object-cover pointer-events-none'
-               src={signupImage}
+               src={resetImage}
                alt='Reset Password Illustration'
             />
          </div>
