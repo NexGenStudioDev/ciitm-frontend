@@ -63,7 +63,7 @@ const ForgotPassword = () => {
                </p>
 
                <input
-                  type={'text'}
+                  type={'email'}
                   autoComplete='off'
                   {...register('email')}
                   placeholder={'Email'}
