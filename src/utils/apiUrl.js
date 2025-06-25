@@ -1,4 +1,8 @@
-export const apiUrl = path => {
-   //   const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-   return `${path}`;
-};
+import _axios from 'axios';
+
+const axiosInstance = _axios.create({
+   baseURL: `${import.meta.env.VITE_BACKEND_URL}/api/v1`,
+   withCredentials: true,
+});
+
+export { axiosInstance as axios };
