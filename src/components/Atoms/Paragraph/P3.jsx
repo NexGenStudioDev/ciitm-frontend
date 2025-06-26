@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 const P3 = ({ children, Tailwind_utility_Class }) => {

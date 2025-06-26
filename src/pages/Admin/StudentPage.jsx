@@ -4,26 +4,57 @@ import FormTemplate from '../../components/Templates/Admin/form/FormTemplate';
 import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
 import StudentDataTable from '../../components/Organisms/Admin/StudentDataTable';
 import { Helmet } from 'react-helmet-async';
+import axios from 'axios';
 
-const studentOptions = ['Bca', 'Mca', 'Bcom', 'Bba'];
 
-const semisterOptions = [
-   'Semister 1',
-   'Semister 2',
-   'Semister 3',
-   'Semister 4',
-   'Semister 5',
-   'Semister 6',
+
+const studentOptions = ['Bachelor of Computer Applications (BCA)', 'Master of Computer Applications (MCA)', 'Bachelor of Commerce (B.Com)', 'Bachelor of Business Administration (BBA)'];
+
+const semesterOptions = [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
 ];
 
-let Handle_Student_Search = e => {
-   e.preventDefault();
-   alert('Search functionality is not implemented yet.');
-};
+
 
 const StudentPage = () => {
-   const [isStudentFind, setIsStudentFind] = React.useState(false);
+   const [isError, setIsError] = React.useState(false);
+   const [ErrorMessage, setErrorMessage] = React.useState('');
+   const [studentData, setStudentData] = React.useState([]);
+   const [SelectedCourse, setSelectedCourse] = React.useState('');
+   const [SelectedSemester, setSelectedSemester] = React.useState('');
 
+
+
+   let Handle_Student_Search = async e => {
+  try {
+    e.preventDefault();
+   let res = await axios.get(`/api/v1/Student/FindByCourseAndSemester?course=${SelectedCourse}&semester=${SelectedSemester}&PerPage=1&Limit=2`)
+
+  if(res.data.success && res.data.data.length < 0) {
+     setStudentData(res.data.data);
+     setIsError(false);
+  } 
+
+  setIsError(false);
+  throw new Error('No students found for the selected course and semester.');
+
+} catch (error) {
+ 
+   
+   setIsError(true);
+   setErrorMessage(error.response?.data?.message || error?.message || 'Something went wrong while fetching student data.');
+   console.error('Error fetching student data:', ErrorMessage);
+
+  }finally {
+   setStudentData([]);
+  }
+};
+{console.log('isError:', isError)}
    return (
       <>
          <Helmet>
@@ -35,24 +66,26 @@ const StudentPage = () => {
          </Helmet>
 
          <AdminTemplate pageName={'Students'}>
-            <div className='findStudent_Container px-[2vw] h-[10vh] w-[93%] flex items-center justify-stretch  gap-4 bg-[#1C1C1C] rounded-lg mb-[3vh]'>
+            <div className='findStudent_Container px-[2vw] h-[13vh] min-[900px]:h-[10vh] w-[93%] flex items-center justify-between gap-4 bg-[#1C1C1C] rounded-lg mb-[3vh]'>
                <Dropdown_Primary
                   options={studentOptions}
                   backgroundColor='#1C1C1C'
                   textColor='#FFFFFF'
                   height='70%'
-                  width='20vw'
+                  width='40%'
+                  optionSelectedData={data => setSelectedCourse(data)}
                   value='Select Course'
                   border='2px solid #2C2C2C'
                />
 
                <Dropdown_Primary
-                  options={semisterOptions}
+                  options={semesterOptions}
                   backgroundColor='#1C1C1C'
                   textColor='#FFFFFF'
+                  optionSelectedData={data => setSelectedSemester(data)}
                   height='70%'
-                  width='20vw'
-                  value='Select Semister'
+                  width='40%'
+                  value='Select Semester'
                   border='2px solid #2C2C2C'
                />
 
@@ -63,9 +96,23 @@ const StudentPage = () => {
                   Search
                </button>
             </div>
-            <FormTemplate PageName={'Students'}>
-               <StudentDataTable />
-            </FormTemplate>
+
+         {isError && (
+            <div className='text-white text-center  flex mb-[4vh] items-center justify-center flex-col w-[94%] max-[553px]:w-[87%] h-[91vh] rounded-md  bg-[#1C1C1C]'>
+               <p className='text-[3rem]'>⚠️</p>
+               <p className='text-[1.2rem]'>{ErrorMessage}</p>
+         
+            </div>
+         )}
+
+         {!isError && studentData.length > 0 && (
+            <FormTemplate PageName={'Students'} >
+               <StudentDataTable students={studentData} />
+             </FormTemplate>
+         )}
+
+
+  
          </AdminTemplate>
       </>
    );

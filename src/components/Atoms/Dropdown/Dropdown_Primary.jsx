@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import  { useState, useEffect, useRef } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
+import PropTypes from 'prop-types';
 
 const Dropdown_Primary = ({
    options = [],
@@ -8,6 +9,7 @@ const Dropdown_Primary = ({
    height = '5vh',
    width = '20vw',
    marginTop = '1vh',
+   optionSelectedData,
    marginBottom = '1vh',
    marginLeft = '1vw',
    marginRight = '1vw',
@@ -16,6 +18,9 @@ const Dropdown_Primary = ({
 }) => {
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
    const [selectedOption, setSelectedOption] = useState(value || '');
+
+  
+
    const dropdownRef = useRef(null);
 
    useEffect(() => {
@@ -40,6 +45,7 @@ const Dropdown_Primary = ({
 
    const handleOptionClick = option => {
       setSelectedOption(option);
+      optionSelectedData && optionSelectedData(option);
       setIsDropdownOpen(!false);
    };
 
@@ -67,7 +73,7 @@ const Dropdown_Primary = ({
             if (e.key === 'Enter' || e.key === ' ') toggleDropdown();
          }}
       >
-         <div className='flex items-center justify-between w-full h-full px-[1vw] py-[1vh]'>
+         <div className='flex items-center justify-between w-full h-full  text-[2.5vw] min-[600px]:text-[1.5vw] px-[1vw] py-[1vh]'>
             <span className='truncate'>
                {selectedOption || value}
             </span>
@@ -84,7 +90,7 @@ const Dropdown_Primary = ({
                   options.map((option, index) => (
                      <div
                         key={index}
-                        className='p-2 hover:bg-[#333] transition-colors cursor-pointer'
+                        className='p-2 hover:bg-[#333] transition-colors  text-[2vw] min-[600px]:text-[1.2vw] cursor-pointer'
                         style={{ color: textColor }}
                         onClick={() => handleOptionClick(option)}
                      >
@@ -96,6 +102,22 @@ const Dropdown_Primary = ({
          )}
       </div>
    );
+};
+
+
+Dropdown_Primary.propTypes = {
+   options: PropTypes.arrayOf(PropTypes.string),
+   backgroundColor: PropTypes.string,
+   textColor: PropTypes.string,
+   height: PropTypes.string,
+   width: PropTypes.string,
+   marginTop: PropTypes.string,
+   optionSelectedData: PropTypes.func,
+   marginBottom: PropTypes.string,
+   marginLeft: PropTypes.string,
+   marginRight: PropTypes.string,
+   border: PropTypes.string,
+   value: PropTypes.string,
 };
 
 export default Dropdown_Primary;
