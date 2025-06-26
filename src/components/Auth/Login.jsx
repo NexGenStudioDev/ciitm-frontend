@@ -11,7 +11,6 @@ import Checkbox from './Checkbox';
 import axios from 'axios';
 import { setUser } from '../../store/AuthSlice';
 import Loader from '../Molecules/Loader/Loader';
-import { use } from 'react';
 
 const Login = () => {
    let dispatch = useDispatch();
@@ -131,12 +130,12 @@ const Login = () => {
                         name='Login_CheckBox'
                      />
                   </div>
-                  <a
-                     href='#'
+                  <Link
+                     to='/forgot-password'
                      className='text-[#FF6603] text-[1.05vw] font-semibold max-[999px]:text-[3.05vw]'
                   >
                      Forgot Password?
-                  </a>
+                  </Link>
                </div>
 
                <button
