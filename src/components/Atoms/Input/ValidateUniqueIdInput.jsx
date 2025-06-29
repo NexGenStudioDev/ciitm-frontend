@@ -54,7 +54,7 @@ const ValidateUniqueIdInput = ({
       // Reset status when user types
       setValidationStatus(null);
       setStatusMessage('');
-      getValidationStatus(false);
+      getValidationStatus(false, '');
 
       // Don't validate empty input
       if (!value.trim()) {
@@ -65,7 +65,7 @@ const ValidateUniqueIdInput = ({
       if (value.length < minLength || value.length > maxLength) {
          setValidationStatus(false);
          setStatusMessage(`ID must be between ${minLength} and ${maxLength} characters`);
-         getValidationStatus(false);
+         getValidationStatus(false, '');
          return;
       }
 
@@ -100,12 +100,12 @@ const ValidateUniqueIdInput = ({
             // Student found - valid ID
             setValidationStatus(true);
             setStatusMessage('Valid Student ID');
-            getValidationStatus(true);
+            getValidationStatus(true, uniqueId);
          } else {
             // Student not found - invalid ID
             setValidationStatus(false);
             setStatusMessage('Student ID not found');
-            getValidationStatus(false);
+            getValidationStatus(false, '');
          }
       } catch (error) {
          // Check if request was cancelled
@@ -169,14 +169,13 @@ const ValidateUniqueIdInput = ({
                maxLength={maxLength}
                className={`
                   w-full px-4 py-3 rounded-lg border-2 transition-all duration-200
-                  bg-white text-gray-900 placeholder-gray-500
                   focus:outline-none focus:ring-2 focus:ring-opacity-20
-                  disabled:bg-gray-100 disabled:cursor-not-allowed
+                  disabled:cursor-not-allowed
                   ${getBorderColor()}
                   ${validationStatus === true ? 'focus:ring-green-200' : ''}
                   ${validationStatus === false ? 'focus:ring-red-200' : ''}
                   ${isLoading ? 'focus:ring-blue-200' : ''}
-                  ${className}
+                  ${className || 'bg-white text-gray-900 placeholder-gray-500 disabled:bg-gray-100'}
                `}
                style={{ height }}
             />
