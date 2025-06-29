@@ -74,7 +74,7 @@ const ValidateUniqueIdInput = ({
 
       try {
          // TODO: Replace with actual API call when backend is ready
-         // Simulating API response for now
+         // Simulating API response for testing
         /*  const mockResponse = await new Promise((resolve) => {
             setTimeout(() => {
                // Mock validation logic - for demo purposes
@@ -90,8 +90,9 @@ const ValidateUniqueIdInput = ({
             }, 800); // Simulate network delay
          }); */
 
-         // Real API call (commented out until backend is ready)
+         // Real API call
          const {data} = await axios.get(`/api/v1/Student/validate/${uniqueId}`);
+
          console.log('API Response:', data);
          if (data?.success && data?.data?.isValid) {
             // Student found - valid ID
