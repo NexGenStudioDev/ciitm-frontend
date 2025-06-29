@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const ValidateUniqueIdInput = ({
    getValidationStatus,
@@ -74,7 +75,7 @@ const ValidateUniqueIdInput = ({
       try {
          // TODO: Replace with actual API call when backend is ready
          // Simulating API response for now
-         const mockResponse = await new Promise((resolve) => {
+        /*  const mockResponse = await new Promise((resolve) => {
             setTimeout(() => {
                // Mock validation logic - for demo purposes
                const validIds = ['STU12345', 'STU123', 'STUDENT001', 'ST001'];
@@ -87,13 +88,12 @@ const ValidateUniqueIdInput = ({
                   data: isValid ? { uniqueId: uniqueId.toUpperCase() } : null
                });
             }, 800); // Simulate network delay
-         });
+         }); */
 
          // Real API call (commented out until backend is ready)
-         // const response = await axios.get(`/api/students/${uniqueId}`);
-         // const data = await response.json();
-
-         if (mockResponse.success && mockResponse.isvalidate) {
+         const {data} = await axios.get(`/api/v1/Student/validate/${uniqueId}`);
+         console.log('API Response:', data);
+         if (data?.success && data?.data?.isValid) {
             // Student found - valid ID
             setValidationStatus(true);
             setStatusMessage('✅ Valid Student ID');

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import ValidateUniqueIdInput from '../../components/Atoms/Input/ValidateUniqueIdInput';
+import { Helmet } from 'react-helmet-async';
+import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 
 const UpdateStatus = () => {
    const [isValidStudentId, setIsValidStudentId] = useState(false);
@@ -57,6 +59,15 @@ const UpdateStatus = () => {
    ];
 
    return (
+      <>
+      <Helmet>
+                  <title>Update Status - CIITM Admin</title>
+                  <meta
+                     name='description'
+                     content="CIITM Admin  Page - Manage your institution's student data efficiently."
+                  />
+               </Helmet>
+      <AdminTemplate pageName={'Update Status'}>         
       <div className="min-h-screen bg-gray-50 py-8 px-4">
          <div className="max-w-2xl mx-auto">
             {/* Page Header */}
@@ -202,6 +213,8 @@ const UpdateStatus = () => {
             </div>
          </div>
       </div>
+      </AdminTemplate>
+      </>            
    );
 };
 
