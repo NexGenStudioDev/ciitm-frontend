@@ -97,18 +97,18 @@ const ValidateUniqueIdInput = ({
          if (data?.success && data?.data?.isValid) {
             // Student found - valid ID
             setValidationStatus(true);
-            setStatusMessage('✅ Valid Student ID');
+            setStatusMessage('Valid Student ID');
             getValidationStatus(true);
          } else {
             // Student not found - invalid ID
             setValidationStatus(false);
-            setStatusMessage('❌ Student ID not found');
+            setStatusMessage('Student ID not found');
             getValidationStatus(false);
          }
       } catch (error) {
          console.error('Error validating student ID:', error);
          setValidationStatus(false);
-         setStatusMessage('❌ Error validating ID. Please try again.');
+         setStatusMessage('Error validating ID. Please try again.');
          getValidationStatus(false);
       } finally {
          setIsLoading(false);
