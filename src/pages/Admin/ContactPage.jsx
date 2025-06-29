@@ -15,9 +15,6 @@ import { Helmet } from 'react-helmet-async';
 const ContactPage = memo(() => {
    let dispatch = useDispatch();
 
-   const contactDataFromRedux = useSelector(
-      state => state.AdminUi.Contact,
-   );
 
    let Navigator = useSelector(state => state.Navigator.navigator);
 

@@ -22,13 +22,13 @@ const FormTemplate = ({ children, Navigator = true, PageName }) => {
    console.log(findNavigator);
 
    return (
-      <div className='w-[94%]  max-[553px]:shadow-lg max-[553px]:shadow-blue-700 max-[553px]:w-[87%] h-[90%] flex flex-col items-center  bg-[#1C1C1C] justify-between rounded-bl-2xl rounded-br-2xl mb-[18vh]'>
+      <div className='max-[553px]:shadow-lg max-[553px]:shadow-blue-700  w-[94%] max-[553px]:w-[87%] h-[90%] flex flex-col items-center  bg-[#1C1C1C] justify-between rounded-bl-2xl rounded-br-2xl mb-[18vh]'>
          <table className='w-full h-auto bg-[#1C1C1C]  table-fixed '>
             {children}
          </table>
          {Navigator && (
             <div className='w-full h-[8vh] bg-[#090909] rounded-bl-2xl rounded-br-2xl text-white flex items-center gap-[1.5vw] justify-end text-[1.5vw]'>
-               fff
+         
                <FaArrowAltCircleLeft
                   onClick={() => {
                      dispatch(
