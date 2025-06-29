@@ -3,17 +3,22 @@ import { setAlbum } from '../store/homeSlice';
 
 import { Album_EndPoint } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { axios } from '../utils/apiUrl';
+import axios from 'axios';
+
+
+
 
 const useAlbum = () => {
    let Album = useSelector(state => state.home.Album);
+   console.log('Album: selector', Album);
 
    let dispatch = useDispatch();
 
    const Handle_Album = async () => {
       try {
          if (!Album) {
-            const response = await axios.get('/user/get/album');
+            const response = await axios.get(Album_EndPoint)
+            console.log('Album Response:', response);
             let data = response.data.data;
             dispatch(setAlbum(data));
          }

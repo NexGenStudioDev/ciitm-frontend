@@ -1,19 +1,18 @@
 import React from 'react';
-import TableHeading from '../../Atoms/Table/Th/TableHeading';
-import TableData from '../../Atoms/Table/Td/TableData';
+import TableRow_Heading from '../../Molecules/table/TableRow_Heading';
+import PropTypes from 'prop-types';
 
-const StudentTableHeading = ({ HeadingArray = [] }) => {
-   return (
-      <TableHeading Tailwind_utility_Class='w-full px-[2.8vw] h-[7vh] bg-[#090909] text-white flex items-center justify-between px-4'>
-         {HeadingArray.map((heading, index) => (
-            <TableData
-               key={index}
-               Tailwind_utility_Class='flex item-center justify-center text-center h-full w-fit  max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'
-            >
-               {heading}
-            </TableData>
-         ))}
-      </TableHeading>
-   );
+const StudentTableHeading = ({ TableHeadingArray = [] }) => {
+   return <TableRow_Heading TableHeadingArray={TableHeadingArray} />;
 };
+
+StudentTableHeading.propTypes = {
+   TableHeadingArray: PropTypes.arrayOf(
+      PropTypes.shape({
+         text: PropTypes.string.isRequired,
+         style: PropTypes.string.isRequired,
+      })
+   ),
+};
+
 export default StudentTableHeading;
