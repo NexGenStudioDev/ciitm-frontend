@@ -36,8 +36,6 @@ const Login = () => {
          if (!find_Email || !find_Password) {
             throw new Error('Email or Password not found in state');
          }
-       /*   const url = import.meta.env.VITE_BACKEND_URL || 'https://ciitm-backend.onrende'; */
-         console.log(import.meta.env.VITE_BACKEND_URL);
          let res = await axios.post(
             Login_EndPoint,
             {

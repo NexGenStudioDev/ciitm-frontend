@@ -20,15 +20,20 @@ const ValidateUniqueIdInput = ({
    const [validationStatus, setValidationStatus] = useState(null); // null, true, false
    const [statusMessage, setStatusMessage] = useState('');
    const debounceRef = useRef(null);
+   const abortControllerRef = useRef(null); // For cancelling requests
 
    // Debounce delay in milliseconds
    const DEBOUNCE_DELAY = 500;
 
-   // Cleanup debounce on unmount
+   // Cleanup debounce and abort pending requests on unmount
    useEffect(() => {
       return () => {
          if (debounceRef.current) {
             clearTimeout(debounceRef.current);
+         }
+         const abortController = abortControllerRef.current;
+         if (abortController) {
+            abortController.abort('Component unmounted');
          }
       };
    }, []);
@@ -38,9 +43,12 @@ const ValidateUniqueIdInput = ({
       const value = e.target.value;
       setInputValue(value);
 
-      // Clear previous debounce
+      // Clear previous debounce and abort previous request
       if (debounceRef.current) {
          clearTimeout(debounceRef.current);
+      }
+      if (abortControllerRef.current) {
+         abortControllerRef.current.abort('New request initiated');
       }
 
       // Reset status when user types
@@ -69,29 +77,23 @@ const ValidateUniqueIdInput = ({
 
    // Validate student ID against API
    const validateStudentId = async (uniqueId) => {
+      // Guard clause: Don't validate empty or invalid input
+      if (!uniqueId || !uniqueId.trim()) {
+         return;
+      }
+
       setIsLoading(true);
       setStatusMessage('Checking...');
+      
+      // Create new AbortController for this request
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
 
       try {
-         // TODO: Replace with actual API call when backend is ready
-         // Simulating API response for testing
-        /*  const mockResponse = await new Promise((resolve) => {
-            setTimeout(() => {
-               // Mock validation logic - for demo purposes
-               const validIds = ['STU12345', 'STU123', 'STUDENT001', 'ST001'];
-               const isValid = validIds.includes(uniqueId.toUpperCase()) && uniqueId.length >= 3;
-               
-               resolve({
-                  success: true,
-                  isvalidate: isValid,
-                  message: isValid ? "Student ID is valid" : "Student ID not found",
-                  data: isValid ? { uniqueId: uniqueId.toUpperCase() } : null
-               });
-            }, 800); // Simulate network delay
-         }); */
-
-         // Real API call
-         const {data} = await axios.get(`/api/v1/Student/validate/${uniqueId}`);
+         
+         const {data} = await axios.get(`/api/v1/Student/validate/${uniqueId}`, {
+         signal: controller.signal,
+         });
 
          console.log('API Response:', data);
          if (data?.success && data?.data?.isValid) {
@@ -106,12 +108,22 @@ const ValidateUniqueIdInput = ({
             getValidationStatus(false);
          }
       } catch (error) {
+         // Check if request was cancelled
+         if (error.name === 'AbortError' || error.message === 'Request cancelled' || axios.isCancel?.(error)) {
+            // Request was cancelled, do nothing to prevent setting state on cancelled requests
+            console.log('Request cancelled:', error.message);
+            return;
+         }
+         
          console.error('Error validating student ID:', error);
          setValidationStatus(false);
          setStatusMessage('Error validating ID. Please try again.');
          getValidationStatus(false);
       } finally {
-         setIsLoading(false);
+         // Only update loading state if request wasn't cancelled
+         if (!controller.signal.aborted) {
+            setIsLoading(false);
+         }
       }
    };
 

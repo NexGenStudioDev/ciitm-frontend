@@ -60,6 +60,8 @@ const UpdateStatus = () => {
 
    return (
       <>
+      {/* this page is for demo i will update in later on the next pr
+      TODO: Complete the page */}
       <Helmet>
                   <title>Update Status - CIITM Admin</title>
                   <meta

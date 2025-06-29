@@ -4,7 +4,6 @@ import ErrorPage from '../Templates/ErrorPage';
 
 const Protected_Admin = () => {
    let student = useSelector(state => state.auth.user);
-   console.log('Protected_Admin student:', student);
 
    if (!student) {
       return <ErrorPage />;
