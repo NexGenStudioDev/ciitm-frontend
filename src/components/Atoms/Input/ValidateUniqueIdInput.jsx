@@ -96,7 +96,7 @@ const ValidateUniqueIdInput = ({
          });
 
          console.log('API Response:', data);
-         if (data?.success && data?.data?.isValid) {
+         if (data?.success && data?.data?.isValidated) {
             // Student found - valid ID
             setValidationStatus(true);
             setStatusMessage('Valid Student ID');
