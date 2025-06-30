@@ -1,16 +1,13 @@
-import React, { useRef, useState } from 'react';
 import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTemplate_Secondary';
-import { MdOutlineArrowDropDown } from 'react-icons/md';
+
 import Image_Form_Title from '../../components/Molecules/Admin/image/Image_Form_Title';
 import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
 import { Helmet } from 'react-helmet-async';
 import { IoIosCloudUpload } from 'react-icons/io';
 
 const ImagePage = () => {
-   const [isOptionOpen, setIsOptionOpen] = useState(false);
-   const [selectedOption, setSelectedOption] = useState(null);
-   const [focusedIndex, setFocusedIndex] = useState(-1);
+
 
    const Album_Name = [
       { id: 1, name: 'Album 1' },
@@ -32,7 +29,8 @@ const ImagePage = () => {
 
          <AdminTemplate pageName='Create Image'>
             <FormTemplate_Secondary>
-               <Image_Form_Title Title='Create Image' />
+              <div className="Image_Form_Container w-full h-[90vh]  flex flex-col items-center">
+                <Image_Form_Title Title='Create Image' />
 
                <Dropdown_Primary
                   width='70%'
@@ -69,6 +67,7 @@ const ImagePage = () => {
                      className='hidden'
                   />
                </div>
+              </div>
             </FormTemplate_Secondary>
          </AdminTemplate>
       </>

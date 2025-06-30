@@ -35,23 +35,24 @@ const StudentPage = () => {
     e.preventDefault();
    let res = await axios.get(`/api/v1/Student/FindByCourseAndSemester?course=${SelectedCourse}&semester=${SelectedSemester}&PerPage=1&Limit=2`)
 
-  if(res.data.success && res.data.data.length < 0) {
-     setStudentData(res.data.data);
-     setIsError(false);
-  } 
+   if(res.data.success && res.data.data.length > 0) {
+      
+      console.log('Response from student search:', res.data.data);
+           setStudentData(res.data?.data);
+           setIsError(false);
+  }
 
   setIsError(false);
-  throw new Error('No students found for the selected course and semester.');
+ 
+ 
 
 } catch (error) {
  
+   console.error('Error fetching student data:', error);
    
    setIsError(true);
    setErrorMessage(error.response?.data?.message || error?.message || 'Something went wrong while fetching student data.');
-   console.error('Error fetching student data:', ErrorMessage);
 
-  }finally {
-   setStudentData([]);
   }
 };
 {console.log('isError:', isError)}

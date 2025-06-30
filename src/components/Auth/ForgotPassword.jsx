@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import forgotImage from '../../assets/images/forgot.jpg';
 import logo from '../../assets/logo.svg';
-import { axios } from '../../utils/apiUrl';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { forgotPasswordSchema } from '../../validation/forgotPassword.schema';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const ForgotPassword = () => {
    const [loading, setLoading] = useState(false);
+   let navigate = useNavigate();
    const {
       register,
       handleSubmit,
@@ -21,10 +22,21 @@ const ForgotPassword = () => {
 
    const onSubmit = async data => {
       try {
+         console.log('Form data:', data);
          setLoading(true);
-         await axios.post(`/forgot-password/${data.email}`);
-         toast.success('Success');
+        await axios.post("/api/v1/forgot-password", {
+            email: data.email
+         });
+
+           toast.success('Success');
+
+         setTimeout(() => {
+            navigate('/reset-password')
+         }, 1000);
+
+         
       } catch (error) {
+         console.error('Error during password reset:', error);
          toast.error(
             error.response?.data?.message || 'An error occurred',
          );

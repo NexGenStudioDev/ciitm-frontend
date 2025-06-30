@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate } from 'react-router-dom';
 import { resetPasswordSchema } from '../../validation/resetPassword.schema';
-import { axios } from '../../utils/apiUrl';
+
 
 import resetImage from '../../assets/images/reset.jpg';
 import logo from '../../assets/logo.svg';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const ResetPassword = () => {
    const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ const ResetPassword = () => {
    const onSubmit = async data => {
       try {
          setLoading(true);
-         await axios.post('/validate/password', {
+         await axios.post('/api/v1/validate/password', {
             email: data.email,
             otp: data.otp,
             newPassword: data.password,
