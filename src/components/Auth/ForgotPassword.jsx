@@ -24,17 +24,15 @@ const ForgotPassword = () => {
       try {
          console.log('Form data:', data);
          setLoading(true);
-        await axios.post("/api/v1/forgot-password", {
-            email: data.email
+         await axios.post('/api/v1/forgot-password', {
+            email: data.email,
          });
 
-           toast.success('Success');
+         toast.success('Success');
 
          setTimeout(() => {
-            navigate('/reset-password')
+            navigate('/reset-password');
          }, 1000);
-
-         
       } catch (error) {
          console.error('Error during password reset:', error);
          toast.error(

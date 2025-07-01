@@ -17,7 +17,7 @@ const Album = () => {
    const user = useSelector(state => state.auth.user);
    const album = useSelector(state => state.home.Album);
 
-     useAlbum();
+   useAlbum();
 
    useEffect(() => {
       if (album) {

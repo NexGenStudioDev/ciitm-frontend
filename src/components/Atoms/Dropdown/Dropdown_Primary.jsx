@@ -1,4 +1,4 @@
-import  { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import PropTypes from 'prop-types';
 
@@ -18,8 +18,6 @@ const Dropdown_Primary = ({
 }) => {
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
    const [selectedOption, setSelectedOption] = useState(value || '');
-
-  
 
    const dropdownRef = useRef(null);
 
@@ -103,7 +101,6 @@ const Dropdown_Primary = ({
       </div>
    );
 };
-
 
 Dropdown_Primary.propTypes = {
    options: PropTypes.arrayOf(PropTypes.string),

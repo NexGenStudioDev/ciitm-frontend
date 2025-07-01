@@ -6,20 +6,14 @@ import StudentDataTable from '../../components/Organisms/Admin/StudentDataTable'
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 
-
-
-const studentOptions = ['Bachelor of Computer Applications (BCA)', 'Master of Computer Applications (MCA)', 'Bachelor of Commerce (B.Com)', 'Bachelor of Business Administration (BBA)'];
-
-const semesterOptions = [
-   1,
-   2,
-   3,
-   4,
-   5,
-   6,
+const studentOptions = [
+   'Bachelor of Computer Applications (BCA)',
+   'Master of Computer Applications (MCA)',
+   'Bachelor of Commerce (B.Com)',
+   'Bachelor of Business Administration (BBA)',
 ];
 
-
+const semesterOptions = [1, 2, 3, 4, 5, 6];
 
 const StudentPage = () => {
    const [isError, setIsError] = React.useState(false);
@@ -28,34 +22,37 @@ const StudentPage = () => {
    const [SelectedCourse, setSelectedCourse] = React.useState('');
    const [SelectedSemester, setSelectedSemester] = React.useState('');
 
-
-
    let Handle_Student_Search = async e => {
-  try {
-    e.preventDefault();
-   let res = await axios.get(`/api/v1/Student/FindByCourseAndSemester?course=${SelectedCourse}&semester=${SelectedSemester}&PerPage=1&Limit=2`)
+      try {
+         e.preventDefault();
+         let res = await axios.get(
+            `/api/v1/Student/FindByCourseAndSemester?course=${SelectedCourse}&semester=${SelectedSemester}&PerPage=1&Limit=2`,
+         );
 
-   if(res.data.success && res.data.data.length > 0) {
-      
-      console.log('Response from student search:', res.data.data);
-           setStudentData(res.data?.data);
-           setIsError(false);
-  }
+         if (res.data.success && res.data.data.length > 0) {
+            console.log(
+               'Response from student search:',
+               res.data.data,
+            );
+            setStudentData(res.data?.data);
+            setIsError(false);
+         }
 
-  setIsError(false);
- 
- 
+         setIsError(false);
+      } catch (error) {
+         console.error('Error fetching student data:', error);
 
-} catch (error) {
- 
-   console.error('Error fetching student data:', error);
-   
-   setIsError(true);
-   setErrorMessage(error.response?.data?.message || error?.message || 'Something went wrong while fetching student data.');
-
-  }
-};
-{console.log('isError:', isError)}
+         setIsError(true);
+         setErrorMessage(
+            error.response?.data?.message ||
+               error?.message ||
+               'Something went wrong while fetching student data.',
+         );
+      }
+   };
+   {
+      console.log('isError:', isError);
+   }
    return (
       <>
          <Helmet>
@@ -83,7 +80,9 @@ const StudentPage = () => {
                   options={semesterOptions}
                   backgroundColor='#1C1C1C'
                   textColor='#FFFFFF'
-                  optionSelectedData={data => setSelectedSemester(data)}
+                  optionSelectedData={data =>
+                     setSelectedSemester(data)
+                  }
                   height='70%'
                   width='40%'
                   value='Select Semester'
@@ -98,22 +97,18 @@ const StudentPage = () => {
                </button>
             </div>
 
-         {isError && (
-            <div className='text-white text-center  flex mb-[4vh] items-center justify-center flex-col w-[94%] max-[553px]:w-[87%] h-[91vh] rounded-md  bg-[#1C1C1C]'>
-               <p className='text-[3rem]'>⚠️</p>
-               <p className='text-[1.2rem]'>{ErrorMessage}</p>
-         
-            </div>
-         )}
+            {isError && (
+               <div className='text-white text-center  flex mb-[4vh] items-center justify-center flex-col w-[94%] max-[553px]:w-[87%] h-[91vh] rounded-md  bg-[#1C1C1C]'>
+                  <p className='text-[3rem]'>⚠️</p>
+                  <p className='text-[1.2rem]'>{ErrorMessage}</p>
+               </div>
+            )}
 
-         {!isError && studentData.length > 0 && (
-            <FormTemplate PageName={'Students'} >
-               <StudentDataTable students={studentData} />
-             </FormTemplate>
-         )}
-
-
-  
+            {!isError && studentData.length > 0 && (
+               <FormTemplate PageName={'Students'}>
+                  <StudentDataTable students={studentData} />
+               </FormTemplate>
+            )}
          </AdminTemplate>
       </>
    );

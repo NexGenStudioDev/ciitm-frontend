@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate } from 'react-router-dom';
 import { resetPasswordSchema } from '../../validation/resetPassword.schema';
 
-
 import resetImage from '../../assets/images/reset.jpg';
 import logo from '../../assets/logo.svg';
 import { toast } from 'react-toastify';

@@ -9,30 +9,34 @@ const StudentTableData = ({ students = [] }) => {
          {students.length > 0 ? (
             students.map((studentData, index) => {
                const { student, uniqueId } = studentData;
-               const fullName = `${student.firstName} ${student.middleName || ''} ${student.lastName}`.trim();
-               
+               const fullName =
+                  `${student.firstName} ${student.middleName || ''} ${student.lastName}`.trim();
+
                return (
-                  <TableRow key={studentData._id || index} Tailwind_utility_Class='w-full h-[7vh] text-white flex items-center justify-between'>
+                  <TableRow
+                     key={studentData._id || index}
+                     Tailwind_utility_Class='w-full h-[7vh] text-white flex items-center justify-between'
+                  >
                      {/* S.No */}
                      <TableData Tailwind_utility_Class='text-center overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F] max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'>
                         {index + 1}
                      </TableData>
-                     
+
                      {/* Name */}
                      <TableData Tailwind_utility_Class='text-center overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F] max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'>
                         {fullName}
                      </TableData>
-                     
+
                      {/* Student ID */}
                      <TableData Tailwind_utility_Class='text-center overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F] max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'>
                         {uniqueId}
                      </TableData>
-                     
+
                      {/* Mobile Number */}
                      <TableData Tailwind_utility_Class='text-center overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F] max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'>
                         {student.contactNumber}
                      </TableData>
-                     
+
                      {/* Action Button */}
                      <TableData Tailwind_utility_Class='text-center overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F] max-[348px]:text-[3.5vw] max-[553px]:text-[2.7vw] max-[775px]:text-[2vw] md:text-md'>
                         <Link_btn
@@ -51,9 +55,7 @@ const StudentTableData = ({ students = [] }) => {
                </TableData>
             </TableRow>
          )}
-      </div>   
-
-
+      </div>
    );
 };
 
@@ -67,11 +69,11 @@ StudentTableData.propTypes = {
             middleName: PropTypes.string,
             lastName: PropTypes.string.isRequired,
             contactNumber: PropTypes.string.isRequired,
-            email: PropTypes.arrayOf(PropTypes.string)
+            email: PropTypes.arrayOf(PropTypes.string),
          }).isRequired,
-         isAdmitted: PropTypes.bool
-      })
-   )
+         isAdmitted: PropTypes.bool,
+      }),
+   ),
 };
 
 export default StudentTableData;

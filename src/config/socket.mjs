@@ -1,7 +1,9 @@
 import { io } from 'socket.io-client';
 
 if (!import.meta.env.VITE_BACKEND_URL) {
-   throw new Error('VITE_BACKEND_URL is not defined in environment variables');
+   throw new Error(
+      'VITE_BACKEND_URL is not defined in environment variables',
+   );
 }
 
 const MAX_RETRIES = 5;
