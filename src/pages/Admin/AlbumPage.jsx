@@ -6,10 +6,43 @@ import { IoIosCloudUpload } from 'react-icons/io';
 import Image_Form_Title from '../../components/Molecules/Admin/image/Image_Form_Title';
 import Input_Primary from '../../components/Atoms/Input/Input_Primary';
 import TextArea_Primary from '../../components/Atoms/Textarea/TextArea_Primary';
+import axios from 'axios';
+import { useRef } from 'react';
+import Swal from 'sweetalert2';
 
 const AlbumPage = () => {
    const [albumName, setAlbumName] = useState('');
    const [albumDescription, setAlbumDescription] = useState('');
+   const [albumCover, setAlbumCover] = useState(null);
+   let AlbumRef = useRef(null);
+
+   let Handle_Album_Creation = async() => {
+      try {
+  
+         let res = await axios.post('/api/v1/admin/create/album', {
+            albumName,
+            albumDescription,
+            albumImage: albumCover ? albumCover : null,
+         }, {
+            headers: {
+               'Content-Type': 'multipart/form-data',
+            },
+         });
+        
+         Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: res.data.message,
+         });
+      } catch (error) {
+        Swal.fire({
+           icon: 'error',
+           title: 'Error',
+           text: error.response?.data?.message || 'Something went wrong!',
+        });
+
+      }
+   };
 
    return (
       <>
@@ -27,16 +60,20 @@ const AlbumPage = () => {
 
                <Input_Primary
                   className='w-[85%] mx-auto mt-6 bg-[#090909] text-white rounded-md p-4'
+                  readOnly={false}
                   placeholder='Enter Album Name'
+                  type='text'
                   value={albumName}
-                  onChange={e => setAlbumName(e.target.value)}
+                  onInput={e => setAlbumName(e.target.value)}
+               
                />
 
                <TextArea_Primary
                   className='w-[85%] mx-auto mt-6 bg-[#090909] text-white rounded-md p-4'
                   placeholder='Enter Your Album Description Here'
+                  readOnly={false}
                   value={albumDescription}
-                  onChange={e => setAlbumDescription(e.target.value)}
+                  onInput={e => setAlbumDescription(e.target.value)}
                   rows={5}
                />
 
@@ -51,13 +88,21 @@ const AlbumPage = () => {
                </label>
 
                <div className='btn_container flex justify-center mt-4'>
-                  <button className='bg-[#322F2F] text-white rounded-lg px-4 py-2'>
+                  <button
+                     className='bg-[#322F2F] text-white rounded-lg px-4 py-2'
+                     onClick={Handle_Album_Creation}
+                  >
                      Create Album
                   </button>
                </div>
 
                <div className='Album_Upload_Container w-full mt-6'>
                   <input
+                     ref={AlbumRef}
+                     onChange={e => {
+                       setAlbumCover(e.target.files[0]);
+                       console.log(e.target.files[0]);
+                     }}
                      type='file'
                      id='album-upload'
                      accept='image/*'

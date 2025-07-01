@@ -6,43 +6,68 @@ if (!import.meta.env.VITE_BACKEND_URL) {
    );
 }
 
-// 👇 Initialize socket connection
-console.log('token', localStorage.getItem('token')); // or sessionStorage
+const MAX_RETRIES = 5;
+let retryCount = 0;
+let reconnecting = false;
+
 const socket = io(import.meta.env.VITE_BACKEND_URL, {
    auth: {
       token: localStorage.getItem('token'), // or sessionStorage
    },
-   withCredentials: true, // Allow cookies to be sent with requests
-   autoConnect: true, // Automatically connect on load (set to false if you want manual control)
-   transports: ['websocket'], // Prefer WebSocket
-   reconnectionAttempts: 5, // Retry 5 times if connection fails
-   timeout: 20000, // Max time to wait for connection
-   pingTimeout: 20000, // Max time to wait for ping response
-   pingInterval: 25000, // Send ping every 25s
+   withCredentials: true,
+   autoConnect: true,
+   transports: ['websocket'],
+   reconnection: false, // We'll handle reconnection manually
+   timeout: 20000,
+   pingTimeout: 20000,
+   pingInterval: 25000,
 });
 
-// ✅ Connection success
-
+// ✅ Connected
 socket.on('connect', () => {
    console.log('✅ Connected to server');
+   retryCount = 0; // reset retry count
+   reconnecting = false;
 });
 
-socket.on('disconnect', () => {
-   console.log('❌ Disconnected from server');
-
-   if (socket.connected) {
-      console.log('✅ Reconnected to server');
-      socket.connect();
+// ❌ Disconnected
+socket.on('disconnect', reason => {
+   console.warn(`⚠️ Disconnected: ${reason}`);
+   if (!reconnecting) {
+      attemptReconnection();
    }
 });
 
+// ❌ Connection error
 socket.on('connect_error', error => {
-   console.error('❌ Connection error:', error);
-   throw new Error(`Connection error: ${error.message}`);
+   console.error('❌ Connection error:', error.message);
+   if (!reconnecting) {
+      attemptReconnection();
+   }
 });
 
-socket.on('connect_timeout', timeout => {
-   console.error(`Connection timeout: ${timeout}`);
-});
+function attemptReconnection() {
+   reconnecting = true;
+   const retryInterval = setInterval(() => {
+      if (socket.connected) {
+         console.log('✅ Reconnected successfully.');
+         clearInterval(retryInterval);
+         reconnecting = false;
+         retryCount = 0;
+         return;
+      }
+
+      if (retryCount >= MAX_RETRIES) {
+         clearInterval(retryInterval);
+         console.error('❌ Reconnection failed. Reloading page...');
+         window.location.reload();
+         return;
+      }
+
+      console.log(`🔄 Reconnection attempt ${retryCount + 1}...`);
+      socket.connect(); // manually attempt to reconnect
+      retryCount++;
+   }, 3000); // wait 3 seconds between each attempt
+}
 
 export default socket;

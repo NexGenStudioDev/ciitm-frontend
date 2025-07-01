@@ -85,6 +85,7 @@ const App = () => {
          <BrowserRouter basename='/'>
             <ScrollRestoration />
             <Routes>
+               <Route path='*' element={<ErrorPage />} />
                <Route path='/' element={<Body />}>
                   <Route path='/' element={<Landing />} />
                   <Route path='/about' element={<About />} />
@@ -175,12 +176,9 @@ const App = () => {
                      element={<UpdateStatus />}
                   />
 
-                  <Route path='*' element={<ErrorPage />} />
+                  <Route path='*' element={<ErrorPage />}
                </Route>
             </Routes>
-            <div
-               dangerouslySetInnerHTML={{ __html: sanitizedInput }}
-            />
          </BrowserRouter>
       </>
    );

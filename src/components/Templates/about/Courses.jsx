@@ -80,76 +80,88 @@ const Courses = () => {
    }, [courseData]);
 
    return (
-     <Suspense fallback={<div className='text-green-700'>Fetching Course From Data Base</div>}>
-       <section className='w-full px-10 py-20 max-[599px]:py-10 flex items-center justify-between flex-col gap-4'>
-         <div className='title text-[#333] text-[3.5vw] max-[599px]:text-[10vw] font-bold font-[Montserrat]'>
-            Our Courses
-         </div>
+      <Suspense
+         fallback={
+            <div className='text-green-700'>
+               Fetching Course From Data Base
+            </div>
+         }
+      >
+         <section className='w-full px-10 py-20 max-[599px]:py-10 flex items-center justify-between flex-col gap-4'>
+            <div className='title text-[#333] text-[3.5vw] max-[599px]:text-[10vw] font-bold font-[Montserrat]'>
+               Our Courses
+            </div>
 
-         <p className='text text-[1vw] max-[599px]:text-[3vw] font-[Poppins] w-[40%] max-[599px]:w-[90%] text-center pb-8'>
-            We have a group of eminent Faculty members with great
-            personality and excellence in their specific domains.
-         </p>
+            <p className='text text-[1vw] max-[599px]:text-[3vw] font-[Poppins] w-[40%] max-[599px]:w-[90%] text-center pb-8'>
+               We have a group of eminent Faculty members with great
+               personality and excellence in their specific domains.
+            </p>
 
-         <div className='cards w-full flex items-center justify-center max-[599px]:flex-col gap-4 max-[599px]:hidden max-[1103px]:flex-wrap'>
-            {Error ? (
-               <p className='text-red-500'>{Error}</p>
-            ) : (
-               courseData.map((data, index) => (
-                  <CourseCard
-                     key={index}
-                     data={{
-                        courseName: data?.courseName || 'Course Name',
-                        duration:
-                           data?.courseDuration || 'Course Duration',
-                        imageUrl: data?.courseThumbnail || '',
-                        _id: data?._id || '',
-                        price: data?.coursePrice || 'Course Price',
-                     }}
-                  />
-               ))
-            )}
-         </div>
-
-         <div className='w-full h-full hidden max-[599px]:block py-5'>
-            <Swiper
-               spaceBetween={30}
-               centeredSlides
-               autoplay={{ delay: 5000, disableOnInteraction: true }}
-               loop
-               modules={[Autoplay]}
-               className='mySwiper'
-            >
+            <div className='cards w-full flex items-center justify-center max-[599px]:flex-col gap-4 max-[599px]:hidden max-[1103px]:flex-wrap'>
                {Error ? (
                   <p className='text-red-500'>{Error}</p>
                ) : (
                   courseData.map((data, index) => (
-                     <SwiperSlide key={index}>
-                        <div className='w-full h-full flex items-center justify-center'>
-                           <CourseCard
-                              key={index}
-                              data={{
-                                 courseName:
-                                    data?.courseName || 'Course Name',
-                                 duration:
-                                    data?.courseDuration ||
-                                    'Course Duration',
-                                 imageUrl:
-                                    data?.courseThumbnail || '',
-                                 _id: data?._id || '',
-                                 price:
-                                    data?.coursePrice ||
-                                    'Course Price',
-                              }}
-                           />
-                        </div>
-                     </SwiperSlide>
+                     <CourseCard
+                        key={index}
+                        data={{
+                           courseName:
+                              data?.courseName || 'Course Name',
+                           duration:
+                              data?.courseDuration ||
+                              'Course Duration',
+                           imageUrl: data?.courseThumbnail || '',
+                           _id: data?._id || '',
+                           price: data?.coursePrice || 'Course Price',
+                        }}
+                     />
                   ))
                )}
-            </Swiper>
-         </div>
-      </section>
-     </Suspense>
+            </div>
+
+            <div className='w-full h-full hidden max-[599px]:block py-5'>
+               <Swiper
+                  spaceBetween={30}
+                  centeredSlides
+                  autoplay={{
+                     delay: 5000,
+                     disableOnInteraction: true,
+                  }}
+                  loop
+                  modules={[Autoplay]}
+                  className='mySwiper'
+               >
+                  {Error ? (
+                     <p className='text-red-500'>{Error}</p>
+                  ) : (
+                     courseData.map((data, index) => (
+                        <SwiperSlide key={index}>
+                           <div className='w-full h-full flex items-center justify-center'>
+                              <CourseCard
+                                 key={index}
+                                 data={{
+                                    courseName:
+                                       data?.courseName ||
+                                       'Course Name',
+                                    duration:
+                                       data?.courseDuration ||
+                                       'Course Duration',
+                                    imageUrl:
+                                       data?.courseThumbnail || '',
+                                    _id: data?._id || '',
+                                    price:
+                                       data?.coursePrice ||
+                                       'Course Price',
+                                 }}
+                              />
+                           </div>
+                        </SwiperSlide>
+                     ))
+                  )}
+               </Swiper>
+            </div>
+         </section>
+      </Suspense>
    );
 };
 

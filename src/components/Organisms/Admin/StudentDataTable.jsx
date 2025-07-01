@@ -48,11 +48,11 @@ StudentDataTable.propTypes = {
             middleName: PropTypes.string,
             lastName: PropTypes.string.isRequired,
             contactNumber: PropTypes.string.isRequired,
-            email: PropTypes.arrayOf(PropTypes.string)
+            email: PropTypes.arrayOf(PropTypes.string),
          }).isRequired,
-         isAdmitted: PropTypes.bool
-      })
-   )
+         isAdmitted: PropTypes.bool,
+      }),
+   ),
 };
 
 export default StudentDataTable;
