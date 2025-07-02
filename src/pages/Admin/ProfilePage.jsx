@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState, useEffect } from 'react';
+import { memo, useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
@@ -160,5 +160,7 @@ const ProfilePage = memo(() => {
       </AdminTemplate>
    );
 });
+
+ProfilePage.displayName = 'ProfilePage';
 
 export default ProfilePage;
