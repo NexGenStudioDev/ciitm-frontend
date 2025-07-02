@@ -9,8 +9,15 @@ const socialLinkSlice = createSlice({
       setSocialLinks: (state, action) => {
          state.links = action.payload;
       },
+      
+      updateSocialLink: (state, action) => {
+         const { field, value } = action.payload;
+         if (state.links) {
+            state.links[field] = value;
+         }
+      },
    },
 });
 
-export const { setSocialLinks } = socialLinkSlice.actions;
+export const { setSocialLinks, updateSocialLink } = socialLinkSlice.actions;
 export default socialLinkSlice.reducer;
