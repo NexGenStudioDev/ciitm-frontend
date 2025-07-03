@@ -8,6 +8,7 @@ import { FaImage } from 'react-icons/fa';
 import { GoBellFill } from 'react-icons/go';
 import { PiStudentBold } from 'react-icons/pi';
 import { GiCash } from 'react-icons/gi';
+import { MdSystemUpdateAlt } from 'react-icons/md';
 import gsap from 'gsap';
 import AdminSidebarLink from '../../../Atoms/Links/AdminSidebarLink';
 import { FaBookBookmark } from 'react-icons/fa6';
@@ -39,6 +40,11 @@ const links = [
       name: 'Fee Payment',
       link: '/admin/student/pay/fee',
       icon: <GiCash />,
+   },
+   {
+      name: 'Update Status',
+      link: '/admin/update/status',
+      icon: <MdSystemUpdateAlt />,
    },
 ];
 

@@ -7,7 +7,7 @@ export default defineConfig({
    server: {
       proxy: {
          '/api': {
-            target: 'http://localhost:3000', // For Production use this URL:- https://ciitm-backend.onrender.com
+            target: 'https://ciitm-backend.onrender.com', // For Production use this URL:- https://ciitm-backend.onrender.com
             changeOrigin: true,
             secure: false, // Set to true if using HTTPS
          },

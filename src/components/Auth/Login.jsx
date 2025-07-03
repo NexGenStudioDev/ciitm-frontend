@@ -36,7 +36,6 @@ const Login = () => {
          if (!find_Email || !find_Password) {
             throw new Error('Email or Password not found in state');
          }
-
          let res = await axios.post(
             Login_EndPoint,
             {

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
    addInput,
@@ -62,6 +63,16 @@ const Input_Primary = ({
          name={name}
       />
    );
+};
+
+Input_Primary.propTypes = {
+   type: PropTypes.string,
+   placeholder: PropTypes.string,
+   value: PropTypes.string,
+   readOnly: PropTypes.bool,
+   className: PropTypes.string,
+   name: PropTypes.string.isRequired,
+   onInput: PropTypes.func,
 };
 
 export default Input_Primary;

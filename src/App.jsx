@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Body from './Body';
 import {
    BrowserRouter,
@@ -33,6 +33,7 @@ import StudentViewPage from './pages/Admin/StudentViewPage';
 import AlbumPage from './pages/Admin/AlbumPage';
 import FeePay from './pages/Admin/FeePay';
 import CreateCourse from './pages/Admin/CreateCourse';
+import UpdateStatus from './pages/Admin/UpdateStatus';
 import ViewCourseDetail from './pages/ViewCourseDetail';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ResetPassword from './components/Auth/ResetPassword';
@@ -84,7 +85,7 @@ const App = () => {
          <BrowserRouter basename='/'>
             <ScrollRestoration />
             <Routes>
-                <Route path='*' element={<ErrorPage />} />
+               <Route path='*' element={<ErrorPage />} />
                <Route path='/' element={<Body />}>
                   <Route path='/' element={<Landing />} />
                   <Route path='/about' element={<About />} />
@@ -170,10 +171,14 @@ const App = () => {
                      element={<FeePay />}
                   />
 
-                 
+                  <Route
+                     path='/admin/update/status'
+                     element={<UpdateStatus />}
+                  />
+
+                  <Route path='*' element={<ErrorPage />}
                </Route>
             </Routes>
-          
          </BrowserRouter>
       </>
    );

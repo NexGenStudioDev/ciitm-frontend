@@ -11,7 +11,7 @@ StudentTableHeading.propTypes = {
       PropTypes.shape({
          text: PropTypes.string.isRequired,
          style: PropTypes.string.isRequired,
-      })
+      }),
    ),
 };
 

@@ -28,7 +28,6 @@ const FormTemplate = ({ children, Navigator = true, PageName }) => {
          </table>
          {Navigator && (
             <div className='w-full h-[8vh] bg-[#090909] rounded-bl-2xl rounded-br-2xl text-white flex items-center gap-[1.5vw] justify-end text-[1.5vw]'>
-         
                <FaArrowAltCircleLeft
                   onClick={() => {
                      dispatch(
