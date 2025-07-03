@@ -37,9 +37,9 @@ import UpdateStatus from './pages/Admin/UpdateStatus';
 import ViewCourseDetail from './pages/ViewCourseDetail';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ResetPassword from './components/Auth/ResetPassword';
-const userInput = "<img src='x' onerror='alert(1)' />";
 
-const sanitizedInput = DOMPurify.sanitize(userInput);
+
+
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -176,7 +176,7 @@ const App = () => {
                      element={<UpdateStatus />}
                   />
 
-                  <Route path='*' element={<ErrorPage />}
+                  <Route path='*' element={<ErrorPage />} />
                </Route>
             </Routes>
          </BrowserRouter>
