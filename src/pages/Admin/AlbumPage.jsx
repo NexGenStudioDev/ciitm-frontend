@@ -58,7 +58,10 @@ const AlbumPage = () => {
             <FormTemplate_Secondary>
                <Image_Form_Title Title='Create Album' />
 
-               <Input_Primary
+              <div className="w-full flex flex-col items-center h-screen">
+
+               
+              <Input_Primary
                   className='w-[85%] mx-auto mt-6 bg-[#090909] text-white rounded-md p-4'
                   readOnly={false}
                   placeholder='Enter Album Name'
@@ -109,6 +112,7 @@ const AlbumPage = () => {
                      className='hidden'
                   />
                </div>
+              </div>
             </FormTemplate_Secondary>
          </AdminTemplate>
       </>

@@ -7,6 +7,7 @@ const ValidateUniqueIdInput = ({
    placeholder = 'Enter Student ID',
    readOnly = false,
    disabled = false,
+   getStudentId,
    required = false,
    minLength = 1,
    maxLength = 50,
@@ -42,6 +43,7 @@ const ValidateUniqueIdInput = ({
    const handleInputChange = (e) => {
       const value = e.target.value;
       setInputValue(value);
+      getStudentId(value.trim()); // Update parent component with current input value
 
       // Clear previous debounce and abort previous request
       if (debounceRef.current) {
@@ -211,6 +213,7 @@ const ValidateUniqueIdInput = ({
 
 ValidateUniqueIdInput.propTypes = {
    getValidationStatus: PropTypes.func.isRequired,
+   getStudentId: PropTypes.func,
    placeholder: PropTypes.string,
    readOnly: PropTypes.bool,
    disabled: PropTypes.bool,

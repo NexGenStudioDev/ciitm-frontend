@@ -3,8 +3,53 @@ import Input_Primary from '../../../Atoms/Input/Input_Primary';
 import Link_btn from '../../../Atoms/Button/Link_btn';
 import TextArea_Primary from '../../../Atoms/Textarea/TextArea_Primary';
 import H3 from '../../../Atoms/Heading/H3';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Contact_view = ({ data = {} }) => {
+
+   let Navigator = useNavigate();
+   const handleDelete = async () => {
+      const result = await Swal.fire({
+         title: 'Are you sure?',
+         text: 'You will not be able to recover this contact!',
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#d33',
+         cancelButtonColor: '#3085d6',
+         confirmButtonText: 'Yes, delete it!',
+         cancelButtonText: 'No, cancel!',
+      });
+
+      if (result.isConfirmed) {
+         try {
+            let res = await axios.delete('/api/v1/contact/admin/deleteContact/' + data?._id);
+
+            if (res.data.success) {
+               Swal.fire({
+                  icon: 'success',
+                  title: 'Deleted',
+                  text: 'Your contact has been deleted successfully!',
+               });
+
+               setTimeout(() => {
+                  Navigator('/admin/contact');
+               }
+               , 1000);
+               
+            }
+         } catch (error) {
+            console.error('Error deleting contact:', error);
+            Swal.fire({
+               icon: 'error',
+               title: 'Error',
+               text: error.response?.data?.message || 'Something went wrong!',
+            });
+         }
+      }
+   };
+
    return (
       <div className='relative flex flex-col gap-4 max-[300px]:text-[4vw] max-[500px]:text-[2.8vw] max-[995px]:text-[2vw] text-[1.3vw]'>
          <div className='Name_Container flex flex-col gap-2  px-[1.8vw]'>
@@ -106,9 +151,7 @@ const Contact_view = ({ data = {} }) => {
               focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2
              max-[300px]:text-[4vw] max-[500px]:text-[2.8vw] max-[995px]:text-[2vw] text-[1.3vw]
             '
-               onClick={() => {
-                  alert('Delete functionality not implemented yet.');
-               }}
+               onClick={handleDelete}
             >
                🗑️ Delete
             </button>
