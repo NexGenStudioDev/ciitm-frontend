@@ -38,9 +38,6 @@ import ViewCourseDetail from './pages/ViewCourseDetail';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ResetPassword from './components/Auth/ResetPassword';
 
-
-
-
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
    const location = useLocation();

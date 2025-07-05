@@ -14,47 +14,47 @@ const fallbackImage = 'https://via.placeholder.com/150';
 const FeePay = () => {
    const [studentId, setStudentId] = useState('');
    const [isValidId, setIsValidId] = useState(false);
- 
+   const [paymentMethod, setPaymentMethod] = useState('');
    const [studentData, setStudentData] = useState(null);
    const [amount, setAmount] = useState('');
    const [error, setError] = useState('');
 
    // Dummy fetch function, replace with real API/socket call
-   const fetchStudentData = async() => {
-     
+   const fetchStudentData = async () => {
       try {
-         let res =  await axios.get(`/api/v1/Student/FeeInfo?uniqueId=${studentId}`);
-       
-         let data = res.data.data.Student_Info ;
+         let res = await axios.get(
+            `/api/v1/Student/FeeInfo?uniqueId=${studentId}`,
+         );
+
+         let data = res.data.data.Student_Info;
          console.log('Fetched Student Data:', data);
          if (data) {
             console.log('Student Data:', data.student);
-         setStudentData({
-            profileImage: data.student.avtar || fallbackImage,
-            name: `${data.student.firstName} ${data.student.middleName}  ${data.student.lastName}`   || 'Unknown data.student',
-            email: data.student.email[0] || 'No Email Provided',
-            semester: data.semester || 'N/A',
-            totalCourseFee: data.fee.course_Fee || 0,
-            totalAmountPaid: data.fee.amount_paid || 0,
-            totalAmountDue: data.fee.amount_due || 0,
-         });
+            setStudentData({
+               profileImage: data.student.avtar || fallbackImage,
+               name:
+                  `${data.student.firstName} ${data.student.middleName}  ${data.student.lastName}` ||
+                  'Unknown data.student',
+               email: data.student.email[0] || 'No Email Provided',
+               semester: data.semester || 'N/A',
+               totalCourseFee: data.fee.course_Fee || 0,
+               totalAmountPaid: data.fee.amount_paid || 0,
+               totalAmountDue: data.fee.amount_due || 0,
+            });
          }
-       
-
-  
       } catch (error) {
          Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: error.response?.data?.message || 'Something went wrong!',
-         })
-         
+            text:
+               error.response?.data?.message ||
+               'Something went wrong!',
+         });
       }
    };
 
    console.log('Student ID:', studentId);
    console.log('Is Valid ID:', isValidId);
-
 
    useEffect(() => {
       if (studentId && isValidId) {
@@ -66,30 +66,49 @@ const FeePay = () => {
       }
    }, [studentId, isValidId]);
 
-   const handlePay = () => {
-      if (!amount || isNaN(amount) || Number(amount) <= 0) {
-         setError('Please enter a valid amount.');
-         return;
+   console.log('Pay' , paymentMethod)
+   const handlePay = async() => {
+     try {
+      let res = await axios.patch('/api//v1/Student/FeeUpdate', {
+         uniqueId: studentId,
+         paymentMethod: paymentMethod,
+         Paid_amount: amount, 
+      })
+
+      if (res.data.success) {
+         Swal.fire({
+            icon: 'success',
+            title: 'Payment Successful',
+            text: res.data.message,
+   
+         })
       }
-      setError('');
-      alert(`Paid ₹${amount} for ${studentData?.name}`);
-      setAmount('');
+
+
+     } catch (error) {
+      Swal.fire({
+         icon: 'error',
+         title: 'Payment Error',
+         text: error.response?.data?.message || 'Payment failed. Please try again.',
+   
+      })
+     }
    };
 
    return (
       <AdminTemplate pageName='Fee Pay'>
          <div className='findStudent_Container  w-[90%] px-[2vw] h-[10vh] flex items-center justify-stretch gap-4 bg-[#1C1C1C] rounded-lg mb-[3vh]'>
-
-            <ValidateUniqueIdInput 
-            disabled={false} 
-            getStudentId={(data) => {setStudentId(data)}}
-            getValidationStatus={(data) => {setIsValidId(data)}} 
-            className='w-[75%] h-[70%] bg-[#1C1C1C] text-white placeholder-white rounded-md p-2 focus:outline-none border-2 border-solid border-[#2C2C2C]' 
-            placeholder='Enter Student ID'
-
+            <ValidateUniqueIdInput
+               disabled={false}
+               getStudentId={data => {
+                  setStudentId(data);
+               }}
+               getValidationStatus={data => {
+                  setIsValidId(data);
+               }}
+               className='w-[75%] h-[70%] bg-[#1C1C1C] text-white placeholder-white rounded-md p-2 focus:outline-none border-2 border-solid border-[#2C2C2C]'
+               placeholder='Enter Student ID'
             />
-       
-        
          </div>
 
          {error && (
@@ -154,46 +173,38 @@ const FeePay = () => {
                   </div>
                   {/* Pay Section */}
 
-               
                   <div className='w-full flex flex-col  items-center justify-center gap-4 mt-6'>
-                   
-                <div className="w-full  flex flex-col gap-[2rem] items-center justify-center">
+                     <div className='w-full  flex flex-col gap-[2rem] items-center justify-center'>
+                        <Dropdown_Primary
+                           width='85%'
+                           height='5vh'
+                           optionSelectedData={'sss'}
+                           options={[
+                              'Cash',
+                              'Cheque',
+                              'Online Transfer',
+                              'UPI',
+                              'Card Payment',
+                           ]}
+                           getSelectedOption={data => setPaymentMethod(data)}
+                          
+                           backgroundColor='#2B2C2B'
+                           value='Select Payment Method'
+                           border='2px solid #2C2C2C'
+                           textColor='#FFFFFF'
+                        />
 
-                     <Dropdown_Primary
-                                                      width='85%'
-                                                      height='5vh'
-          
-                                                      optionSelectedData={'sss'}
+                        <Input_Primary
+                           type='number'
+                           min='1'
+                           value={amount}
+                           onInput={e => setAmount(e.target.value)}
+                           readOnly={false}
+                           placeholder='Enter Amount'
+                           className='w-[85%] h-[5vh] bg-[#2B2C2B] text-white placeholder-white rounded-md p-2 text-[2.5vw] min-[600px]:text-[1.5vw]'
+                        />
+                     </div>
 
-                                                      options={[
-                                                         'Cash',
-                                                         'Cheque',
-                                                         'Online Transfer',
-                                                         'UPI',
-                                                         'Card Payment',
-                                                      ]}
-                                                      backgroundColor='#2B2C2B'
-                                                      value='Select Payment Method'
-                                                      border='2px solid #2C2C2C'
-                                                      textColor='#FFFFFF'
-                                                   />
-
-
-                <Input_Primary
-                        type='number'
-                        min='1'
-                        value={amount}
-                        onInput={e => setAmount(e.target.value)}
-                        readOnly={false}
-                        placeholder='Enter Amount'
-                        className='w-[85%] h-[5vh] bg-[#2B2C2B] text-white placeholder-white rounded-md p-2 text-[2.5vw] min-[600px]:text-[1.5vw]'
-                     />
-
-                </div>
-
-
-               
-                 
                      <button
                         className='
                   w-full md:w-[20%]

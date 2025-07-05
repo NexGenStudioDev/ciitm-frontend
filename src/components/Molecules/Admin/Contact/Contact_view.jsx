@@ -8,7 +8,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Contact_view = ({ data = {} }) => {
-
    let Navigator = useNavigate();
    const handleDelete = async () => {
       const result = await Swal.fire({
@@ -24,7 +23,9 @@ const Contact_view = ({ data = {} }) => {
 
       if (result.isConfirmed) {
          try {
-            let res = await axios.delete('/api/v1/contact/admin/deleteContact/' + data?._id);
+            let res = await axios.delete(
+               '/api/v1/contact/admin/deleteContact/' + data?._id,
+            );
 
             if (res.data.success) {
                Swal.fire({
@@ -35,16 +36,16 @@ const Contact_view = ({ data = {} }) => {
 
                setTimeout(() => {
                   Navigator('/admin/contact');
-               }
-               , 1000);
-               
+               }, 1000);
             }
          } catch (error) {
             console.error('Error deleting contact:', error);
             Swal.fire({
                icon: 'error',
                title: 'Error',
-               text: error.response?.data?.message || 'Something went wrong!',
+               text:
+                  error.response?.data?.message ||
+                  'Something went wrong!',
             });
          }
       }
