@@ -11,7 +11,7 @@ const Search = () => {
 
    let Handle_Search = async () => {
       try {
-         console.log('Student_Id:', Student_Id);
+       
          const response = await axios.get(
             `/api/find/student/payment/info?uniqueId=${Student_Id}`,
          );

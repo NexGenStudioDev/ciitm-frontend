@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const CourseCard = memo(({ data }) => {
-   console.log('CourseCard data:', data?.courseName.split('('));
+  
    return (
       <div className='card-1 h-full w-[25%] max-[599px]:w-full px-2 py-3 border-[1px] border-black rounded-xl max-[1098px]:w-[40%]'>
          <div
@@ -56,8 +56,7 @@ const Courses = () => {
 
          setCourseData(data || []);
          setError(null);
-         console.log('Course data:', courseSlice);
-         // console.log('Courses fetched successfully:', res.data?.data);
+       
       } catch (error) {
          console.error(
             'Error fetching courses:',

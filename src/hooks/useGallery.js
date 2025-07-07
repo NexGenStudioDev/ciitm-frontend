@@ -7,7 +7,7 @@ export let useGallery = () => {
    const dispatch = useDispatch();
    const gallery = useSelector(state => state.gallery);
 
-   console.log('Gallery', gallery);
+  
 
    const fetchData = async () => {
       try {

@@ -56,9 +56,7 @@ const Signup = () => {
             confirm_Password: confirm_Password.value,
          });
 
-         if (res.data) {
-            console.log('Signup Response:', res.data);
-         }
+       
 
          Swal.fire({
             icon: 'success',

@@ -183,6 +183,7 @@ const UpdateStatus = () => {
                            placeholder='Enter Student Unique ID (e.g., STU123)'
                            required
                            minLength={3}
+                           getStudentId={setValidatedUniqueId}
                            maxLength={20}
                            width='100%'
                            height='52px'
@@ -201,6 +202,7 @@ const UpdateStatus = () => {
                               Current Status
                            </label>
                            <div className=''>
+                              ffff
                               <span
                                  className={`inline-flex px-3 py-1 rounded-full text-sm font-medium ${
                                     currentStatus === 'Pending'

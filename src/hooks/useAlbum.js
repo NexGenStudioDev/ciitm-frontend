@@ -7,15 +7,14 @@ import axios from 'axios';
 
 const useAlbum = () => {
    let Album = useSelector(state => state.home.Album);
-   console.log('Album: selector', Album);
-
+ 
    let dispatch = useDispatch();
 
    const Handle_Album = async () => {
       try {
          if (!Album) {
             const response = await axios.get(Album_EndPoint);
-            console.log('Album Response:', response);
+         
             let data = response.data.data;
             dispatch(setAlbum(data));
          }
