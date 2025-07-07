@@ -14,6 +14,7 @@ const fallbackImage = 'https://via.placeholder.com/150';
 const FeePay = () => {
    const [studentId, setStudentId] = useState('');
    const [isValidId, setIsValidId] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
    const [paymentMethod, setPaymentMethod] = useState('');
    const [studentData, setStudentData] = useState(null);
    const [amount, setAmount] = useState('');
@@ -64,7 +65,7 @@ const FeePay = () => {
          setAmount('');
          setError('');
       }
-   }, [studentId, isValidId]);
+   }, [studentId, isValidId , isLoading]);
 
    console.log('Pay' , paymentMethod)
    const handlePay = async() => {
@@ -75,6 +76,8 @@ const FeePay = () => {
          Paid_amount: amount, 
       })
 
+
+
       if (res.data.success) {
          Swal.fire({
             icon: 'success',
@@ -82,6 +85,10 @@ const FeePay = () => {
             text: res.data.message,
    
          })
+         setIsLoading(true);
+         setTimeout(() => {
+            setIsLoading(false);
+         }, 2000);
       }
 
 
@@ -178,7 +185,7 @@ const FeePay = () => {
                         <Dropdown_Primary
                            width='85%'
                            height='5vh'
-                           optionSelectedData={'sss'}
+                           optionSelectedData={data => setPaymentMethod(data)}
                            options={[
                               'Cash',
                               'Cheque',
@@ -186,7 +193,8 @@ const FeePay = () => {
                               'UPI',
                               'Card Payment',
                            ]}
-                           getSelectedOption={data => setPaymentMethod(data)}
+
+                      
                           
                            backgroundColor='#2B2C2B'
                            value='Select Payment Method'
