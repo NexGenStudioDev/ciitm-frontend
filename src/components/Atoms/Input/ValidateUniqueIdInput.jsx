@@ -7,6 +7,7 @@ const ValidateUniqueIdInput = ({
    placeholder = 'Enter Student ID',
    readOnly = false,
    disabled = false,
+   getStudentId,
    required = false,
    minLength = 1,
    maxLength = 50,
@@ -39,9 +40,10 @@ const ValidateUniqueIdInput = ({
    }, []);
 
    // Handle input change
-   const handleInputChange = (e) => {
+   const handleInputChange = e => {
       const value = e.target.value;
       setInputValue(value);
+      getStudentId(value.trim()); // Update parent component with current input value
 
       // Clear previous debounce and abort previous request
       if (debounceRef.current) {
@@ -64,7 +66,9 @@ const ValidateUniqueIdInput = ({
       // Check length constraints
       if (value.length < minLength || value.length > maxLength) {
          setValidationStatus(false);
-         setStatusMessage(`ID must be between ${minLength} and ${maxLength} characters`);
+         setStatusMessage(
+            `ID must be between ${minLength} and ${maxLength} characters`,
+         );
          getValidationStatus(false, '');
          return;
       }
@@ -76,7 +80,7 @@ const ValidateUniqueIdInput = ({
    };
 
    // Validate student ID against API
-   const validateStudentId = async (uniqueId) => {
+   const validateStudentId = async uniqueId => {
       // Guard clause: Don't validate empty or invalid input
       if (!uniqueId || !uniqueId.trim()) {
          return;
@@ -84,16 +88,18 @@ const ValidateUniqueIdInput = ({
 
       setIsLoading(true);
       setStatusMessage('Checking...');
-      
+
       // Create new AbortController for this request
       const controller = new AbortController();
       abortControllerRef.current = controller;
 
       try {
-         
-         const {data} = await axios.get(`/api/v1/Student/validate/${uniqueId}`, {
-         signal: controller.signal,
-         });
+         const { data } = await axios.get(
+            `/api/v1/Student/validate/${uniqueId}`,
+            {
+               signal: controller.signal,
+            },
+         );
 
          console.log('API Response:', data);
          if (data?.success && data?.data?.isValidated) {
@@ -109,12 +115,16 @@ const ValidateUniqueIdInput = ({
          }
       } catch (error) {
          // Check if request was cancelled
-         if (error.name === 'AbortError' || error.message === 'Request cancelled' || axios.isCancel?.(error)) {
+         if (
+            error.name === 'AbortError' ||
+            error.message === 'Request cancelled' ||
+            axios.isCancel?.(error)
+         ) {
             // Request was cancelled, do nothing to prevent setting state on cancelled requests
             console.log('Request cancelled:', error.message);
             return;
          }
-         
+
          console.error('Error validating student ID:', error);
          setValidationStatus(false);
          setStatusMessage('Error validating ID. Please try again.');
@@ -138,27 +148,31 @@ const ValidateUniqueIdInput = ({
    // Determine input border color based on validation status
    const getBorderColor = () => {
       if (isLoading) return 'border-blue-400 focus:border-blue-500';
-      if (validationStatus === true) return 'border-green-400 focus:border-green-500';
-      if (validationStatus === false) return 'border-red-400 focus:border-red-500';
+      if (validationStatus === true)
+         return 'border-green-400 focus:border-green-500';
+      if (validationStatus === false)
+         return 'border-red-400 focus:border-red-500';
       return 'border-gray-300 focus:border-blue-500';
    };
 
    return (
-      <div className="w-full" style={{ width, ...style }}>
+      <div className='w-full' style={{ width, ...style }}>
          {/* Status Message */}
          {statusMessage && (
-            <div className={`text-sm mb-2 flex items-center gap-1 ${getStatusColor()}`}>
+            <div
+               className={`text-sm mb-2 flex items-center gap-1 ${getStatusColor()}`}
+            >
                {isLoading && (
-                  <div className="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+                  <div className='animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full'></div>
                )}
                <span>{statusMessage}</span>
             </div>
          )}
 
          {/* Input Field */}
-         <div className="relative">
+         <div className='relative'>
             <input
-               type="text"
+               type='text'
                value={inputValue}
                onChange={handleInputChange}
                placeholder={placeholder}
@@ -182,18 +196,18 @@ const ValidateUniqueIdInput = ({
 
             {/* Loading indicator inside input */}
             {isLoading && (
-               <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  <div className="animate-spin h-5 w-5 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+               <div className='absolute right-3 top-1/2 transform -translate-y-1/2'>
+                  <div className='animate-spin h-5 w-5 border-2 border-blue-500 border-t-transparent rounded-full'></div>
                </div>
             )}
 
             {/* Success/Error icon */}
             {!isLoading && validationStatus !== null && (
-               <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+               <div className='absolute right-3 top-1/2 transform -translate-y-1/2'>
                   {validationStatus ? (
-                     <div className="text-green-500 text-xl">✓</div>
+                     <div className='text-green-500 text-xl'>✓</div>
                   ) : (
-                     <div className="text-red-500 text-xl">✗</div>
+                     <div className='text-red-500 text-xl'>✗</div>
                   )}
                </div>
             )}
@@ -201,7 +215,7 @@ const ValidateUniqueIdInput = ({
 
          {/* Character count (optional) */}
          {inputValue && (
-            <div className="text-xs text-gray-400 mt-1 text-right">
+            <div className='text-xs text-gray-400 mt-1 text-right'>
                {inputValue.length}/{maxLength}
             </div>
          )}
@@ -211,6 +225,7 @@ const ValidateUniqueIdInput = ({
 
 ValidateUniqueIdInput.propTypes = {
    getValidationStatus: PropTypes.func.isRequired,
+   getStudentId: PropTypes.func,
    placeholder: PropTypes.string,
    readOnly: PropTypes.bool,
    disabled: PropTypes.bool,

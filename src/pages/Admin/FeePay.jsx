@@ -1,64 +1,114 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTemplate_Secondary';
 import Input_Primary from '../../components/Atoms/Input/Input_Primary';
+import ValidateUniqueIdInput from '../../components/Atoms/Input/ValidateUniqueIdInput';
+import Dropdown from '../../components/Templates/admission/DropDown';
+import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { use } from 'react';
 
 const fallbackImage = 'https://via.placeholder.com/150';
 
 const FeePay = () => {
    const [studentId, setStudentId] = useState('');
+   const [isValidId, setIsValidId] = useState(false);
+   const [paymentMethod, setPaymentMethod] = useState('');
    const [studentData, setStudentData] = useState(null);
    const [amount, setAmount] = useState('');
    const [error, setError] = useState('');
 
    // Dummy fetch function, replace with real API/socket call
-   const fetchStudentData = () => {
-      // // Simulate fetching data
-      // if (studentId.trim() === "") {
-      //   setError("Please enter a Student ID.");
-      //   setStudentData(null);
-      //   return;
-      // }
-      // setError('');
-      // // Replace this with your real fetch logic
-      setStudentData({
-         profileImage: fallbackImage,
-         name: 'Abhishek Kumar',
-         email: 'abhishek.nexgen.dev@gmail.com',
-         semester: '1',
-         totalCourseFee: 150000,
-         totalAmountPaid: 50000,
-         totalAmountDue: 100000,
-      });
+   const fetchStudentData = async () => {
+      try {
+         let res = await axios.get(
+            `/api/v1/Student/FeeInfo?uniqueId=${studentId}`,
+         );
+
+         let data = res.data.data.Student_Info;
+         console.log('Fetched Student Data:', data);
+         if (data) {
+            console.log('Student Data:', data.student);
+            setStudentData({
+               profileImage: data.student.avtar || fallbackImage,
+               name:
+                  `${data.student.firstName} ${data.student.middleName}  ${data.student.lastName}` ||
+                  'Unknown data.student',
+               email: data.student.email[0] || 'No Email Provided',
+               semester: data.semester || 'N/A',
+               totalCourseFee: data.fee.course_Fee || 0,
+               totalAmountPaid: data.fee.amount_paid || 0,
+               totalAmountDue: data.fee.amount_due || 0,
+            });
+         }
+      } catch (error) {
+         Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text:
+               error.response?.data?.message ||
+               'Something went wrong!',
+         });
+      }
    };
 
-   const handlePay = () => {
-      if (!amount || isNaN(amount) || Number(amount) <= 0) {
-         setError('Please enter a valid amount.');
-         return;
+   console.log('Student ID:', studentId);
+   console.log('Is Valid ID:', isValidId);
+
+   useEffect(() => {
+      if (studentId && isValidId) {
+         fetchStudentData();
+      } else {
+         setStudentData(null);
+         setAmount('');
+         setError('');
       }
-      setError('');
-      alert(`Paid ₹${amount} for ${studentData?.name}`);
-      setAmount('');
+   }, [studentId, isValidId]);
+
+   console.log('Pay' , paymentMethod)
+   const handlePay = async() => {
+     try {
+      let res = await axios.patch('/api//v1/Student/FeeUpdate', {
+         uniqueId: studentId,
+         paymentMethod: paymentMethod,
+         Paid_amount: amount, 
+      })
+
+      if (res.data.success) {
+         Swal.fire({
+            icon: 'success',
+            title: 'Payment Successful',
+            text: res.data.message,
+   
+         })
+      }
+
+
+     } catch (error) {
+      Swal.fire({
+         icon: 'error',
+         title: 'Payment Error',
+         text: error.response?.data?.message || 'Payment failed. Please try again.',
+   
+      })
+     }
    };
 
    return (
       <AdminTemplate pageName='Fee Pay'>
          <div className='findStudent_Container  w-[90%] px-[2vw] h-[10vh] flex items-center justify-stretch gap-4 bg-[#1C1C1C] rounded-lg mb-[3vh]'>
-            <Input_Primary
-               name='studentId'
-               type='text'
-               value={studentId}
-               onChange={e => setStudentId(e.target.value)}
-               placeholder='Student ID'
+            <ValidateUniqueIdInput
+               disabled={false}
+               getStudentId={data => {
+                  setStudentId(data);
+               }}
+               getValidationStatus={data => {
+                  setIsValidId(data);
+               }}
                className='w-[75%] h-[70%] bg-[#1C1C1C] text-white placeholder-white rounded-md p-2 focus:outline-none border-2 border-solid border-[#2C2C2C]'
+               placeholder='Enter Student ID'
             />
-            <button
-               className='w-[20%] h-[70%] bg-[#2C2C2C] text-white rounded-md p-2 hover:bg-[#3C3C3C] transition-colors duration-300'
-               onClick={fetchStudentData}
-            >
-               Search
-            </button>
          </div>
 
          {error && (
@@ -69,7 +119,7 @@ const FeePay = () => {
 
          <FormTemplate_Secondary>
             {studentData && (
-               <div className='w-full  flex flex-col items-center gap-6'>
+               <div className='w-full h-screen flex flex-col items-center gap-6'>
                   {/* Profile Picture */}
                   <img
                      src={studentData.profileImage}
@@ -122,15 +172,39 @@ const FeePay = () => {
                      </div>
                   </div>
                   {/* Pay Section */}
-                  <div className='w-full flex flex-col md:flex-row items-center justify-center gap-4 mt-6'>
-                     <Input_Primary
-                        type='number'
-                        min='1'
-                        value={amount}
-                        onChange={e => setAmount(e.target.value)}
-                        placeholder='Enter Amount'
-                        className='w-full md:w-[40%] bg-[#2B2C2B] text-white placeholder-white rounded-md p-2'
-                     />
+
+                  <div className='w-full flex flex-col  items-center justify-center gap-4 mt-6'>
+                     <div className='w-full  flex flex-col gap-[2rem] items-center justify-center'>
+                        <Dropdown_Primary
+                           width='85%'
+                           height='5vh'
+                           optionSelectedData={'sss'}
+                           options={[
+                              'Cash',
+                              'Cheque',
+                              'Online Transfer',
+                              'UPI',
+                              'Card Payment',
+                           ]}
+                           getSelectedOption={data => setPaymentMethod(data)}
+                          
+                           backgroundColor='#2B2C2B'
+                           value='Select Payment Method'
+                           border='2px solid #2C2C2C'
+                           textColor='#FFFFFF'
+                        />
+
+                        <Input_Primary
+                           type='number'
+                           min='1'
+                           value={amount}
+                           onInput={e => setAmount(e.target.value)}
+                           readOnly={false}
+                           placeholder='Enter Amount'
+                           className='w-[85%] h-[5vh] bg-[#2B2C2B] text-white placeholder-white rounded-md p-2 text-[2.5vw] min-[600px]:text-[1.5vw]'
+                        />
+                     </div>
+
                      <button
                         className='
                   w-full md:w-[20%]

@@ -11,6 +11,7 @@ const CreateCourse = () => {
    const [courseName, setCourseName] = useState('');
    const [coursePrice, setCoursePrice] = useState('');
    const [courseDuration, setCourseDuration] = useState('');
+   const [ImageUrl, setImageUrl] = useState('');
    const [courseEligibility, setCourseEligibility] = useState('');
    const [courseThumbnail, setCourseThumbnail] = useState('');
    const [courseDescription, setCourseDescription] = useState('');
@@ -162,6 +163,28 @@ const CreateCourse = () => {
                      required
                   />
                </div>
+
+
+               <div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+                  <label
+                     htmlFor='imageUrl'
+                     className='text-white mb-2'
+                  >
+                     Course Image URL
+                     
+                  </label>
+                  <Input_Primary
+                     className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
+                     type='text'
+                     id='imageUrl'
+                     name='imageUrl'
+                     placeholder='Enter course image URL'
+                     value={ImageUrl}
+                     onInput={e => setImageUrl(e.target.value)}
+                     required
+                  />
+               </div>
+
 
                <div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
                   <label

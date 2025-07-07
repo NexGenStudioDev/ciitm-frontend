@@ -43,7 +43,7 @@ const Dropdown_Primary = ({
 
    const handleOptionClick = option => {
       setSelectedOption(option);
-      optionSelectedData && optionSelectedData(option);
+      optionSelectedData(option); // Call the function to pass the selected option
       setIsDropdownOpen(!false);
    };
 
@@ -108,8 +108,8 @@ Dropdown_Primary.propTypes = {
    textColor: PropTypes.string,
    height: PropTypes.string,
    width: PropTypes.string,
+   optionSelectedData: PropTypes.func.isRequired,
    marginTop: PropTypes.string,
-   optionSelectedData: PropTypes.func,
    marginBottom: PropTypes.string,
    marginLeft: PropTypes.string,
    marginRight: PropTypes.string,
