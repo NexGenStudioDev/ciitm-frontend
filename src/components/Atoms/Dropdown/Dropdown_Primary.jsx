@@ -9,7 +9,7 @@ const Dropdown_Primary = ({
    height = '5vh',
    width = '20vw',
    marginTop = '1vh',
-   getSelectedOption,
+   optionSelectedData,
    marginBottom = '1vh',
    marginLeft = '1vw',
    marginRight = '1vw',
@@ -43,7 +43,7 @@ const Dropdown_Primary = ({
 
    const handleOptionClick = option => {
       setSelectedOption(option);
-      getSelectedOption(option)
+      optionSelectedData(option); // Call the function to pass the selected option
       setIsDropdownOpen(!false);
    };
 
@@ -108,9 +108,8 @@ Dropdown_Primary.propTypes = {
    textColor: PropTypes.string,
    height: PropTypes.string,
    width: PropTypes.string,
-   getSelectedOption: PropTypes.func,
+   optionSelectedData: PropTypes.func.isRequired,
    marginTop: PropTypes.string,
-   optionSelectedData: PropTypes.func,
    marginBottom: PropTypes.string,
    marginLeft: PropTypes.string,
    marginRight: PropTypes.string,
