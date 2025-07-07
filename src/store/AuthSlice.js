@@ -13,6 +13,10 @@ const Auth_Slice = createSlice({
          state.user = action.payload;
       },
 
+      updateUser: (state, action) => {
+         state.user = { ...state.user, ...action.payload };
+      },
+
       setInput: (state, action) => {
          state.data = [...state.data, action.payload];
       },
@@ -29,6 +33,6 @@ const Auth_Slice = createSlice({
    },
 });
 
-export const { setUser, setInput, UpdateInput } = Auth_Slice.actions;
+export const { setUser, updateUser, setInput, UpdateInput } = Auth_Slice.actions;
 export const selectUser = state => state.auth.user;
 export default Auth_Slice.reducer;
