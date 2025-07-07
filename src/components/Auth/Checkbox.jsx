@@ -12,7 +12,7 @@ const Checkbox = ({ label, name }) => {
    let dispatch = useDispatch();
 
    let HandleCheckbox = e => {
-      console.log(e.target.checked);
+     
 
       setValue(e.target.checked);
 

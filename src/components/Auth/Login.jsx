@@ -52,9 +52,7 @@ const Login = () => {
          let user = res.data.data.user;
 
          localStorage.setItem('token', user.token);
-         console.log('Token:', user.token);
-
-         console.log('User Data:', user);
+        
 
          if (!user) {
             throw new Error('User not found');

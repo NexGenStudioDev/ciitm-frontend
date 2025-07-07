@@ -7,9 +7,10 @@ import { setUser } from '../../store/AuthSlice';
 import { FcGoogle } from 'react-icons/fc';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const Google = ({ text }) => {
-   console.log('Google');
+
 
    let user = useSelector(state => state.auth.user);
 
@@ -18,10 +19,10 @@ const Google = ({ text }) => {
    const login = useGoogleLogin({
       onSuccess: async credentialResponse => {
          try {
-            console.log('credentialResponse', credentialResponse);
+          
 
             let token = credentialResponse.access_token;
-            console.log('token', token);
+        
 
             let res = await axios.post(
                `/api/auth/google?token=${token}`,
@@ -29,19 +30,29 @@ const Google = ({ text }) => {
                { withCredentials: true },
             );
 
-            console.log('res', res);
+           
 
             let user = res.data.user;
 
-            console.log('user', user);
+           
 
             dispatch(setUser(user));
          } catch (error) {
-            console.log('Login Failed', error);
+          Swal.fire({
+               icon: 'error',
+               title: 'Login Failed',
+               text: error.response?.data?.message || error.message,
+            });
+          
          }
       },
       onError: error => {
-         console.log('Login Failed', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            text: error?.message || 'Something went wrong during login.',
+         });
+        
       },
    });
 

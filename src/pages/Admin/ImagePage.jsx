@@ -5,16 +5,41 @@ import Image_Form_Title from '../../components/Molecules/Admin/image/Image_Form_
 import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
 import { Helmet } from 'react-helmet-async';
 import { IoIosCloudUpload } from 'react-icons/io';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const ImagePage = () => {
-   const Album_Name = [
-      { id: 1, name: 'Album 1' },
-      { id: 2, name: 'Album 2' },
-      { id: 3, name: 'Album 3' },
-      { id: 4, name: 'Album 4' },
-      { id: 5, name: 'Album 5' },
-   ];
+   const [selectedAlbum, setSelectedAlbum] = useState('');
+   
 
+   const [Album_Name, setAlbumName] = useState([]);
+
+
+   let fetchAlbumName = async () => {
+      try {
+        let res = await axios.get('/api/v1/admin/get/all/albumName')
+ 
+        setAlbumName(res.data.data.map(album => album.aName));
+     
+     
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.response?.data?.message || 'Failed to fetch album names.',
+        });
+      }
+   
+         return [];
+      }
+   };
+
+
+   useEffect(()=>{
+    
+   fetchAlbumName()
+   },[])
+ 
    return (
       <>
          <Helmet>
@@ -34,9 +59,8 @@ const ImagePage = () => {
                      width='70%'
                      height='[8vh]'
                      marginTop='2.8vh'
-                     options={[
-                        ...Album_Name.map(album => album.name),
-                     ]}
+                     options={Album_Name}
+                     optionSelectedData={data => selectedAlbum(data)}
                      backgroundColor='#1C1C1C'
                      value='Select Album'
                      border='2px solid #2C2C2C'

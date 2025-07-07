@@ -82,7 +82,7 @@ const Steps = () => {
             formData.append('avtar', Avtor);
          }
 
-         console.log('formData', formData);
+
 
          let res = await axios.post(
             '/api/v1/online/admission',
@@ -102,7 +102,7 @@ const Steps = () => {
             timer: 1500,
          });
       } catch (error) {
-         console.log('Error 1', error);
+
 
          Swal.fire({
             icon: 'error',

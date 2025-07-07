@@ -27,7 +27,7 @@ const Social_info = ({ link }) => {
             Social Links
          </H3>
 
-         {console.log(link)}
+        
 
          <Social_Input
             LinkUrl={link.instagram}

@@ -9,7 +9,7 @@ const Social_Input = ({
    Name,
 }) => {
    const [Link, setLink] = useState(LinkUrl);
-   console.log(LinkUrl);
+ 
    return (
       <div className='Social_LinkContainer flex w-[97%] h-[6vh] bg-black text-white rounded-lg  mt-[1vh] ml-[1vw]'>
          <div className='Link_Logo_Container w-[8%] h-full flex items-center justify-center bg-white rounded-l-lg  text-black text-[2.6vw] '>

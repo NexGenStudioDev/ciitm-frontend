@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const AdminProfile_Title = () => {
    let [Title, setTitle] = useState('Profile');
-   console.log('AdminProfile_Title rendered', Title);
+
    let [EditMode, setEditMode] = useState(true);
    const dispatch = useDispatch();
 
@@ -55,7 +55,7 @@ const AdminProfile_Title = () => {
                let data = inputs.findIndex(
                   i => i?.name === 'Profile_Edit',
                );
-               console.log('data', data);
+         
                dispatch(
                   setInputValueByIndex({
                      index: data,
