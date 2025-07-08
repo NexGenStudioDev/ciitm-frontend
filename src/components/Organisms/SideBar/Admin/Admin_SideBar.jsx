@@ -17,12 +17,12 @@ const links = [
    { name: 'Home', link: '/admin/DashBoard', icon: <BiHomeSmile /> },
    {
       name: 'Earnings',
-      link: '/admin/Earnings',
+      link: '#',
       icon: <TbPigMoney />,
    },
    {
       name: 'Notifications',
-      link: '/admin/Notifications',
+      link: '#',
       icon: <GoBellFill />,
    },
    {

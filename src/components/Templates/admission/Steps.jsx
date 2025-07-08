@@ -23,17 +23,7 @@ const Steps = () => {
 
    let admission = useSelector(state => state.admission.admission);
 
-   useEffect(() => {
-      if (admission.length <= 0) {
-         Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Please fill Admission Form',
-            showConfirmButton: true,
-            timer: 2500,
-         });
-      }
-   }, [admission]);
+
 
    let dispatch = useDispatch();
 
