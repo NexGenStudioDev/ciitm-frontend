@@ -20,10 +20,12 @@ const FeePay = () => {
 
    const fetchStudentData = async () => {
       try {
-         const res = await axios.get(`/api/v1/Student/FeeInfo?uniqueId=${studentId}`);
+         const res = await axios.get(
+            `/api/v1/Student/FeeInfo?uniqueId=${studentId}`,
+         );
          console.log('API Response:', res.data);
          const data = res.data.data.Student_Info;
-         console.log('data' , data)
+         console.log('data', data);
 
          if (data) {
             setStudentData({
@@ -44,7 +46,6 @@ const FeePay = () => {
 
    useEffect(() => {
       if (isValidId) {
-
          fetchStudentData();
       }
    }, [isValidId, fetchStudentData]);
@@ -65,8 +66,6 @@ const FeePay = () => {
             Paid_amount: amount,
          });
 
-       
-
          if (res.data.success) {
             Swal.fire({
                icon: 'success',
@@ -78,7 +77,9 @@ const FeePay = () => {
          Swal.fire({
             icon: 'error',
             title: 'Payment Error',
-            text: error.response?.data?.message || 'Payment failed. Please try again.',
+            text:
+               error.response?.data?.message ||
+               'Payment failed. Please try again.',
          });
       }
    };
@@ -102,14 +103,14 @@ const FeePay = () => {
          )}
 
          <FormTemplate_Secondary>
-            {console.log('student data line number 104' , studentData)}
+            {console.log('student data line number 104', studentData)}
             {studentData && (
                <div className='w-full h-screen flex flex-col items-center gap-6'>
                   <img
                      src={studentData.profileImage}
                      alt='Profile'
                      className='w-32 mt-[6vh] h-32 object-cover rounded-full border-4 border-white shadow-lg mb-2'
-                     onError={(e) => {
+                     onError={e => {
                         e.currentTarget.onerror = null;
                         e.currentTarget.src = fallbackImage;
                      }}
@@ -120,28 +121,38 @@ const FeePay = () => {
                         <div className='text-white text-xl font-bold'>
                            {studentData.name}
                         </div>
-                        <div className='text-[#C7C0C0]'>{studentData.email}</div>
+                        <div className='text-[#C7C0C0]'>
+                           {studentData.email}
+                        </div>
                         <div className='text-[#C7C0C0]'>
                            Semester:{' '}
-                           <span className='font-semibold'>{studentData.semester}</span>
+                           <span className='font-semibold'>
+                              {studentData.semester}
+                           </span>
                         </div>
                      </div>
 
                      <div className='w-full flex flex-col justify-center px-[2.5vw] md:flex-row items-center gap-[3vw] mt-4'>
                         <div className='flex flex-col items-center bg-[#2B2C2B] rounded-lg p-4 w-full md:w-fit'>
-                           <span className='text-[#C7C0C0]'>Total Course Fee</span>
+                           <span className='text-[#C7C0C0]'>
+                              Total Course Fee
+                           </span>
                            <span className='text-white font-semibold text-lg'>
                               ₹ {studentData.totalCourseFee}
                            </span>
                         </div>
                         <div className='flex flex-col items-center bg-[#2B2C2B] rounded-lg p-4 w-full md:w-fit'>
-                           <span className='text-[#C7C0C0]'>Total Amount Paid</span>
+                           <span className='text-[#C7C0C0]'>
+                              Total Amount Paid
+                           </span>
                            <span className='text-white font-semibold text-lg'>
                               ₹ {studentData.totalAmountPaid}
                            </span>
                         </div>
                         <div className='flex flex-col items-center bg-[#2B2C2B] rounded-lg p-4 w-full md:w-fit'>
-                           <span className='text-[#C7C0C0]'>Total Amount Due</span>
+                           <span className='text-[#C7C0C0]'>
+                              Total Amount Due
+                           </span>
                            <span className='text-white font-semibold text-lg'>
                               ₹ {studentData.totalAmountDue}
                            </span>
@@ -154,8 +165,16 @@ const FeePay = () => {
                         <Dropdown_Primary
                            width='85%'
                            height='5vh'
-                           optionSelectedData={data => setPaymentMethod(data)}
-                           options={['Cash', 'Cheque', 'Online Transfer', 'UPI', 'Card Payment']}
+                           optionSelectedData={data =>
+                              setPaymentMethod(data)
+                           }
+                           options={[
+                              'Cash',
+                              'Cheque',
+                              'Online Transfer',
+                              'UPI',
+                              'Card Payment',
+                           ]}
                            backgroundColor='#2B2C2B'
                            value='Select Payment Method'
                            border='2px solid #2C2C2C'
@@ -168,14 +187,15 @@ const FeePay = () => {
                            value={amount}
                            onInput={e => setAmount(e.target.value)}
                            readOnly={false}
-                           
                            placeholder='Enter Amount'
                            className='w-[85%] h-[5vh] bg-[#2B2C2B] text-white placeholder-white rounded-md p-2 text-[2.5vw] min-[600px]:text-[1.5vw]'
                         />
                      </div>
 
                      <button
-                        disabled={!isValidId || !amount || !paymentMethod}
+                        disabled={
+                           !isValidId || !amount || !paymentMethod
+                        }
                         className={`
                            w-full md:w-[20%] px-[2vw] py-[1.2vh]
                            ${
