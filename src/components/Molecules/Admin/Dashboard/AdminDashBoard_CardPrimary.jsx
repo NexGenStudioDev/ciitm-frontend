@@ -10,7 +10,6 @@ const AdminDashBoard_CardPrimary = React.memo(
       iconContainerClassName = 'flex items-center justify-center w-[30%] h-full  bg-opacity-20 mb-2',
       textContainerClassName = 'flex flex-col justify-center text-white w-[70%] max-[640px]:px-0 px-4',
    }) => {
-     
       return (
          <div className={`Admin_cardContainer ${containerClassName}`}>
             <div

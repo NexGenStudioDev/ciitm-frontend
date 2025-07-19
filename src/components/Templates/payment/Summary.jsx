@@ -54,7 +54,6 @@ const Summary = ({ heading, duration, feesList, description }) => {
                ))}
          </div>
          <div className='Total py-4'>
-         
             {feesList
                .filter(fee => fee.id === 'total')
                .map((fee, index) => (

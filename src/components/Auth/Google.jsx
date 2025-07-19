@@ -10,8 +10,6 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const Google = ({ text }) => {
-
-
    let user = useSelector(state => state.auth.user);
 
    let dispatch = useDispatch();
@@ -19,10 +17,7 @@ const Google = ({ text }) => {
    const login = useGoogleLogin({
       onSuccess: async credentialResponse => {
          try {
-          
-
             let token = credentialResponse.access_token;
-        
 
             let res = await axios.post(
                `/api/auth/google?token=${token}`,
@@ -30,29 +25,24 @@ const Google = ({ text }) => {
                { withCredentials: true },
             );
 
-           
-
             let user = res.data.user;
-
-           
 
             dispatch(setUser(user));
          } catch (error) {
-          Swal.fire({
+            Swal.fire({
                icon: 'error',
                title: 'Login Failed',
                text: error.response?.data?.message || error.message,
             });
-          
          }
       },
       onError: error => {
-        Swal.fire({
+         Swal.fire({
             icon: 'error',
             title: 'Login Failed',
-            text: error?.message || 'Something went wrong during login.',
+            text:
+               error?.message || 'Something went wrong during login.',
          });
-        
       },
    });
 

@@ -55,7 +55,7 @@ const AdminProfile_Title = () => {
                let data = inputs.findIndex(
                   i => i?.name === 'Profile_Edit',
                );
-         
+
                dispatch(
                   setInputValueByIndex({
                      index: data,

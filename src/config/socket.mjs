@@ -22,7 +22,6 @@ const socket = io(import.meta.env.VITE_BACKEND_URL, {
    pingTimeout: 20000,
    pingInterval: 25000,
 });
-
 // ✅ Connected
 socket.on('connect', () => {
    console.log('✅ Connected to server');

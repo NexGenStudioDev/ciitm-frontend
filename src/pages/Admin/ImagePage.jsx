@@ -22,7 +22,9 @@ const ImagePage = () => {
          Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: error.response?.data?.message || 'Failed to fetch album names.',
+            text:
+               error.response?.data?.message ||
+               'Failed to fetch album names.',
          });
       }
    };
@@ -32,19 +34,19 @@ const ImagePage = () => {
    }, []);
 
    // Handle album selection
-   const handleAlbumSelect = (album) => {
+   const handleAlbumSelect = album => {
       setSelectedAlbum(album);
    };
 
    // Handle image selection
-   const handleImageChange = (e) => {
+   const handleImageChange = e => {
       if (e.target.files && e.target.files[0]) {
          setSelectedImage(e.target.files[0]);
       }
    };
 
    // Handle upload
-   const handleUpload = async (e) => {
+   const handleUpload = async e => {
       e.preventDefault();
       if (!selectedAlbum) {
          Swal.fire({
@@ -67,11 +69,15 @@ const ImagePage = () => {
       formData.append('image', selectedImage);
 
       try {
-         const res = await axios.post('/api/v1/admin/create/image', formData, {
-            headers: {
-               'Content-Type': 'multipart/form-data',
+         const res = await axios.post(
+            '/api/v1/admin/create/image',
+            formData,
+            {
+               headers: {
+                  'Content-Type': 'multipart/form-data',
+               },
             },
-         });
+         );
          Swal.fire({
             icon: 'success',
             title: 'Uploaded',
@@ -82,7 +88,9 @@ const ImagePage = () => {
          Swal.fire({
             icon: 'error',
             title: 'Upload Failed',
-            text: error.response?.data?.message || 'Image upload failed.',
+            text:
+               error.response?.data?.message ||
+               'Image upload failed.',
          });
       }
    };
@@ -120,7 +128,9 @@ const ImagePage = () => {
                   >
                      <IoIosCloudUpload className='text-white text-4xl mb-2' />
                      <p className='text-white text-center'>
-                        {selectedImage ? selectedImage.name : 'Drag or Upload Image'}
+                        {selectedImage
+                           ? selectedImage.name
+                           : 'Drag or Upload Image'}
                      </p>
                   </label>
 

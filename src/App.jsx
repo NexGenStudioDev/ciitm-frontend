@@ -16,7 +16,6 @@ import ContactUs from './pages/ContactUs';
 import Admission from './pages/Admission';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
-import DOMPurify from 'dompurify';
 import Protected_Student from './components/Protected/Protected_Student';
 import Student from './components/Templates/Student/Student';
 import PaymentPage from './pages/PaymentPage';

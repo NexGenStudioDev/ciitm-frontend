@@ -22,7 +22,6 @@ const ForgotPassword = () => {
 
    const onSubmit = async data => {
       try {
-      
          setLoading(true);
          await axios.post('/api/v1/forgot-password', {
             email: data.email,

@@ -9,11 +9,9 @@ const SideBar_UserCard = () => {
    const admin = useSelector(state => state.auth.user);
 
    const handleImageError = () => {
-
       setImg(
          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpng.pngtree.com%2Fpng-clipart%2F20230102%2Foriginal%2Fpngtree-business-man-avatar-png-image_8855195.png&f=1&nofb=1&ipt=334549503cad3198057e39ffda4bfdb3d8c3709c5b262eb69f4c56f465dc11a5&ipo=images',
       );
- 
    };
 
    useEffect(() => {
@@ -21,8 +19,6 @@ const SideBar_UserCard = () => {
          setImg(admin.picture);
       }
    }, [admin]);
-
- 
 
    return (
       <div className='p-[1vh] w-full h-fit bg-[#000000] rounded-lg flex items-center justify-center gap-[2vw] border border-[#989595]'>
