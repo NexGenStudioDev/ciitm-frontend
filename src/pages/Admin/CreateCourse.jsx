@@ -164,14 +164,12 @@ const CreateCourse = () => {
                   />
                </div>
 
-
                <div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
                   <label
                      htmlFor='imageUrl'
                      className='text-white mb-2'
                   >
                      Course Image URL
-                     
                   </label>
                   <Input_Primary
                      className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
@@ -184,7 +182,6 @@ const CreateCourse = () => {
                      required
                   />
                </div>
-
 
                <div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
                   <label
