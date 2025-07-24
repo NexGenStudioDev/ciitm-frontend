@@ -21,8 +21,6 @@ const UserProfileCard = ({
 
    const actualUser = user || reduxUser;
 
-   
-
    const [img, setImg] = useState('');
 
    useEffect(() => {

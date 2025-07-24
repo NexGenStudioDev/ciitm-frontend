@@ -12,8 +12,6 @@ const Checkbox = ({ label, name }) => {
    let dispatch = useDispatch();
 
    let HandleCheckbox = e => {
-     
-
       setValue(e.target.checked);
 
       let data = {

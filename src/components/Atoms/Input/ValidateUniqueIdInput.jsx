@@ -101,7 +101,6 @@ const ValidateUniqueIdInput = ({
             },
          );
 
-         
          if (data?.success && data?.data?.isValidated) {
             // Student found - valid ID
             setValidationStatus(true);
@@ -121,7 +120,7 @@ const ValidateUniqueIdInput = ({
             axios.isCancel?.(error)
          ) {
             // Request was cancelled, do nothing to prevent setting state on cancelled requests
-           
+
             return;
          }
 

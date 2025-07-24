@@ -56,8 +56,6 @@ const Signup = () => {
             confirm_Password: confirm_Password.value,
          });
 
-       
-
          Swal.fire({
             icon: 'success',
             title: 'Success',

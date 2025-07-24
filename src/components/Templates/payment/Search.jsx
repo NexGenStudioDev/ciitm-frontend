@@ -9,46 +9,24 @@ import { ToastContainer, toast } from 'react-toastify';
 const Search = () => {
    const dispatch = useDispatch();
    const [Student_Id, setStudent_Id] = useState(null);
-   const [getValidationStatus, setGetValidationStatus] = useState(false);
+   const [getValidationStatus, setGetValidationStatus] =
+      useState(false);
    const [isLoading, setIsLoading] = useState(false);
    const payment = useSelector(state => state.Payment.Payment_Info);
 
-
-
-
-
    let Handle_Search = async () => {
       try {
-       
-        
+         if (isLoading) {
+            const response = await axios.get(
+               `/api/v1/Student/FeeInfoByStudent?uniqueId=${Student_Id}`,
+            );
 
-
-         
-         
-         
-         if(isLoading){
-            
-      
-         const response = await axios.get(
-            `/api/v1/Student/FeeInfoByStudent?uniqueId=${Student_Id}`,
-            
-         );
-
-  
-
-         if(response.data.success){
-          
-          
-            const data = response.data.data;
-           dispatch(setPayment_Info(data));
-           
+            if (response.data.success) {
+               const data = response.data.data;
+               dispatch(setPayment_Info(data));
+            }
          }
-        }
-   
-
-        
       } catch (error) {
-      
          Swal.fire({
             icon: 'error',
             title: 'Error',
@@ -58,19 +36,13 @@ const Search = () => {
       }
    };
 
-
    useEffect(() => {
-
-       dispatch(setPayment_Info(null));
+      dispatch(setPayment_Info(null));
 
       if (!payment) {
          setIsLoading(true);
       }
    }, [payment]);
-
-
-
-
 
    return (
       <div className='Student_Id_Container w-full bg-[#FAFAFA]  p-4'>
@@ -81,19 +53,13 @@ const Search = () => {
          </label>
 
          <div className='flex '>
-
-      
-            <ValidateUniqueIdInput 
-            getValidationStatus={(status) => setGetValidationStatus(status)}
-             getStudentId={(id => setStudent_Id(id))}
-             className='bg-white border-[1px] border-[#D7D7D79E] rounded-lg px-4 py-3 placeholder:text-[.9vw] w-full'
-           
-            
-
-
+            <ValidateUniqueIdInput
+               getValidationStatus={status =>
+                  setGetValidationStatus(status)
+               }
+               getStudentId={id => setStudent_Id(id)}
+               className='bg-white border-[1px] border-[#D7D7D79E] rounded-lg px-4 py-3 placeholder:text-[.9vw] w-full'
             />
-
-
 
             {/* bg-white border-[1px] border-[#D7D7D79E] rounded-lg px-4 py-3 placeholder:text-[.9vw] */}
 

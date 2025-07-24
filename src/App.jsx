@@ -37,6 +37,7 @@ import UpdateStatus from './pages/Admin/UpdateStatus';
 import ViewCourseDetail from './pages/ViewCourseDetail';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ResetPassword from './components/Auth/ResetPassword';
+import StatusPage from './pages/StatusPage';
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -94,6 +95,7 @@ const App = () => {
                   <Route path='/gallery' element={<Gallery />} />
                   <Route path='/admission' element={<Admission />} />
                   <Route path='/payment' element={<PaymentPage />} />
+                  <Route path='/status' element={<StatusPage />} />
                   <Route
                      path='/album/:name'
                      element={<Album_Image />}

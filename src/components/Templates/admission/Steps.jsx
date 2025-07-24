@@ -23,8 +23,6 @@ const Steps = () => {
 
    let admission = useSelector(state => state.admission.admission);
 
-
-
    let dispatch = useDispatch();
 
    const handleInputChange = e => {
@@ -72,8 +70,6 @@ const Steps = () => {
             formData.append('avtar', Avtor);
          }
 
-
-
          let res = await axios.post(
             '/api/v1/online/admission',
             formData,
@@ -92,8 +88,6 @@ const Steps = () => {
             timer: 1500,
          });
       } catch (error) {
-
-
          Swal.fire({
             icon: 'error',
             title: 'Error',

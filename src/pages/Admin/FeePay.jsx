@@ -27,6 +27,8 @@ const FeePay = () => {
             `/api/v1/Student/FeeInfo?uniqueId=${studentId}`,
          );
 
+         console.log('Response from fetchStudentData:', res.data);
+
          let data = res.data.data.Student_Info;
          console.log('Fetched Student Data:', data);
          if (data) {
@@ -54,9 +56,6 @@ const FeePay = () => {
       }
    };
 
-   console.log('Student ID:', studentId);
-   console.log('Is Valid ID:', isValidId);
-
    useEffect(() => {
       if (studentId && isValidId) {
          fetchStudentData();
@@ -65,41 +64,36 @@ const FeePay = () => {
          setAmount('');
          setError('');
       }
-   }, [studentId, isValidId , isLoading]);
+   }, [studentId, isValidId, studentData]);
 
-   console.log('Pay' , paymentMethod)
-   const handlePay = async() => {
-     try {
-      let res = await axios.patch('/api//v1/Student/FeeUpdate', {
-         uniqueId: studentId,
-         paymentMethod: paymentMethod,
-         Paid_amount: amount, 
-      })
+   const handlePay = async () => {
+      try {
+         let res = await axios.patch('/api//v1/Student/FeeUpdate', {
+            uniqueId: studentId,
+            paymentMethod: paymentMethod,
+            Paid_amount: amount,
+         });
 
-
-
-      if (res.data.success) {
+         if (res.data.success) {
+            Swal.fire({
+               icon: 'success',
+               title: 'Payment Successful',
+               text: res.data.message,
+            });
+            setIsLoading(true);
+            setTimeout(() => {
+               setIsLoading(false);
+            }, 2000);
+         }
+      } catch (error) {
          Swal.fire({
-            icon: 'success',
-            title: 'Payment Successful',
-            text: res.data.message,
-   
-         })
-         setIsLoading(true);
-         setTimeout(() => {
-            setIsLoading(false);
-         }, 2000);
+            icon: 'error',
+            title: 'Payment Error',
+            text:
+               error.response?.data?.message ||
+               'Payment failed. Please try again.',
+         });
       }
-
-
-     } catch (error) {
-      Swal.fire({
-         icon: 'error',
-         title: 'Payment Error',
-         text: error.response?.data?.message || 'Payment failed. Please try again.',
-   
-      })
-     }
    };
 
    return (
@@ -185,7 +179,9 @@ const FeePay = () => {
                         <Dropdown_Primary
                            width='85%'
                            height='5vh'
-                           optionSelectedData={data => setPaymentMethod(data)}
+                           optionSelectedData={data =>
+                              setPaymentMethod(data)
+                           }
                            options={[
                               'Cash',
                               'Cheque',
@@ -193,9 +189,6 @@ const FeePay = () => {
                               'UPI',
                               'Card Payment',
                            ]}
-
-                      
-                          
                            backgroundColor='#2B2C2B'
                            value='Select Payment Method'
                            border='2px solid #2C2C2C'

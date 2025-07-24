@@ -63,7 +63,14 @@ const ProfilePage = memo(() => {
                <Social_info link={links} />
 
                <div className='flex w-full items-center justify-center'>
-                  <button className='bg-green-600 p-4 rounded-md text-white w-[20%]' onClick={() => alert('Update functionality not implemented yet We are working on it')}>
+                  <button
+                     className='bg-green-600 p-4 rounded-md text-white w-[20%]'
+                     onClick={() =>
+                        alert(
+                           'Update functionality not implemented yet We are working on it',
+                        )
+                     }
+                  >
                      Save
                   </button>
                </div>

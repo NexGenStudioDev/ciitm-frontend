@@ -31,7 +31,7 @@ const Payment = () => {
    // const { error, isLoading, Razorpay } = useRazorpay();
 
    // if (isLoading) {
-     
+
    //    return;
    // }
 
@@ -55,7 +55,7 @@ const Payment = () => {
          icon: 'warning',
          text: 'Payment Feature is under development',
          allowOutsideClick: false,
-      })
+      });
       // try {
       //    const response = await axios.post('/api/create/payment', {
       //       amount: Number(Amount),

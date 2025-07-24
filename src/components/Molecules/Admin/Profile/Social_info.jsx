@@ -27,8 +27,6 @@ const Social_info = ({ link }) => {
             Social Links
          </H3>
 
-        
-
          <Social_Input
             LinkUrl={link.instagram}
             Icon={<RiInstagramFill />}
