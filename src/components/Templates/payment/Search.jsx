@@ -9,8 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 const Search = () => {
    const dispatch = useDispatch();
    const [Student_Id, setStudent_Id] = useState(null);
-   const [getValidationStatus, setGetValidationStatus] =
-      useState(false);
+   const [getValidationStatus, setGetValidationStatus] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
    const payment = useSelector(state => state.Payment.Payment_Info);
 
@@ -20,6 +19,7 @@ const Search = () => {
             const response = await axios.get(
                `/api/v1/Student/FeeInfoByStudent?uniqueId=${Student_Id}`,
             );
+
 
             if (response.data.success) {
                const data = response.data.data;
@@ -42,11 +42,11 @@ const Search = () => {
       if (!payment) {
          setIsLoading(true);
       }
-   }, [payment]);
+   }, [payment , getValidationStatus]);
 
    return (
       <div className='Student_Id_Container w-full bg-[#FAFAFA]  p-4'>
-         <label htmlFor='ujnju'>
+         <label htmlFor='studentId'>
             <h1 className='text-[1vw] max-[599px]:text-[3vw] font-medium mb-2 ml-1'>
                Student Id
             </h1>
@@ -61,11 +61,11 @@ const Search = () => {
                className='bg-white border-[1px] border-[#D7D7D79E] rounded-lg px-4 py-3 placeholder:text-[.9vw] w-full'
             />
 
-            {/* bg-white border-[1px] border-[#D7D7D79E] rounded-lg px-4 py-3 placeholder:text-[.9vw] */}
+        
 
             <button
                className='bg-green-600 ml-[2vw] p-[0.7vw] text-white rounded-md font-medium'
-               // disabled={getValidationStatus}
+               disabled={!getValidationStatus}
                onClick={Handle_Search}
             >
                Search
