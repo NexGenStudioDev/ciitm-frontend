@@ -23,9 +23,11 @@ const FeePay = () => {
          const res = await axios.get(
             `/api/v1/Student/FeeInfo?uniqueId=${studentId}`,
          );
-         console.log('API Response:', res.data);
-         const data = res.data.data.Student_Info;
-         console.log('data', data);
+ 
+
+
+         let data = res.data.data.Student_Info;
+
 
          if (data) {
             setStudentData({
@@ -48,6 +50,15 @@ const FeePay = () => {
       if (isValidId) {
          fetchStudentData();
       }
+
+   }, [studentId, isValidId, studentData]);
+
+   const handlePay = async () => {
+      try {
+         let res = await axios.patch('/api//v1/Student/FeeUpdate', {
+            uniqueId: studentId,
+            paymentMethod: paymentMethod,
+
    }, [isValidId, fetchStudentData]);
 
    const handlePay = async () => {
@@ -72,6 +83,12 @@ const FeePay = () => {
                title: 'Payment Successful',
                text: res.data.message,
             });
+
+            setIsLoading(true);
+            setTimeout(() => {
+               setIsLoading(false);
+            }, 2000);
+
          }
       } catch (error) {
          Swal.fire({

@@ -56,7 +56,7 @@ const ContactUs = () => {
 
    return (
       <div className='flex flex-col bg-[#d7d7d719] my-4 pt-12 px-4 md:px-10 justify-between md:flex-row items-center pb-10'>
-         <div className=' w-full lg:w-1/2 md:w-1/3 p-2 text-[#333333] text-wrap'>
+         <div className=' w-full lg:w-1/2 md:w-1/3 p-2 text-[#333333] text-wrap mt-5'>
             <h1 className='text-xl sm:text-2xl md:text-4xl font-semibold mb-2'>
                About Us
             </h1>
@@ -134,7 +134,7 @@ const ContactUs = () => {
             </div>
          </div>
 
-         <div className='bg-white rounded-xl w-full md:w-1/2 h-fit p-4 text-[#333333] border-[1.1px] border-[#D7D7D7] shadow-lg shadow-gray-300 mt-10 md:mt-0'>
+         <div className='bg-white rounded-xl w-full md:w-1/2  p-6 text-[#333333] border-[1.1px] border-[#D7D7D7] shadow-lg shadow-gray-300 mt-[8vh] '>
             <h1 className='text-xl md:text-2xl font-semibold mb-2'>
                Feel free to ask any query
             </h1>
@@ -142,7 +142,7 @@ const ContactUs = () => {
                Welcome to [Institute Name], an institution dedicated
                to fostering innovation...
             </p>
-            <form className='form flex flex-col gap-5'>
+            <form className='form flex flex-col gap-7'>
                {errors.cName && (
                   <p className='text-red-800 mb-4 text-xs font-bold'>
                      {errors.cName.message}
@@ -192,7 +192,7 @@ const ContactUs = () => {
                <textarea
                   {...register('cMessage')}
                   placeholder='Message:'
-                  className='p-1 bg-[#F9F9F9] text-xs outline-none w-full h-16 rounded-lg border border-[#D7D7D7]'
+                  className='p-1 bg-[#F9F9F9] text-xs outline-none w-full h-28 rounded-lg border border-[#D7D7D7]'
                ></textarea>
 
                <SubmitButton
@@ -205,7 +205,7 @@ const ContactUs = () => {
                         socket.emit('Request_DashBoard_Data');
                      }
                   }}
-                  Tailwind_utility_Class='text-center bg-[#333333] w-full text-white py-2 text-sm rounded-lg'
+                  Tailwind_utility_Class='text-center bg-[#333333] mb-[10vh] w-full text-white py-2 text-sm rounded-lg'
                >
                   Submit
                </SubmitButton>
