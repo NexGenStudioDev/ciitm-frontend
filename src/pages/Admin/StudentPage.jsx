@@ -5,6 +5,7 @@ import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
 import StudentDataTable from '../../components/Organisms/Admin/StudentDataTable';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
+import { set } from 'react-hook-form';
 
 const studentOptions = [
    'Bachelor of Computer Applications (BCA)',
@@ -18,6 +19,7 @@ const semesterOptions = [1, 2, 3, 4, 5, 6];
 const StudentPage = () => {
    const [isError, setIsError] = React.useState(false);
    const [ErrorMessage, setErrorMessage] = React.useState('');
+   const [isLoading, setIsLoading] = React.useState(false);
    const [studentData, setStudentData] = React.useState([]);
    const [SelectedCourse, setSelectedCourse] = React.useState('');
    const [SelectedSemester, setSelectedSemester] = React.useState('');
@@ -25,22 +27,23 @@ const StudentPage = () => {
    let Handle_Student_Search = async e => {
       try {
          e.preventDefault();
+         setIsLoading(true);
          let res = await axios.get(
             `/api/v1/Student/FindByCourseAndSemester?course=${SelectedCourse}&semester=${SelectedSemester}&PerPage=1&Limit=2`,
          );
 
          if (res.data.success && res.data.data.length > 0) {
-            console.log(
-               'Response from student search:',
-               res.data.data,
-            );
             setStudentData(res.data?.data);
             setIsError(false);
          }
 
+         setTimeout(() => {
+            setIsLoading(false);
+         }, 1000);
+
          setIsError(false);
       } catch (error) {
-         console.error('Error fetching student data:', error);
+        
 
          setIsError(true);
          setErrorMessage(
@@ -48,11 +51,9 @@ const StudentPage = () => {
                error?.message ||
                'Something went wrong while fetching student data.',
          );
-      }
+      } 
    };
-   {
-      console.log('isError:', isError);
-   }
+
    return (
       <>
          <Helmet>
@@ -93,7 +94,8 @@ const StudentPage = () => {
                   className='p-[2vh] bg-gray-500 text-white rounded-md'
                   onClick={e => Handle_Student_Search(e)}
                >
-                  Search
+                  {console.log('isLoading',isLoading)}
+                 {isLoading ? 'Searching...' : 'Search'}
                </button>
             </div>
 

@@ -27,6 +27,7 @@ const FeePay = () => {
 
 
          let data = res.data.data.Student_Info;
+         console.log('Fetched Data:', data);
 
 
          if (data) {
@@ -42,7 +43,7 @@ const FeePay = () => {
          }
       } catch (error) {
          console.error('Fetch Error:', error);
-         setError('Could not fetch student data. Please try again.');
+         setError(error.response?.data?.message || 'Failed to fetch student data');
       }
    };
 
@@ -51,15 +52,9 @@ const FeePay = () => {
          fetchStudentData();
       }
 
-   }, [studentId, isValidId, studentData]);
+   }, [isValidId , ]);
 
-   const handlePay = async () => {
-      try {
-         let res = await axios.patch('/api//v1/Student/FeeUpdate', {
-            uniqueId: studentId,
-            paymentMethod: paymentMethod,
 
-   }, [isValidId, fetchStudentData]);
 
    const handlePay = async () => {
       if (!amount || !paymentMethod || !isValidId || !studentId) {
@@ -77,6 +72,8 @@ const FeePay = () => {
             Paid_amount: amount,
          });
 
+    
+
          if (res.data.success) {
             Swal.fire({
                icon: 'success',
@@ -84,19 +81,24 @@ const FeePay = () => {
                text: res.data.message,
             });
 
-            setIsLoading(true);
-            setTimeout(() => {
-               setIsLoading(false);
-            }, 2000);
+            setStudentData(prevData => ({
+               ...prevData,
+               totalAmountPaid: prevData.totalAmountPaid + parseFloat(amount),
+               totalAmountDue: prevData.totalAmountDue - parseFloat(amount),
+            }));
+
 
          }
       } catch (error) {
+         console.error('Payment Error:', error);
          Swal.fire({
             icon: 'error',
             title: 'Payment Error',
             text:
+               error.message ? error.message :
                error.response?.data?.message ||
-               'Payment failed. Please try again.',
+               'An error occurred while processing the payment. Please try again later.',
+
          });
       }
    };
