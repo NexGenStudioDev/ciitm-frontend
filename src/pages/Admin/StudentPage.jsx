@@ -43,15 +43,13 @@ const StudentPage = () => {
 
          setIsError(false);
       } catch (error) {
-        
-
          setIsError(true);
          setErrorMessage(
             error.response?.data?.message ||
                error?.message ||
                'Something went wrong while fetching student data.',
          );
-      } 
+      }
    };
 
    return (
@@ -94,8 +92,8 @@ const StudentPage = () => {
                   className='p-[2vh] bg-gray-500 text-white rounded-md'
                   onClick={e => Handle_Student_Search(e)}
                >
-                  {console.log('isLoading',isLoading)}
-                 {isLoading ? 'Searching...' : 'Search'}
+                  {console.log('isLoading', isLoading)}
+                  {isLoading ? 'Searching...' : 'Search'}
                </button>
             </div>
 

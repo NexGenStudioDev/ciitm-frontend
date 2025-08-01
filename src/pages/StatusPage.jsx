@@ -5,7 +5,8 @@ import Swal from 'sweetalert2';
 
 const StatusPage = () => {
    const [Student_Id, setStudent_Id] = useState(null);
-   const [getValidationStatus, setGetValidationStatus] = useState(false);
+   const [getValidationStatus, setGetValidationStatus] =
+      useState(false);
    const [studentData, setStudentData] = useState(null);
    const [isLoading, setIsLoading] = useState(false);
 
@@ -23,23 +24,23 @@ const StatusPage = () => {
       setIsLoading(true);
 
       try {
-        //  const response = await axios.get(`/api/v1/student/admissionStatus?uniqueId=${Student_Id}`);
-        //  if (response.data.success) {
-        //     setStudentData(response.data.data);
-        //     Swal.fire({
-        //        icon: 'success',
-        //        title: 'Success',
-        //        text: 'Student data fetched successfully!',
-        //     });
-        //  } else {
-        //     Swal.fire({
-        //        icon: 'error',
-        //        title: 'Error',
-        //        text: response.data.message || 'No data found for the given Student ID.',
-        //     });
-        //  }
+         //  const response = await axios.get(`/api/v1/student/admissionStatus?uniqueId=${Student_Id}`);
+         //  if (response.data.success) {
+         //     setStudentData(response.data.data);
+         //     Swal.fire({
+         //        icon: 'success',
+         //        title: 'Success',
+         //        text: 'Student data fetched successfully!',
+         //     });
+         //  } else {
+         //     Swal.fire({
+         //        icon: 'error',
+         //        title: 'Error',
+         //        text: response.data.message || 'No data found for the given Student ID.',
+         //     });
+         //  }
 
-        setStudentData({
+         setStudentData({
             name: 'John Doe',
             email: 'john12@gmail.com',
             fatherName: 'Mr. Doe',
@@ -53,7 +54,9 @@ const StatusPage = () => {
          Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: error.response?.data?.message || 'Failed to fetch student data.',
+            text:
+               error.response?.data?.message ||
+               'Failed to fetch student data.',
          });
       } finally {
          setIsLoading(false);
@@ -76,7 +79,9 @@ const StatusPage = () => {
 
                <div className='flex items-center gap-4'>
                   <ValidateUniqueIdInput
-                     getValidationStatus={status => setGetValidationStatus(status)}
+                     getValidationStatus={status =>
+                        setGetValidationStatus(status)
+                     }
                      getStudentId={id => setStudent_Id(id)}
                      className='bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-gray-700 w-full focus:outline-none focus:ring-2 focus:ring-blue-500'
                   />
@@ -91,115 +96,142 @@ const StatusPage = () => {
                </div>
             </div>
 
-            {studentData && (
-               <div className='Status_Container w-full flex flex-col lg:flex-row gap-6 bg-gray-50 p-6 rounded-lg shadow-md border border-gray-300'>
-                  <div className='Status_Data w-full flex flex-col gap-4'>
-
+            <div className='Status_Container w-full flex flex-col lg:flex-row gap-6 bg-gray-50 p-6 rounded-lg shadow-md border border-gray-300'>
+               <div className='Status_Data w-full flex flex-col gap-4'>
                   <div className='Image_Container w-full flex items-center justify-center'>
                      <img
-                        src={studentData?.photo || '/default-photo.png'}
+                        src={
+                           studentData?.photo ||
+                           'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg2.cgtrader.com%2Fitems%2F4259562%2Ffcc1f1114a%2F3d-avatar-profession-as-graduate-student-3d-model-fcc1f1114a.jpg&f=1&nofb=1&ipt=b0eab11d3af8aeed65795c97b9918af90758b1fa92e305b3c0fd576b18b37d05'
+                        }
                         alt='Student Photo'
                         className='w-52 h-52 rounded-full border border-gray-300 shadow-md'
                      />
                   </div>
 
-
-                     <div>
-                        <label htmlFor='Student_Name' className='text-lg font-medium text-gray-700'>
-                           Name
-                        </label>
-                        <input
-                           type='text'
-                           id='Student_Name'
-                           value={studentData?.name || ''}
-                           readOnly
-                           className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
-                        />
-                     </div>
-
-                     <div>
-                        <label htmlFor='Student_Email' className='text-lg font-medium text-gray-700'>
-                           Email
-                        </label>
-                        <input
-                           type='text'
-                           id='Student_Email'
-                           value={studentData?.email || ''}
-                           readOnly
-                           className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
-                        />
-                     </div>
-
-                     <div>
-                        <label htmlFor='Father_Name' className='text-lg font-medium text-gray-700'>
-                           Father Name
-                        </label>
-                        <input
-                           type='text'
-                           id='Father_Name'
-                           value={studentData?.fatherName || ''}
-                           readOnly
-                           className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
-                        />
-                     </div>
-
-                     <div>
-                        <label htmlFor='Mobile_Number' className='text-lg font-medium text-gray-700'>
-                           Mobile Number
-                        </label>
-                        <input
-                           type='text'
-                           id='Mobile_Number'
-                           value={studentData?.mobileNumber || ''}
-                           readOnly
-                           className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
-                        />
-                     </div>
-
-                     <div>
-                        <label htmlFor='Message' className='text-lg font-medium text-gray-700'>
-                           Message
-                        </label>
-                        <textarea
-                           id='Message'
-                           value={studentData?.message || ''}
-                           readOnly
-                           className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
-                        />
-                     </div>
-
-                     <div>
-                        <label htmlFor='Status' className='text-lg font-medium text-gray-700'>
-                           Status
-                        </label>
-                        <input
-                           type='text'
-                           id='Status'
-                           value={studentData?.status || ''}
-                           readOnly
-                           className={`w-full p-3 border rounded-lg bg-white text-gray-700 ${
-                              studentData?.status === 'Approved' ? 'border-green-500' : 'border-red-500'
-                           }`}
-                        />
-                     </div>
-
-                     <div>
-                        <label htmlFor='Admission_Date' className='text-lg font-medium text-gray-700'>
-                           Date of Admission Form Fill
-                        </label>
-                        <input
-                           type='text'
-                           id='Admission_Date'
-                           value={studentData?.admissionDate || ''}
-                           readOnly
-                           className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
-                        />
-                     </div>
+                  <div>
+                     <label
+                        htmlFor='Student_Name'
+                        className='text-lg font-medium text-gray-700'
+                     >
+                        Name
+                     </label>
+                     <input
+                        type='text'
+                        id='Student_Name'
+                        placeholder='Student Name'
+                        value={studentData?.name || ''}
+                        readOnly
+                        className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
+                     />
                   </div>
 
-                
+                  <div>
+                     <label
+                        htmlFor='Student_Email'
+                        className='text-lg font-medium text-gray-700'
+                     >
+                        Email
+                     </label>
+                     <input
+                        type='text'
+                        id='Student_Email'
+                        placeholder='Your email'
+                        value={studentData?.email || ''}
+                        readOnly
+                        className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
+                     />
+                  </div>
+
+                  <div>
+                     <label
+                        htmlFor='Father_Name'
+                        className='text-lg font-medium text-gray-700'
+                     >
+                        Father Name
+                     </label>
+                     <input
+                        type='text'
+                        placeholder='Student Father Name'
+                        id='Father_Name'
+                        value={studentData?.fatherName || ''}
+                        readOnly
+                        className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
+                     />
+                  </div>
+
+                  <div>
+                     <label
+                        htmlFor='Mobile_Number'
+                        className='text-lg font-medium text-gray-700'
+                     >
+                        Mobile Number
+                     </label>
+                     <input
+                        type='text'
+                        placeholder='Your Mobile Number'
+                        id='Mobile_Number'
+                        value={studentData?.mobileNumber || ''}
+                        readOnly
+                        className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
+                     />
+                  </div>
+
+                  <div>
+                     <label
+                        htmlFor='Message'
+                        className='text-lg font-medium text-gray-700'
+                     >
+                        Message
+                     </label>
+                     <textarea
+                        placeholder='Status Message'
+                        id='Message'
+                        value={studentData?.message || ''}
+                        readOnly
+                        className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
+                     />
+                  </div>
+
+                  <div>
+                     <label
+                        htmlFor='Status'
+                        className='text-lg font-medium text-gray-700'
+                     >
+                        Status
+                     </label>
+                     <input
+                        type='text'
+                        placeholder='Admission Status'
+                        id='Status'
+                        value={studentData?.status || ''}
+                        readOnly
+                        className={`w-full p-3 border rounded-lg bg-white text-gray-700 ${
+                           studentData?.status === 'Approved'
+                              ? 'border-green-500'
+                              : 'border-red-500'
+                        }`}
+                     />
+                  </div>
+
+                  <div>
+                     <label
+                        htmlFor='Admission_Date'
+                        className='text-lg font-medium text-gray-700'
+                     >
+                        Date of Admission Form Fill
+                     </label>
+                     <input
+                        placeholder='Admission Date'
+                        type='text'
+                        id='Admission_Date'
+                        value={studentData?.admissionDate || ''}
+                        readOnly
+                        className='w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700'
+                     />
+                  </div>
                </div>
-            )}
+            </div>
          </div>
       </div>
    );

@@ -17,7 +17,7 @@ const links = [
    { name: 'Home', link: '/admin/DashBoard', icon: <BiHomeSmile /> },
    {
       name: 'Earnings',
-      link: '#',
+      link: '/admin/Student/Earning',
       icon: <TbPigMoney />,
    },
    {

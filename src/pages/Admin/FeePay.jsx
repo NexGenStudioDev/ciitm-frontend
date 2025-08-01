@@ -23,12 +23,9 @@ const FeePay = () => {
          const res = await axios.get(
             `/api/v1/Student/FeeInfo?uniqueId=${studentId}`,
          );
- 
-
 
          let data = res.data.data.Student_Info;
          console.log('Fetched Data:', data);
-
 
          if (data) {
             setStudentData({
@@ -43,7 +40,10 @@ const FeePay = () => {
          }
       } catch (error) {
          console.error('Fetch Error:', error);
-         setError(error.response?.data?.message || 'Failed to fetch student data');
+         setError(
+            error.response?.data?.message ||
+               'Failed to fetch student data',
+         );
       }
    };
 
@@ -51,10 +51,7 @@ const FeePay = () => {
       if (isValidId) {
          fetchStudentData();
       }
-
-   }, [isValidId , ]);
-
-
+   }, [isValidId]);
 
    const handlePay = async () => {
       if (!amount || !paymentMethod || !isValidId || !studentId) {
@@ -72,8 +69,6 @@ const FeePay = () => {
             Paid_amount: amount,
          });
 
-    
-
          if (res.data.success) {
             Swal.fire({
                icon: 'success',
@@ -83,22 +78,21 @@ const FeePay = () => {
 
             setStudentData(prevData => ({
                ...prevData,
-               totalAmountPaid: prevData.totalAmountPaid + parseFloat(amount),
-               totalAmountDue: prevData.totalAmountDue - parseFloat(amount),
+               totalAmountPaid:
+                  prevData.totalAmountPaid + parseFloat(amount),
+               totalAmountDue:
+                  prevData.totalAmountDue - parseFloat(amount),
             }));
-
-
          }
       } catch (error) {
          console.error('Payment Error:', error);
          Swal.fire({
             icon: 'error',
             title: 'Payment Error',
-            text:
-               error.message ? error.message :
-               error.response?.data?.message ||
-               'An error occurred while processing the payment. Please try again later.',
-
+            text: error.message
+               ? error.message
+               : error.response?.data?.message ||
+                 'An error occurred while processing the payment. Please try again later.',
          });
       }
    };
