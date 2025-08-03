@@ -5,7 +5,6 @@ import FormTemplate from '../../components/Templates/Admin/form/FormTemplate';
 import EarningData_Table from '../../components/Organisms/Admin/EarningData_Table';
 import EarningData from '../../components/Organisms/Admin/EarningData';
 
-
 const studentOptions = [
    'Bachelor of Computer Applications (BCA)',
    'Master of Computer Applications (MCA)',
@@ -50,21 +49,23 @@ let arr = [
 ];
 
 const earnings = [
-    {
+   {
       date: '2025-08-01',
       studentName: 'Abhishek Kumar',
       type: 'Admission',
       amount: 10000,
       status: 'Completed',
-    },
-    {
+      billId: 'bill12345',
+   },
+   {
       date: '2025-08-02',
       studentName: 'John Doe',
       type: 'Tuition',
       amount: 15000,
       status: 'Pending',
-    },
-  ];
+      billId: 'bill12346',
+   },
+];
 
 const Earning = () => {
    const [SelectedCourse, setSelectedCourse] = React.useState('');
@@ -120,13 +121,9 @@ const Earning = () => {
          </div>
 
          <FormTemplate PageName={'Earnings'} Navigator={false}>
-         
-         <EarningData_Table arr={arr} />
+            <EarningData_Table arr={arr} />
 
-         
-         <EarningData earnings={earnings} />
-       
-            
+            <EarningData earnings={earnings} />
          </FormTemplate>
       </AdminTemplate>
    );
