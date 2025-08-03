@@ -37,6 +37,8 @@ import ViewCourseDetail from './pages/ViewCourseDetail';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ResetPassword from './components/Auth/ResetPassword';
 import StatusPage from './pages/StatusPage';
+import Earning from './pages/Admin/Earning';
+import ViewBill from './pages/Admin/ViewBill';
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -129,6 +131,15 @@ const App = () => {
                      element={<ContactPage />}
                   />
 
+                  <Route
+                     path='/admin/Student/Earning'
+                     element={<Earning />}
+                  />
+
+                  <Route
+                     path='/admin/Student/bill/:billId'
+                     element={<ViewBill />}
+                  />
                   <Route
                      path='/admin/Create/Contact'
                      element={<CreateCourse />}
