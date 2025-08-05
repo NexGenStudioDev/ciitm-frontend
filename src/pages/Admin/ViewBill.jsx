@@ -143,14 +143,10 @@ const ViewBill = () => {
                      <p className='w-[76%] h-full text-left p-[1.5vw] text-[1.7vw] min-[1000px]:text-[1.2vw]'>Tuition Fee for Semester 5</p>
                      
                      <p className='w-[24%] h-full text-left  p-[1.5vw] border-l-2 border-[#322F2F] print:border-l-2 text-[1.7vw] min-[1000px]:text-[1.2vw]'>₹  8000</p>
-                    
-                   
-                     
-                        
                  
                   </div>
 
-                   <div className="w-full bg-[#2E2929] h-[6vh] flex items-center justify-end  text-[#A49C9C] text-[1.1vw] print:bg-gray-600">
+                   <div className="w-full bg-[#2E2929] h-[6vh] flex items-center justify-end  text-[#A49C9C] text-[1.1vw] print:bg-gray-600 print:border-t-2 print:border-b-2 print:border-black ">
                      <p className='mr-[2.5vw] text-[1.7vw] min-[1000px]:text-[1.2vw]'> Total</p>
                      <div className="w-[26%]  h-full flex items-center">
                         <p className="ml-[1.8vw] text-[1.7vw] min-[1000px]:text-[1.2vw]">
