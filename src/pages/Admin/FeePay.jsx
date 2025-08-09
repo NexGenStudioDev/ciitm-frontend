@@ -16,6 +16,7 @@ const FeePay = () => {
    const [paymentMethod, setPaymentMethod] = useState('');
    const [studentData, setStudentData] = useState(null);
    const [amount, setAmount] = useState('');
+   const [PaymentType , setPaymentType] = useState('');
    const [error, setError] = useState('');
 
    const fetchStudentData = async () => {
@@ -67,6 +68,7 @@ const FeePay = () => {
             uniqueId: studentId,
             paymentMethod,
             Paid_amount: amount,
+            PaymentType,
          });
 
          if (res.data.success) {
@@ -175,6 +177,8 @@ const FeePay = () => {
 
                   <div className='w-full flex flex-col items-center justify-center gap-4 mt-6'>
                      <div className='w-full flex flex-col gap-[2rem] items-center justify-center'>
+
+  
                         <Dropdown_Primary
                            width='85%'
                            height='5vh'
@@ -190,6 +194,26 @@ const FeePay = () => {
                            ]}
                            backgroundColor='#2B2C2B'
                            value='Select Payment Method'
+                           border='2px solid #2C2C2C'
+                           textColor='#FFFFFF'
+                        />
+
+                        <Dropdown_Primary
+                           width='85%'
+                           height='5vh'
+                           optionSelectedData={data =>
+                              setPaymentType(data)
+                           }
+                           options={[
+                              'Admission Fee',
+                              'Farewell Fee',
+                              'Teacher Day Fee',
+                              'Exam Fee',
+                              'Semester Fee',
+                              'Other',
+                           ]}
+                           backgroundColor='#2B2C2B'
+                           value='Select Payment Type'
                            border='2px solid #2C2C2C'
                            textColor='#FFFFFF'
                         />
