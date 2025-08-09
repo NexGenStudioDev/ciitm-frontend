@@ -4,126 +4,131 @@ import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
 import FormTemplate from '../../components/Templates/Admin/form/FormTemplate';
 import EarningData_Table from '../../components/Organisms/Admin/EarningData_Table';
 import EarningData from '../../components/Organisms/Admin/EarningData';
-
-const studentOptions = [
-   'Bachelor of Computer Applications (BCA)',
-   'Master of Computer Applications (MCA)',
-   'Bachelor of Commerce (B.Com)',
-   'Bachelor of Business Administration (BBA)',
-];
-
-const semesterOptions = [1, 2, 3, 4, 5, 6];
-const YearOptions = [
-   2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030,
-];
+import axios from 'axios';
+import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 
 let arr = [
    {
       text: 'S.no',
-      style: 'w-[5%] text-center align-middle bg-[#090909] border-[#322F2F] text-white text-sm md:text-md rounded-tl-2xl',
+      style: 'w-[5%] max-[1347px]:hidden text-center align-middle bg-[#090909] border-[#322F2F] text-white text-sm md:text-md rounded-tl-2xl',
    },
    {
       text: 'Date',
-      style: 'w-[15%] text-center bg-[#090909] text-white text-sm md:text-md',
+      style: 'w-[9%] text-center bg-[#090909] text-white text-sm md:text-md',
    },
    {
       text: 'Student Name',
-      style: 'w-[25%] text-center bg-[#090909] text-white text-sm md:text-md',
+      style: 'w-[14%] text-center bg-[#090909] text-white text-sm md:text-md',
    },
    {
       text: 'Type',
-      style: 'w-[15%] text-center bg-[#090909] text-white text-sm md:text-md',
+      style: 'w-[11%] text-center bg-[#090909] text-white text-sm md:text-md',
    },
    {
       text: 'Amount',
-      style: 'w-[10%] text-center bg-[#090909] text-white text-sm md:text-md',
+      style: 'w-[9%] text-center bg-[#090909] text-white text-sm md:text-md',
    },
    {
       text: 'Status',
-      style: 'w-[10%] h-[7vh] text-center bg-[#090909] text-white text-sm md:text-md',
+      style: 'w-[9%] h-[7vh] text-center bg-[#090909] text-white text-sm md:text-md',
    },
    {
       text: 'Bill',
-      style: 'w-[10%] text-center bg-[#090909] text-white text-sm md:text-md rounded-tr-2xl',
+      style: 'w-[8%] text-center bg-[#090909] text-white text-sm md:text-md rounded-tr-2xl',
    },
 ];
 
-const earnings = [
-   {
-      date: '2025-08-01',
-      studentName: 'Abhishek Kumar',
-      type: 'Admission',
-      amount: 10000,
-      status: 'Completed',
-      billId: 'bill12345',
-   },
-   {
-      date: '2025-08-02',
-      studentName: 'John Doe',
-      type: 'Tuition',
-      amount: 15000,
-      status: 'Pending',
-      billId: 'bill12346',
-   },
-];
 
 const Earning = () => {
-   const [SelectedCourse, setSelectedCourse] = React.useState('');
-   const [SelectedSemester, setSelectedSemester] = React.useState('');
-   const [SelectedYear, setSelectedYear] = React.useState('');
+   const [startDate, setStartDate] = React.useState('');
+   const [endDate, setEndDate] = React.useState('');
    const [isLoading, setIsLoading] = React.useState(true);
-   const [data, setData] = React.useState(null);
+   const [earnings, setEarnings] = React.useState([]);
    const [isError, setIsError] = React.useState(true);
    const [error, setError] = React.useState(null);
+   console.log('Start Date:', startDate);
+   console.log('End Date:', endDate);
+
+   let FetchStudent = async () => {
+      try {
+         setIsLoading(true);
+         let res = await axios.get('/api/v1/Student/getEarning',{
+            params: {
+               startDate: startDate,
+               endDate: endDate
+            }
+         })
+         let data = res.data.data;
+         if (data) {
+            setIsLoading(false);
+            setEarnings(data);
+         } 
+         if (data.length === 0) {
+            setIsError(true);
+            setError('No earnings found for the selected date range.');
+         }
+         console.log('Response:', res);
+      } catch (error) {
+         setEarnings(error.response?.data?.data || []);
+         console.error('Error fetching earnings:', error);
+         
+      }finally {
+         setIsLoading(false);
+      }
+   }
 
    return (
       <AdminTemplate pageName='Earnings'>
          <div className='findStudent_Container px-[2vw] h-[10vh] min-[900px]:h-[10vh] w-[93%] flex items-center justify-between gap-4 bg-[#1C1C1C] rounded-lg my-[4vh]'>
-            <Dropdown_Primary
-               options={studentOptions}
-               backgroundColor='#1C1C1C'
-               textColor='#FFFFFF'
-               height='70%'
-               width='40%'
-               optionSelectedData={data => setSelectedCourse(data)}
-               value='Select Course'
-               border='2px solid #2C2C2C'
-            />
-
-            <Dropdown_Primary
-               options={semesterOptions}
-               backgroundColor='#1C1C1C'
-               textColor='#FFFFFF'
-               optionSelectedData={data => setSelectedSemester(data)}
-               height='70%'
-               width='40%'
-               value='Select Semester'
-               border='2px solid #2C2C2C'
-            />
-
-            <Dropdown_Primary
-               options={YearOptions}
-               backgroundColor='#1C1C1C'
-               textColor='#FFFFFF'
-               optionSelectedData={data => setSelectedYear(data)}
-               height='70%'
-               width='40%'
-               value='Select Year'
-               border='2px solid #2C2C2C'
-            />
-
+            <div className="flex flex-col">
+               <label htmlFor="startDate" className="text-gray-300 text-xs font-medium mb-1">Start Date</label>
+               <input
+                  type="date"
+                  id="startDate"
+                  value={startDate}
+                  onChange={e => setStartDate(e.target.value)}
+                  className="bg-[#181c23] text-white border border-[#353b48] rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-150"
+               />
+            </div>
+            <div className="flex flex-col">
+               <label htmlFor="endDate" className="text-gray-300 text-xs font-medium mb-1">End Date</label>
+               <input
+                  type="date"
+                  id="endDate"
+                  value={endDate}
+                  onChange={e => setEndDate(e.target.value)}
+                  className="bg-[#181c23] text-white border border-[#353b48] rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-150"
+               />
+            </div>
             <button
-               className='p-[2vh] bg-gray-500 text-white rounded-md'
-               //   onClick={e => Handle_Student_Search(e)}
+               className="ml-2 mt-5 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md shadow transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-400"
+               onClick={FetchStudent}
             >
-               {isLoading ? 'Searching...' : 'Search'}
+               {isLoading ? 'Search' : 'Searching...'}
             </button>
          </div>
 
          <FormTemplate PageName={'Earnings'} Navigator={false}>
             <EarningData_Table arr={arr} />
-
-            <EarningData earnings={earnings} />
+           {earnings.length > 0 ? (
+               <>
+               <EarningData earnings={earnings} />
+               <div className="w-[69.4vw] h-[8vh] rounded-br-xl  rounded-bl-xl bg-[#090909] flex items-center justify-end px-[2vw]">
+                  <div className="flex  gap-[1vw]  text-[2vw] text-white ">
+                  <FaArrowAltCircleLeft />
+                  <FaArrowAltCircleRight />
+                  </div>
+               </div>
+               </>
+            ) : (
+               <div className='text-center text-white text-lg mt-10 flex justify-center items-center w-[69vw] h-[50vh]'>
+                 <p className=' text-red-900 text-lg'>
+                 {!startDate &&  'Please select a Date to find Earnings.'}
+                 {error && `Error: ${error}`}
+                 </p>
+            
+               </div>
+            )}
          </FormTemplate>
       </AdminTemplate>
    );
