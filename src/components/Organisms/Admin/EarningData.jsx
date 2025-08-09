@@ -36,7 +36,7 @@ const EarningData = ({ earnings }) => {
                <TableData Tailwind_utility_Class='text-center overflow-hidden border-r-2 border-t-2 border-b-2 border-[#322F2F]  w-[8%] max-[553px]:text-[2.7vw] max-[900px]:text-[2vw] md:text-md'>
                   <button className='bg-[#322F2F] text-white px-4 py-1 max-[553px]:px-2 max-[553px]:py-1 rounded-md'>
                      <Link
-                        to={`/admin/Student/bill/${earning.billId}`}
+                        to={`/admin/Student/bill/${String(earning.Payment_id)}`}
                      >
                         🧾 View Bill
                      </Link>

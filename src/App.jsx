@@ -137,7 +137,7 @@ const App = () => {
                   />
 
                   <Route
-                     path='/admin/Student/bill/:billId'
+                     path='/admin/Student/bill/:Payment_id'
                      element={<ViewBill />}
                   />
                   <Route
