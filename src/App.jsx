@@ -16,8 +16,8 @@ import ContactUs from './pages/ContactUs';
 import Admission from './pages/Admission';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
-import Protected_Student from './components/Protected/Protected_Student';
-import Student from './components/Templates/Student/Student';
+
+
 import PaymentPage from './pages/PaymentPage';
 import Gallery from './components/Templates/gallery/Gallery';
 import Protected_Admin from './components/Protected/Protected_Admin';
@@ -39,6 +39,8 @@ import ResetPassword from './components/Auth/ResetPassword';
 import StatusPage from './pages/StatusPage';
 import Earning from './pages/Admin/Earning';
 import ViewBill from './pages/Admin/ViewBill';
+import StudentGroup from './pages/Student/StudentGroup';
+import Protected_Student from './components/Protected/Protected_Student';
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -113,12 +115,7 @@ const App = () => {
                   />
                </Route>
 
-               <Route path='/student' element={<Protected_Student />}>
-                  <Route
-                     path='/student/Dashboard'
-                     element={<Student />}
-                  />
-               </Route>
+              
 
                <Route path='/admin' element={<Protected_Admin />}>
                   <Route
@@ -186,6 +183,18 @@ const App = () => {
                   />
 
                   <Route path='*' element={<ErrorPage />} />
+               </Route>
+
+
+               <Route path='/student' element={<Protected_Student />}>
+                  <Route
+                     path='/student/Dashboard'
+                     element={<StudentGroup />}
+                  />
+                   <Route
+                     path='/student/Group'
+                     element={<StudentGroup />}
+                  />
                </Route>
             </Routes>
          </BrowserRouter>
