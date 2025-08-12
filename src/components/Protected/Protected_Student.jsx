@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import ErrorPage from '../Templates/ErrorPage';
 import { Outlet } from 'react-router-dom';
 
-const Protected_Stedent = () => {
+const Protected_Student = () => {
    let student = useSelector(state => state.auth.user);
 
    if (!student) {
-      return <ErrorPage />;
+      return <ErrorPage />
    }
 
    return (
@@ -17,4 +17,4 @@ const Protected_Stedent = () => {
    );
 };
 
-export default Protected_Stedent;
+export default Protected_Student;
