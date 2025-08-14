@@ -50,6 +50,7 @@ const Login = () => {
          );
 
          let user = res.data.data.user;
+         console.log('User Data:', user);
 
          localStorage.setItem('token', user.token);
 

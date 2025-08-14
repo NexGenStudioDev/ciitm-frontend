@@ -1,8 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import InputField from './InputField';
 import Dropdown from './DropDown';
+import socket from '../../../config/socket.mjs'
 
 const UniversityInfo = ({ handleInputChange }) => {
+   let [courseName, setCourseName] = React.useState([]);
+
+
+   let fetchCourseName = () => {
+  
+      socket.emit('FindCourse');
+      socket.once('CourseFound', (data) => {
+         setCourseName(data);
+      });
+    };
+    
+    useEffect(() => {
+      if(!socket.connected) {
+        socket.connect();
+      }
+
+      fetchCourseName();
+
+      return () => {
+        socket.off('CourseFound');
+      };
+    }, []);
+
+    console.log('Course Name:', );
+
    return (
       <div className='sm:grid flex flex-col w-full 2xl:grid-cols-5 sm:grid-cols-2 md:grid-cols-4 sm:gap-x-4 gap-y-10'>
          <Dropdown
@@ -20,7 +46,7 @@ const UniversityInfo = ({ handleInputChange }) => {
             placeholder='Select Course'
             name='courseName'
             required={true}
-            options={['MCA', 'BCA']}
+            options={courseName.map((item) => item.courseName)}
             onChange={handleInputChange}
          />
 
