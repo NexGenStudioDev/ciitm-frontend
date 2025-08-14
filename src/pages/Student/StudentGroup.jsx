@@ -9,6 +9,7 @@ import socket from '../../config/socket.mjs';
 import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EmojiPicker from 'emoji-picker-react';
 
 const StudentGroup = () => {
   const [isAi, setIsAi] = useState(false);
@@ -18,17 +19,7 @@ const StudentGroup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
   const [messages, setMessages] = useState([
-    // Add some test messages to ensure scrolling works
-    { studentId: 'test1', username: 'Test User 1', content: 'This is a test message to ensure scrolling works properly. This message is long enough to test scrolling functionality.', avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
-    { studentId: 'test2', username: 'Test User 2', content: 'Another test message to make sure we have enough content to scroll through.', avatar: 'https://randomuser.me/api/portraits/women/32.jpg' },
-    { studentId: 'test3', username: 'Test User 3', content: 'Third test message for scrolling functionality testing.', avatar: 'https://randomuser.me/api/portraits/men/33.jpg' },
-    { studentId: 'test4', username: 'Test User 4', content: 'Fourth test message to ensure proper scroll behavior.', avatar: 'https://randomuser.me/api/portraits/women/33.jpg' },
-    { studentId: 'test5', username: 'Test User 5', content: 'Fifth test message for scroll testing purposes.', avatar: 'https://randomuser.me/api/portraits/men/34.jpg' },
-    { studentId: 'test6', username: 'Test User 6', content: 'Sixth test message to verify scroll functionality.', avatar: 'https://randomuser.me/api/portraits/women/34.jpg' },
-    { studentId: 'test7', username: 'Test User 7', content: 'Seventh test message for scroll behavior verification.', avatar: 'https://randomuser.me/api/portraits/men/35.jpg' },
-    { studentId: 'test8', username: 'Test User 8', content: 'Eighth test message to ensure smooth scrolling.', avatar: 'https://randomuser.me/api/portraits/women/35.jpg' },
-    { studentId: 'test9', username: 'Test User 9', content: 'Ninth test message for scroll functionality testing.', avatar: 'https://randomuser.me/api/portraits/men/36.jpg' },
-    { studentId: 'test10', username: 'Test User 10', content: 'Tenth test message to verify proper scroll behavior.', avatar: 'https://randomuser.me/api/portraits/women/36.jpg' },
+
   ]);
   const user = useSelector(state => state.auth.user);
   const messagesEndRef = React.useRef(null);
@@ -44,29 +35,29 @@ const StudentGroup = () => {
   };
 
   // Emoji data
-  const emojis = [
-    { icon: '😊', name: 'smile' },
-    { icon: '😂', name: 'joy' },
-    { icon: '❤️', name: 'heart' },
-    { icon: '👍', name: 'thumbsup' },
-    { icon: '🎉', name: 'party' },
-    { icon: '🔥', name: 'fire' },
-    { icon: '😍', name: 'heart_eyes' },
-    { icon: '🤔', name: 'thinking' },
-    { icon: '😎', name: 'cool' },
-    { icon: '🥳', name: 'celebration' },
-    { icon: '💯', name: 'hundred' },
-    { icon: '✨', name: 'sparkles' },
-    { icon: '👏', name: 'clap' },
-    { icon: '🙌', name: 'raised_hands' },
-    { icon: '💪', name: 'muscle' },
-    { icon: '🎯', name: 'target' },
-  ];
+  // const emojis = [
+  //   { icon: '😊', name: 'smile' },
+  //   { icon: '😂', name: 'joy' },
+  //   { icon: '❤️', name: 'heart' },
+  //   { icon: '👍', name: 'thumbsup' },
+  //   { icon: '🎉', name: 'party' },
+  //   { icon: '🔥', name: 'fire' },
+  //   { icon: '😍', name: 'heart_eyes' },
+  //   { icon: '🤔', name: 'thinking' },
+  //   { icon: '😎', name: 'cool' },
+  //   { icon: '🥳', name: 'celebration' },
+  //   { icon: '💯', name: 'hundred' },
+  //   { icon: '✨', name: 'sparkles' },
+  //   { icon: '👏', name: 'clap' },
+  //   { icon: '🙌', name: 'raised_hands' },
+  //   { icon: '💪', name: 'muscle' },
+  //   { icon: '🎯', name: 'target' },
+  // ];
 
-  const addEmoji = (emoji) => {
-    setInputValue(prev => prev + emoji);
-    setShowEmojiPicker(false);
-  };
+  // const addEmoji = (emoji) => {
+  //   setInputValue(prev => prev + emoji);
+  //   setShowEmojiPicker(false);
+  // };
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
@@ -208,7 +199,7 @@ const StudentGroup = () => {
 
         {/* Messages Container */}
         <div 
-          className="flex-1 p-6 flex flex-col gap-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
+          className="flex-1 p-6 bg-[#F2EBEB] flex flex-col gap-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
           style={{
             scrollBehavior: 'smooth',
             WebkitOverflowScrolling: 'touch',
@@ -220,6 +211,7 @@ const StudentGroup = () => {
           {messages.map((msg, idx) => {
             const isSender = msg.studentId === user._id && msg.username !== 'AI';
 
+       
             return (
               <div
                 key={idx}
@@ -234,9 +226,7 @@ const StudentGroup = () => {
                       : 'border-purple-400/50 bg-gradient-to-br from-purple-400 to-purple-500'
                   }`}>
                     <img
-                      src={msg.avatar || (isSender
-                        ? "https://randomuser.me/api/portraits/men/32.jpg"
-                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-e73lHSywvwHbtQulEd1uIwl40tbvVkJwjQ&s")}
+                      src={msg?.avatar}
                       alt={msg.username}
                       className="w-full h-full object-cover"
                     />
@@ -303,20 +293,18 @@ const StudentGroup = () => {
         {/* Input Area */}
         <div className="p-6 bg-gradient-to-r from-white/80 to-white/60 backdrop-blur-xl border-t border-white/30 relative">
           {/* Emoji Picker */}
-          {showEmojiPicker && (
-            <div className="absolute bottom-24 left-6 bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/30 z-50">
-              <div className="grid grid-cols-4 gap-2">
-                {emojis.map((emoji, index) => (
-                  <button
-                    key={index}
-                    onClick={() => addEmoji(emoji.icon)}
-                    className="p-2 text-2xl hover:bg-gray-100 rounded-xl transition-all duration-200 hover:scale-110"
-                  >
-                    {emoji.icon}
-                  </button>
-                ))}
-              </div>
-            </div>
+
+           {showEmojiPicker && (
+             <div className="absolute bottom-24 left-6 bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/30 z-50">
+             <EmojiPicker
+               onEmojiClick={(emojiData) => {
+                 setInputValue(prev => prev + emojiData.emoji);
+                 setShowEmojiPicker(false);
+               }}
+              reactions={7}
+             />
+           </div>
+       
           )}
 
           {/* File Upload Input */}
@@ -353,7 +341,7 @@ const StudentGroup = () => {
               <input
                 type="text"
                 placeholder="Type your message here..."
-                className="w-full px-4 py-3 bg-transparent border-none outline-none text-gray-800 placeholder-gray-500 font-medium text-sm"
+                className="w-full px-4 py-3 bg-transparent border-none outline-none text-gray-800 placeholder-gray-500 font-medium text-lg"
                 value={inputValue}
                 onChange={e => setInputValue(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}

@@ -94,9 +94,12 @@ const Signup = () => {
                   <img src={logo} alt='CIITM Logo' className='h-8' />
                </div>
 
-               <h1 className='heading text-[1.8vw] max-[999px]:text-[4.5vw] font-semibold mb-6'>
+               <h1 className='heading text-[1.8vw] max-[999px]:text-[4.5vw] font-semibold mb-2'>
                   Let's Go Started Together
                </h1>
+               <p className='text-[0.9vw] max-[999px]:text-[2.5vw] mb-6'>
+  Access to this Sign Up page is limited to Admin users. To obtain Admin privileges, please reach out to the Super Admin.
+</p>
 
                <div className='w-full flex items-center justify-between gap-7'>
                   <Input

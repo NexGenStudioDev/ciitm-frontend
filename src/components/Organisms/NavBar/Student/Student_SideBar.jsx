@@ -1,12 +1,20 @@
 import React, { useState } from 'react'
 import { AiFillDashboard } from "react-icons/ai";
 import { FaUserGroup } from 'react-icons/fa6';
-import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, redirect, useLocation } from 'react-router-dom';
 
 const Student_SideBar = () => {
   const [activeItem, setActiveItem] = useState('dashboard');
   const location = useLocation();
 
+  let user = useSelector(state => state.auth.user)
+
+  if (!user) {
+    redirect('/login');
+  }
+
+  console.log('User Data:', user);
   const menuItems = [
     {
       id: 'dashboard',
