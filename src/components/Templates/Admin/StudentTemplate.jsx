@@ -6,7 +6,7 @@ import Student_SideBar from '../../Organisms/NavBar/Student/Student_SideBar'
 const StudentTemplate = ({children}) => {
   
   return (
-    <div className='w-screen h-screen overflow-x-hidden overflow-y-auto bg-gradient-to-br from-gray-50 to-blue-50'>
+    <div className='w-screen h-screen overflow-x-hidden overflow-y-auto bg-gradient-to-br from-gray-50 to-blue-50 '>
         <div className="sticky top-0 z-50">
             <Student_NavBar />
         </div>

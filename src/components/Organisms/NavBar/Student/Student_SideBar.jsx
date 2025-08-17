@@ -35,7 +35,7 @@ const Student_SideBar = () => {
   };
 
   return (
-    <div className='w-80 h-[87vh] mb-[4vh] bg-gradient-to-br from-white/90 via-white/70 to-white/40 backdrop-blur-2xl rounded-3xl flex flex-col shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-white/30 overflow-hidden relative'>
+    <div className='w-80 h-[87vh] mb-[4vh] bg-gradient-to-br from-white/90 via-white/70 to-white/40 backdrop-blur-2xl rounded-3xl flex flex-col shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-white/30 overflow-hidden relative mt-[8vh]'>
       {/* Animated background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 animate-pulse"></div>
       
@@ -46,7 +46,7 @@ const Student_SideBar = () => {
             {/* Profile picture without gradient background */}
             <div className="w-24 h-24 rounded-full shadow-2xl">
               <img 
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2arksnbaPf0byiOZJkxTS0G2-5vcJvFKweg&s" 
+                src={user?.profile_image} 
                 alt="Profile" 
                 className='w-full h-full rounded-full object-cover border-2 border-white shadow-lg' 
               />
@@ -54,7 +54,7 @@ const Student_SideBar = () => {
             {/* Online status without ping animation */}
             <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border-3 border-white shadow-lg animate-pulse"></div>
           </div>
-          <h2 className='text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2'>Student Name</h2>
+          <h2 className='text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2'>{user.name}</h2>
           <p className='text-sm text-gray-600 font-semibold mb-3 px-4 py-1 bg-white/50 rounded-full backdrop-blur-sm'>Computer Science</p>
           <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-green-50 to-emerald-50 rounded-full border border-green-200/50">
             <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-pulse"></div>
