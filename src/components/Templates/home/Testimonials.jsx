@@ -17,8 +17,9 @@ const Testimonials = () => {
    useEffect(() => {
       if (testimonialData) {
          setTestimonials([...testimonialData]);
+      
       }
-   }, [testimonialData]);
+   }, []);
 
    const settings = {
       infinite: true,

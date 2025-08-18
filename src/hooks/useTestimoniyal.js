@@ -12,7 +12,8 @@ const useTestimonial = () => {
       try {
          if (!Testimonital) {
             const response = await axios.get(Testimonital_EndPoint);
-            dispatch(setTestimonital(response.data.Find_Testimonial));
+            console.log('Testimonial data fetched:', response.data.data);
+            dispatch(setTestimonital(response.data.data));
          }
          // setTestimonials(data)
       } catch (error) {
