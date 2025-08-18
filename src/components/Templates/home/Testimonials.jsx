@@ -16,7 +16,12 @@ const Testimonials = () => {
 
    useEffect(() => {
       if (testimonialData) {
-         setTestimonials([...testimonialData]);
+         let arr = Array.isArray(testimonialData) ? testimonialData : [testimonialData];
+         if (arr.length === 1) {
+            // Duplicate the single testimonial so slider works
+            arr = [arr[0], arr[0]];
+         }
+         setTestimonials(arr);
       }
    }, [testimonialData]);
 
@@ -44,7 +49,7 @@ const Testimonials = () => {
    return (
       <section className='w-full py-[10vh] max-[700px]:px-[5vw] px-[2vw] text-white bg-[#333] p-[2vw] flex max-[600px]:flex-col items-center overflow-hidden'>
          {/* Header */}
-         <div className='left-txts w-[33vw] mb-8 max-[600px]:w-full ml-[2.5vw]'>
+         <div className='left-text w-[33vw] mb-8 max-[600px]:w-full ml-[2.5vw]'>
             <h1 className='text-[3.1vw] max-[599px]:text-[8vw] font-semibold'>
                Transforming Lives, One Story at a Time!
             </h1>
@@ -56,37 +61,23 @@ const Testimonials = () => {
 
          {/* Slider */}
          <div className='carousel-container w-[55vw] max-[600px]:w-full overflow-hidden'>
-            <Slider {...settings} className='slider'>
-               {testimonials.length === 0 ? (
-                  <div className='text-center'>
-                     <h2>No Testimonials Found</h2>
-                  </div>
-               ) : (
-                  testimonials.map(
-                     ({
-                        id,
-                        image,
-                        name,
-                        job_Role,
-                        message,
-                        star,
-                     }) => (
-                        <div
-                           key={id}
-                           className='relative w-full flex justify-center'
-                        >
-                           <TestimonialPrimaryCard
-                              image={image}
-                              name={name}
-                              jobRole={job_Role}
-                              message={message}
-                              star={star}
-                           />
-                        </div>
-                     ),
-                  )
-               )}
-            </Slider>
+            {testimonials.length > 1 ? (
+               <Slider {...settings} className='slider opacity-100'>
+                  {testimonials.map((t, idx) => (
+                     <div key={t.id || idx} className='relative w-full flex justify-center'>
+                        <TestimonialPrimaryCard {...t} />
+                     </div>
+                  ))}
+               </Slider>
+            ) : testimonials.length === 1 ? (
+               <div className='relative w-full flex justify-center'>
+                  <TestimonialPrimaryCard {...testimonials[0]} />
+               </div>
+            ) : (
+               <div className='text-center'>
+                  <h2>No Testimonials Found</h2>
+               </div>
+            )}
          </div>
       </section>
    );

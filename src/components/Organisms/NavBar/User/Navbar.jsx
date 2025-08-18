@@ -98,6 +98,13 @@ const Navbar = () => {
                               Check Status
                            </NavLink>
                            <NavLink
+                              to='/testimonial'
+                              onClick={() => setIsMenuOpen(false)}
+                              className='block px-4 py-2'
+                           >
+                              Testimonial
+                           </NavLink>
+                           <NavLink
                               to='/payment'
                               onClick={() => setIsMenuOpen(false)}
                               className='block px-4 py-2'
@@ -153,6 +160,13 @@ const Navbar = () => {
                               >
                                  Check Status
                               </NavLink>
+                              <NavLink
+                              to='/testimonial'
+                              onClick={() => setIsMenuOpen(false)}
+                              className='block px-4 py-2'
+                           >
+                              Testimonial
+                           </NavLink>
                               <NavLink
                                  to='/payment'
                                  className='block px-4 py-2'

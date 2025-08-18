@@ -179,7 +179,7 @@ const StudentGroup = () => {
   return (
     <StudentTemplate>
       <ToastContainer />
-      <div className="w-full h-[87vh] rounded-3xl bg-gradient-to-br from-white/90 via-white/70 to-white/40 backdrop-blur-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] border border-white/30 flex flex-col overflow-hidden">
+      <div className="w-full h-[87vh] rounded-3xl bg-gradient-to-br from-white/90 via-white/70 to-white/40 backdrop-blur-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] border border-white/30 flex flex-col overflow-hidden  mt-[8vh]">
         {/* Header */}
         <div className="p-6 border-b border-white/30 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm">
           <div className="flex items-center gap-4">

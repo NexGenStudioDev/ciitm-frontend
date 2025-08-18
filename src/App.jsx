@@ -41,6 +41,7 @@ import Earning from './pages/Admin/Earning';
 import ViewBill from './pages/Admin/ViewBill';
 import StudentGroup from './pages/Student/StudentGroup';
 import Protected_Student from './components/Protected/Protected_Student';
+import Testimonial from './pages/Testimonial';
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -89,6 +90,7 @@ const App = () => {
                <Route path='*' element={<ErrorPage />} />
                <Route path='/' element={<Body />}>
                   <Route path='/' element={<Landing />} />
+
                   <Route path='/about' element={<About />} />
                   <Route
                      path='/course/:id'
@@ -99,6 +101,7 @@ const App = () => {
                   <Route path='/admission' element={<Admission />} />
                   <Route path='/payment' element={<PaymentPage />} />
                   <Route path='/status' element={<StatusPage />} />
+                  <Route path='/testimonial' element={<Testimonial />} />
                   <Route
                      path='/album/:name'
                      element={<Album_Image />}
