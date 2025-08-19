@@ -1,5 +1,5 @@
 export default function CreateTeacherPage() {
-	return <div>Create Teacher Page</div>;
+	return <div>Create Teacher  Page</div>;
 }
 
 
