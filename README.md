@@ -178,7 +178,7 @@ src/
 ├── 📁 utils/              # Utility functions
 │   ├── apiUrl.js          # API configuration
 │   └── constants.js       # API endpoints
-├── 📁 validation/         # Form validation schemas
+├── 📁 validation/         # Form validation schemass
 ├── 📁 service/            # API service functions
 └── 📁 config/             # Configuration files
     └── socket.mjs         # Socket.IO configuration
