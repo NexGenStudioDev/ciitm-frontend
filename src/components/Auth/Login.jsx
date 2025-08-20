@@ -29,6 +29,34 @@ const Login = () => {
          e.preventDefault();
          setLoading(true);
 
+         // Dev-only fallback admin login (for local testing)
+         const DEV_EMAIL = import.meta.env.VITE_DEV_ADMIN_EMAIL || 'admin@local.test';
+         const DEV_PASSWORD = import.meta.env.VITE_DEV_ADMIN_PASSWORD || 'Admin@123';
+
+         if (
+            find_Email?.value === DEV_EMAIL &&
+            find_Password?.value === DEV_PASSWORD
+         ) {
+            const devUser = {
+               id: 'dev-admin',
+               name: 'Dev Admin',
+               email: DEV_EMAIL,
+               role: 'admin',
+               token: 'dev-admin-token',
+               profile_image: ''
+            };
+
+            localStorage.setItem('token', devUser.token);
+            dispatch(setUser(devUser));
+            Swal.fire({
+               icon: 'success',
+               title: 'Logged in (Dev Mode)',
+               text: 'You are logged in as Admin using dev credentials.',
+            });
+            navigate('/admin/DashBoard');
+            return;
+         }
+
          if (!find_Email && !find_Password) {
             throw new Error('Please Enter Email and Password');
          }
