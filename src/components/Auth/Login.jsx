@@ -30,12 +30,12 @@ const Login = () => {
          setLoading(true);
 
          // Dev-only fallback admin login (for local testing)
-         const DEV_EMAIL = import.meta.env.VITE_DEV_ADMIN_EMAIL || 'admin@local.test';
-         const DEV_PASSWORD = import.meta.env.VITE_DEV_ADMIN_PASSWORD || 'Admin@123';
+         const DEV_EMAIL = (import.meta.env.VITE_DEV_ADMIN_EMAIL || 'admin@local.test').trim().toLowerCase();
+         const DEV_PASSWORD = (import.meta.env.VITE_DEV_ADMIN_PASSWORD || 'Admin@123').trim();
 
          if (
-            find_Email?.value === DEV_EMAIL &&
-            find_Password?.value === DEV_PASSWORD
+            (find_Email?.value || '').trim().toLowerCase() === DEV_EMAIL &&
+            (find_Password?.value || '').trim() === DEV_PASSWORD
          ) {
             const devUser = {
                id: 'dev-admin',

@@ -1,13 +1,15 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
+import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTemplate_Secondary';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../store/AuthSlice';
-import { axios } from '../../utils/apiUrl';
+import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const schema = yup.object({
 	name: yup.string().required('Name is required'),
@@ -48,6 +50,7 @@ const schema = yup.object({
 
 export default function CreateTeacherPage() {
 	const user = useSelector(selectUser);
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -93,6 +96,14 @@ export default function CreateTeacherPage() {
 				throw new Error('Missing auth token. Please log in as admin.');
 			}
 
+			// Dev-only bypass: simulate success when using placeholder dev token
+			if (token === 'dev-admin-token') {
+				toast.success('Teacher created successfully (dev)');
+				reset();
+				setTimeout(() => navigate('/admin/DashBoard'), 500);
+				return;
+			}
+
 			const res = await axios.post(
 				'/api/v1/admin/teacher/create',
 				payload,
@@ -105,6 +116,7 @@ export default function CreateTeacherPage() {
 
 			toast.success(res?.data?.message || 'Teacher created successfully');
 			reset();
+			setTimeout(() => navigate('/admin/DashBoard'), 500);
 		} catch (error) {
 			const message =
 				error?.response?.data?.message || error?.message || 'Failed to create teacher';
@@ -122,20 +134,21 @@ export default function CreateTeacherPage() {
 				/>
 			</Helmet>
 			<AdminTemplate pageName={'Create Teacher'}>
-				<div className='w-full p-4 md:p-6'>
-					<h2 className='text-xl md:text-2xl font-semibold'>Create New Teacher</h2>
-					<p className='text-sm text-gray-400 mt-2'>Fill in the details to add a new teacher.</p>
-
+				<FormTemplate_Secondary
+					Title='Create Teacher'
+					TitleClassName='w-full h-[10vh] bg-[#090909]'
+					HeadingClassName='text-white text-[1.3vw] max-[995px]:text-[2vw] max-[500px]:text-[2.8vw]'
+				>
 					<form
 						onSubmit={handleSubmit(onSubmit)}
-						className='mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6'
+						className='w-full flex flex-col items-center justify-center mt-4 px-[2vw] text-[1.1vw] max-[995px]:text-[2vw] max-[500px]:text-[2.8vw]'
 					>
-						<div className='flex flex-col'>
-							<label className='text-sm font-medium mb-1'>Name</label>
+						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+							<label className='text-white mb-2'>Name</label>
 							<input
 								{...register('name')}
-								className='rounded-md border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-orange-500'
-								placeholder='Full name'
+								placeholder='Enter full name'
+								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
 							/>
 							{errors.name && (
 								<span className='text-red-500 text-xs mt-1'>
@@ -144,13 +157,13 @@ export default function CreateTeacherPage() {
 							)}
 						</div>
 
-						<div className='flex flex-col'>
-							<label className='text-sm font-medium mb-1'>Email</label>
+						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+							<label className='text-white mb-2'>Email</label>
 							<input
 								{...register('email')}
-								type='email'
-								className='rounded-md border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-orange-500'
 								placeholder='teacher@example.com'
+								type='email'
+								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
 							/>
 							{errors.email && (
 								<span className='text-red-500 text-xs mt-1'>
@@ -159,12 +172,12 @@ export default function CreateTeacherPage() {
 							)}
 						</div>
 
-						<div className='flex flex-col'>
-							<label className='text-sm font-medium mb-1'>Image URL</label>
+						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+							<label className='text-white mb-2'>Image URL</label>
 							<input
 								{...register('image')}
-								className='rounded-md border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-orange-500'
 								placeholder='https://...'
+								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
 							/>
 							{errors.image && (
 								<span className='text-red-500 text-xs mt-1'>
@@ -173,12 +186,12 @@ export default function CreateTeacherPage() {
 							)}
 						</div>
 
-						<div className='flex flex-col'>
-							<label className='text-sm font-medium mb-1'>Role</label>
+						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+							<label className='text-white mb-2'>Role</label>
 							<input
 								{...register('role')}
-								className='rounded-md border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-orange-500'
 								placeholder='e.g. Math Teacher'
+								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
 							/>
 							{errors.role && (
 								<span className='text-red-500 text-xs mt-1'>
@@ -187,12 +200,12 @@ export default function CreateTeacherPage() {
 							)}
 						</div>
 
-						<div className='flex flex-col'>
-							<label className='text-sm font-medium mb-1'>Specialization</label>
+						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+							<label className='text-white mb-2'>Specialization</label>
 							<input
 								{...register('specialization')}
-								className='rounded-md border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-orange-500'
 								placeholder='e.g. Physics'
+								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
 							/>
 							{errors.specialization && (
 								<span className='text-red-500 text-xs mt-1'>
@@ -201,14 +214,13 @@ export default function CreateTeacherPage() {
 							)}
 						</div>
 
-						<div className='flex flex-col'>
-							<label className='text-sm font-medium mb-1'>Experience (years)</label>
+						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+							<label className='text-white mb-2'>Experience (years)</label>
 							<input
 								{...register('experience')}
 								type='number'
-								min={0}
-								className='rounded-md border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-orange-500'
 								placeholder='e.g. 5'
+								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
 							/>
 							{errors.experience && (
 								<span className='text-red-500 text-xs mt-1'>
@@ -217,85 +229,71 @@ export default function CreateTeacherPage() {
 							)}
 						</div>
 
-						<div className='md:col-span-2 mt-2'>
-							<h3 className='text-sm font-semibold mb-2'>Social Media Links</h3>
-							<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-								<div className='flex flex-col'>
-									<label className='text-sm font-medium mb-1'>Facebook</label>
-									<input
-										{...register('facebook')}
-										className='rounded-md border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-orange-500'
-										placeholder='https://facebook.com/...'
-									/>
-									{errors.facebook && (
-										<span className='text-red-500 text-xs mt-1'>
-											{errors.facebook.message}
-										</span>
-									)}
-								</div>
-
-								<div className='flex flex-col'>
-									<label className='text-sm font-medium mb-1'>LinkedIn</label>
-									<input
-										{...register('linkedin')}
-										className='rounded-md border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-orange-500'
-										placeholder='https://linkedin.com/in/...'
-									/>
-									{errors.linkedin && (
-										<span className='text-red-500 text-xs mt-1'>
-											{errors.linkedin.message}
-										</span>
-									)}
-								</div>
-
-								<div className='flex flex-col'>
-									<label className='text-sm font-medium mb-1'>Twitter</label>
-									<input
-										{...register('twitter')}
-										className='rounded-md border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-orange-500'
-										placeholder='https://twitter.com/...'
-									/>
-									{errors.twitter && (
-										<span className='text-red-500 text-xs mt-1'>
-											{errors.twitter.message}
-										</span>
-									)}
-								</div>
-
-								<div className='flex flex-col'>
-									<label className='text-sm font-medium mb-1'>Instagram</label>
-									<input
-										{...register('instagram')}
-										className='rounded-md border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-orange-500'
-										placeholder='https://instagram.com/...'
-									/>
-									{errors.instagram && (
-										<span className='text-red-500 text-xs mt-1'>
-											{errors.instagram.message}
-										</span>
-									)}
-								</div>
-							</div>
+						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+							<label className='text-white mb-2'>Facebook</label>
+							<input
+								{...register('facebook')}
+								placeholder='https://facebook.com/...'
+								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
+							/>
+							{errors.facebook && (
+								<span className='text-red-500 text-xs mt-1'>
+									{errors.facebook.message}
+								</span>
+							)}
 						</div>
 
-						<div className='md:col-span-2 flex items-center gap-3 mt-2'>
-							<button
-								type='submit'
-								className='bg-[#FF6603] hover:bg-[#e05600] text-white font-semibold rounded-md px-5 py-2 disabled:opacity-60 disabled:cursor-not-allowed'
-								disabled={isSubmitting}
-							>
-								{isSubmitting ? 'Submitting...' : 'Submit'}
-							</button>
-							<button
-								type='button'
-								className='bg-gray-200 text-gray-700 font-medium rounded-md px-5 py-2'
-								onClick={() => reset()}
-							>
-								Reset
-							</button>
+						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+							<label className='text-white mb-2'>LinkedIn</label>
+							<input
+								{...register('linkedin')}
+								placeholder='https://linkedin.com/in/...'
+								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
+							/>
+							{errors.linkedin && (
+								<span className='text-red-500 text-xs mt-1'>
+									{errors.linkedin.message}
+								</span>
+							)}
 						</div>
+
+						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+							<label className='text-white mb-2'>Twitter</label>
+							<input
+								{...register('twitter')}
+								placeholder='https://twitter.com/...'
+								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
+							/>
+							{errors.twitter && (
+								<span className='text-red-500 text-xs mt-1'>
+									{errors.twitter.message}
+								</span>
+							)}
+						</div>
+
+						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+							<label className='text-white mb-2'>Instagram</label>
+							<input
+								{...register('instagram')}
+								placeholder='https://instagram.com/...'
+								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
+							/>
+							{errors.instagram && (
+								<span className='text-red-500 text-xs mt-1'>
+									{errors.instagram.message}
+								</span>
+							)}
+						</div>
+
+						<button
+							type='submit'
+							className='mt-4 px-[2vw] py-[1.2vh] bg-gradient-to-r from-green-500 to-green-700 text-white font-semibold rounded-lg shadow-md hover:from-green-600 hover:to-green-800 hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 max-[300px]:text-[4.5vw] max-[500px]:text-[3vw] max-[995px]:text-[2.3vw] text-[1.5vw] w-[40%] mb-[3.5vh] disabled:opacity-60 disabled:cursor-not-allowed'
+							disabled={isSubmitting}
+						>
+							{isSubmitting ? 'Submitting...' : 'Create Teacher'}
+						</button>
 					</form>
-				</div>
+				</FormTemplate_Secondary>
 			</AdminTemplate>
 		</>
 	);
