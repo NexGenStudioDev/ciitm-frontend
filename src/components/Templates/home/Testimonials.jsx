@@ -16,7 +16,9 @@ const Testimonials = () => {
 
    useEffect(() => {
       if (testimonialData) {
-         let arr = Array.isArray(testimonialData) ? testimonialData : [testimonialData];
+         let arr = Array.isArray(testimonialData)
+            ? testimonialData
+            : [testimonialData];
          if (arr.length === 1) {
             // Duplicate the single testimonial so slider works
             arr = [arr[0], arr[0]];
@@ -64,7 +66,10 @@ const Testimonials = () => {
             {testimonials.length > 1 ? (
                <Slider {...settings} className='slider opacity-100'>
                   {testimonials.map((t, idx) => (
-                     <div key={t.id || idx} className='relative w-full flex justify-center'>
+                     <div
+                        key={t.id || idx}
+                        className='relative w-full flex justify-center'
+                     >
                         <TestimonialPrimaryCard {...t} />
                      </div>
                   ))}
