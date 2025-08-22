@@ -13,6 +13,9 @@ import { useNavigate } from 'react-router-dom';
 
 /**
  * Yup validation schema for teacher creation form
+ * Defines validation rules for all form fields including required fields,
+ * email format, URL validation, and numeric constraints
+ * @type {import('yup').ObjectSchema}
  */
 const schema = object({
 	name: string().required('Name is required'),
@@ -45,14 +48,16 @@ const schema = object({
 
 /**
  * Reusable input field component to reduce code duplication
+ * Renders a form input with label, validation, and error display
  * @param {Object} props - Component props
- * @param {string} props.label - Label text for the input
- * @param {string} props.name - Field name for registration
+ * @param {string} props.label - Label text for the input field
+ * @param {string} props.name - Field name for React Hook Form registration
  * @param {Function} props.register - React Hook Form register function
- * @param {Object} props.errors - Form errors object
+ * @param {Object} props.errors - Form errors object from React Hook Form
  * @param {string} props.placeholder - Input placeholder text
- * @param {string} props.type - Input type (default: 'text')
- * @param {string} props.id - Input ID for label association
+ * @param {string} [props.type='text'] - Input type (text, email, number, etc.)
+ * @param {string} props.id - Input ID for label association and accessibility
+ * @returns {JSX.Element} A form input field with label and error handling
  */
 const InputField = ({ 
 	label, 
@@ -83,8 +88,19 @@ const InputField = ({
 );
 
 /**
- * CreateTeacherPage component - Allows admins to create new teacher profiles
- * @returns {JSX.Element} The CreateTeacherPage component
+ * CreateTeacherPage component - Allows administrators to create new teacher profiles
+ * This component provides a comprehensive form for adding teachers with validation,
+ * API integration, and proper error handling. It includes fields for personal
+ * information, professional details, and social media links.
+ * 
+ * Features:
+ * - Form validation using React Hook Form and Yup
+ * - JWT authentication for API requests
+ * - Responsive design matching admin theme
+ * - Success/error notifications with toast
+ * - Auto-redirect after successful submission
+ * 
+ * @returns {JSX.Element} The complete CreateTeacherPage component with form
  */
 export default function CreateTeacherPage() {
 	const user = useSelector(selectUser);
@@ -112,7 +128,21 @@ export default function CreateTeacherPage() {
 
 	/**
 	 * Handle form submission to create a new teacher
-	 * @param {Object} data - Form data from React Hook Form
+	 * Validates form data, constructs API payload, sends POST request,
+	 * and handles success/error responses with user feedback
+	 * 
+	 * @param {Object} data - Form data from React Hook Form validation
+	 * @param {string} data.name - Teacher's full name
+	 * @param {string} data.email - Teacher's email address
+	 * @param {string} data.image - Teacher's profile image URL
+	 * @param {string} data.role - Teacher's role/title
+	 * @param {string} data.specialization - Teacher's area of expertise
+	 * @param {string} data.experience - Years of teaching experience
+	 * @param {string} data.facebook - Facebook profile URL
+	 * @param {string} data.linkedin - LinkedIn profile URL
+	 * @param {string} data.twitter - Twitter profile URL
+	 * @param {string} data.instagram - Instagram profile URL
+	 * @returns {Promise<void>} Handles API request and user feedback
 	 */
 	const onSubmit = async data => {
 		const token = user?.token || localStorage.getItem('token');
