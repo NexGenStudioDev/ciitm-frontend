@@ -4,50 +4,88 @@ import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTemplate_Secondary';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { string, number, object } from 'yup';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../store/AuthSlice';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-const schema = yup.object({
-	name: yup.string().required('Name is required'),
-	email: yup
-		.string()
+/**
+ * Yup validation schema for teacher creation form
+ */
+const schema = object({
+	name: string().required('Name is required'),
+	email: string()
 		.email('Enter a valid email')
 		.required('Email is required'),
-	image: yup
-		.string()
+	image: string()
 		.url('Enter a valid image URL')
 		.required('Image URL is required'),
-	role: yup.string().required('Role is required'),
-	specialization: yup
-		.string()
+	role: string().required('Role is required'),
+	specialization: string()
 		.required('Specialization is required'),
-	experience: yup
-		.number()
+	experience: number()
 		.typeError('Experience must be a number')
 		.min(0, 'Experience cannot be negative')
 		.required('Experience is required'),
-	facebook: yup
-		.string()
+	facebook: string()
 		.url('Enter a valid Facebook URL')
 		.required('Facebook link is required'),
-	linkedin: yup
-		.string()
+	linkedin: string()
 		.url('Enter a valid LinkedIn URL')
 		.required('LinkedIn link is required'),
-	twitter: yup
-		.string()
+	twitter: string()
 		.url('Enter a valid Twitter URL')
 		.required('Twitter link is required'),
-	instagram: yup
-		.string()
+	instagram: string()
 		.url('Enter a valid Instagram URL')
 		.required('Instagram link is required'),
 });
 
+/**
+ * Reusable input field component to reduce code duplication
+ * @param {Object} props - Component props
+ * @param {string} props.label - Label text for the input
+ * @param {string} props.name - Field name for registration
+ * @param {Function} props.register - React Hook Form register function
+ * @param {Object} props.errors - Form errors object
+ * @param {string} props.placeholder - Input placeholder text
+ * @param {string} props.type - Input type (default: 'text')
+ * @param {string} props.id - Input ID for label association
+ */
+const InputField = ({ 
+	label, 
+	name, 
+	register, 
+	errors, 
+	placeholder, 
+	type = 'text',
+	id 
+}) => (
+	<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
+		<label htmlFor={id} className='text-white mb-2'>
+			{label}
+		</label>
+		<input
+			id={id}
+			{...register(name)}
+			type={type}
+			placeholder={placeholder}
+			className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
+		/>
+		{errors[name] && (
+			<span className='text-red-500 text-xs mt-1'>
+				{errors[name].message}
+			</span>
+		)}
+	</div>
+);
+
+/**
+ * CreateTeacherPage component - Allows admins to create new teacher profiles
+ * @returns {JSX.Element} The CreateTeacherPage component
+ */
 export default function CreateTeacherPage() {
 	const user = useSelector(selectUser);
 	const navigate = useNavigate();
@@ -72,6 +110,10 @@ export default function CreateTeacherPage() {
 		},
 	});
 
+	/**
+	 * Handle form submission to create a new teacher
+	 * @param {Object} data - Form data from React Hook Form
+	 */
 	const onSubmit = async data => {
 		const token = user?.token || localStorage.getItem('token');
 		const payload = {
@@ -79,16 +121,14 @@ export default function CreateTeacherPage() {
 			email: data.email,
 			image: data.image,
 			role: data.role,
-			Specialization: data.specialization,
-			Experience: Number(data.experience),
-			social_media: [
-				{
-					facebook: data.facebook,
-					linkedin: data.linkedin,
-					twitter: data.twitter,
-					instagram: data.instagram,
-				},
-			],
+			specialization: data.specialization,
+			experience: Number(data.experience),
+			social_media: {
+				facebook: data.facebook,
+				linkedin: data.linkedin,
+				twitter: data.twitter,
+				instagram: data.instagram,
+			},
 		};
 
 		try {
@@ -135,147 +175,97 @@ export default function CreateTeacherPage() {
 						onSubmit={handleSubmit(onSubmit)}
 						className='w-full flex flex-col items-center justify-center mt-4 px-[2vw] text-[1.1vw] max-[995px]:text-[2vw] max-[500px]:text-[2.8vw]'
 					>
-						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
-							<label className='text-white mb-2'>Name</label>
-							<input
-								{...register('name')}
-								placeholder='Enter full name'
-								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
-							/>
-							{errors.name && (
-								<span className='text-red-500 text-xs mt-1'>
-									{errors.name.message}
-								</span>
-							)}
-						</div>
+						<InputField
+							label='Name'
+							name='name'
+							register={register}
+							errors={errors}
+							placeholder='Enter full name'
+							id='teacher-name'
+						/>
 
-						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
-							<label className='text-white mb-2'>Email</label>
-							<input
-								{...register('email')}
-								placeholder='teacher@example.com'
-								type='email'
-								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
-							/>
-							{errors.email && (
-								<span className='text-red-500 text-xs mt-1'>
-									{errors.email.message}
-								</span>
-							)}
-						</div>
+						<InputField
+							label='Email'
+							name='email'
+							register={register}
+							errors={errors}
+							placeholder='teacher@example.com'
+							type='email'
+							id='teacher-email'
+						/>
 
-						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
-							<label className='text-white mb-2'>Image URL</label>
-							<input
-								{...register('image')}
-								placeholder='https://...'
-								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
-							/>
-							{errors.image && (
-								<span className='text-red-500 text-xs mt-1'>
-									{errors.image.message}
-								</span>
-							)}
-						</div>
+						<InputField
+							label='Image URL'
+							name='image'
+							register={register}
+							errors={errors}
+							placeholder='https://...'
+							id='teacher-image'
+						/>
 
-						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
-							<label className='text-white mb-2'>Role</label>
-							<input
-								{...register('role')}
-								placeholder='e.g. Math Teacher'
-								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
-							/>
-							{errors.role && (
-								<span className='text-red-500 text-xs mt-1'>
-									{errors.role.message}
-								</span>
-							)}
-						</div>
+						<InputField
+							label='Role'
+							name='role'
+							register={register}
+							errors={errors}
+							placeholder='e.g. Math Teacher'
+							id='teacher-role'
+						/>
 
-						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
-							<label className='text-white mb-2'>Specialization</label>
-							<input
-								{...register('specialization')}
-								placeholder='e.g. Physics'
-								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
-							/>
-							{errors.specialization && (
-								<span className='text-red-500 text-xs mt-1'>
-									{errors.specialization.message}
-								</span>
-							)}
-						</div>
+						<InputField
+							label='Specialization'
+							name='specialization'
+							register={register}
+							errors={errors}
+							placeholder='e.g. Physics'
+							id='teacher-specialization'
+						/>
 
-						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
-							<label className='text-white mb-2'>Experience (years)</label>
-							<input
-								{...register('experience')}
-								type='number'
-								placeholder='e.g. 5'
-								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
-							/>
-							{errors.experience && (
-								<span className='text-red-500 text-xs mt-1'>
-									{errors.experience.message}
-								</span>
-							)}
-						</div>
+						<InputField
+							label='Experience (years)'
+							name='experience'
+							register={register}
+							errors={errors}
+							placeholder='e.g. 5'
+							type='number'
+							id='teacher-experience'
+						/>
 
-						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
-							<label className='text-white mb-2'>Facebook</label>
-							<input
-								{...register('facebook')}
-								placeholder='https://facebook.com/...'
-								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
-							/>
-							{errors.facebook && (
-								<span className='text-red-500 text-xs mt-1'>
-									{errors.facebook.message}
-								</span>
-							)}
-						</div>
+						<InputField
+							label='Facebook'
+							name='facebook'
+							register={register}
+							errors={errors}
+							placeholder='https://facebook.com/...'
+							id='teacher-facebook'
+						/>
 
-						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
-							<label className='text-white mb-2'>LinkedIn</label>
-							<input
-								{...register('linkedin')}
-								placeholder='https://linkedin.com/in/...'
-								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
-							/>
-							{errors.linkedin && (
-								<span className='text-red-500 text-xs mt-1'>
-									{errors.linkedin.message}
-								</span>
-							)}
-						</div>
+						<InputField
+							label='LinkedIn'
+							name='linkedin'
+							register={register}
+							errors={errors}
+							placeholder='https://linkedin.com/in/...'
+							id='teacher-linkedin'
+						/>
 
-						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
-							<label className='text-white mb-2'>Twitter</label>
-							<input
-								{...register('twitter')}
-								placeholder='https://twitter.com/...'
-								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
-							/>
-							{errors.twitter && (
-								<span className='text-red-500 text-xs mt-1'>
-									{errors.twitter.message}
-								</span>
-							)}
-						</div>
+						<InputField
+							label='Twitter'
+							name='twitter'
+							register={register}
+							errors={errors}
+							placeholder='https://twitter.com/...'
+							id='teacher-twitter'
+						/>
 
-						<div className='Form_input_Container w-full flex flex-col justify-center mb-4'>
-							<label className='text-white mb-2'>Instagram</label>
-							<input
-								{...register('instagram')}
-								placeholder='https://instagram.com/...'
-								className='p-2 rounded-md bg-[#2B2C2B] text-white border focus:outline-none w-[95%]'
-							/>
-							{errors.instagram && (
-								<span className='text-red-500 text-xs mt-1'>
-									{errors.instagram.message}
-								</span>
-							)}
-						</div>
+						<InputField
+							label='Instagram'
+							name='instagram'
+							register={register}
+							errors={errors}
+							placeholder='https://instagram.com/...'
+							id='teacher-instagram'
+						/>
 
 						<button
 							type='submit'
