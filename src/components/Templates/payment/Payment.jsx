@@ -53,15 +53,25 @@ const Payment = () => {
          let cashfree = await load({ mode: "sandbox" });
 
          const payment_session_id = res?.data?.data?.payment_session_id;
+         const order_id = res?.data?.data?.order_id;
 
          if (!payment_session_id) {
             throw new Error('Payment session ID not received.');
          }
-
+// /success
          cashfree.checkout({
             paymentSessionId: payment_session_id,
             redirectTarget: '_self',
+            oneClickCheckout: true,
+            returnUrl: `${import.meta.VITE_BACKEND_URL}/success?order_id=${order_id}`,
+            
+            style: {
+               theme: 'dark', // or 'dark'
+               buttonColor: '#28a745',
+             }
          });
+
+        
 
       } catch (error) {
          console.error('Payment error:', error);
