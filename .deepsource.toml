@@ -27,7 +27,6 @@ exclude = [
   "build/**",
   "*.min.js"
 ]
-
 # Include specific file patterns
 include = [
   "src/**/*.js",
