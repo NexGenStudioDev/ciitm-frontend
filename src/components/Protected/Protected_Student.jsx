@@ -7,7 +7,7 @@ const Protected_Student = () => {
    let student = useSelector(state => state.auth.user);
 
    if (!student) {
-      return <ErrorPage />
+      return <ErrorPage />;
    }
 
    return (

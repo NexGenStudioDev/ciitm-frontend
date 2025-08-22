@@ -12,6 +12,7 @@ import { MdSystemUpdateAlt } from 'react-icons/md';
 import gsap from 'gsap';
 import AdminSidebarLink from '../../../Atoms/Links/AdminSidebarLink';
 import { FaBookBookmark } from 'react-icons/fa6';
+import { PiChalkboardTeacher } from 'react-icons/pi';
 
 const links = [
    { name: 'Home', link: '/admin/DashBoard', icon: <BiHomeSmile /> },
@@ -34,6 +35,11 @@ const links = [
       name: 'Create Courses',
       link: '/admin/Create/Contact',
       icon: <FaBookBookmark />,
+   },
+   {
+      name: 'Create Teacher',
+      link: '/admin/create-teacher',
+      icon: <PiChalkboardTeacher />,
    },
    { name: 'Image', link: '/admin/create/Image', icon: <FaImage /> },
    {

@@ -17,7 +17,6 @@ import Admission from './pages/Admission';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 
-
 import PaymentPage from './pages/PaymentPage';
 import Gallery from './components/Templates/gallery/Gallery';
 import Protected_Admin from './components/Protected/Protected_Admin';
@@ -42,6 +41,7 @@ import ViewBill from './pages/Admin/ViewBill';
 import StudentGroup from './pages/Student/StudentGroup';
 import Protected_Student from './components/Protected/Protected_Student';
 import Testimonial from './pages/Testimonial';
+import CreateTeacherPage from './pages/Admin/CreateTeacherPage';
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -101,7 +101,10 @@ const App = () => {
                   <Route path='/admission' element={<Admission />} />
                   <Route path='/payment' element={<PaymentPage />} />
                   <Route path='/status' element={<StatusPage />} />
-                  <Route path='/testimonial' element={<Testimonial />} />
+                  <Route
+                     path='/testimonial'
+                     element={<Testimonial />}
+                  />
                   <Route
                      path='/album/:name'
                      element={<Album_Image />}
@@ -118,9 +121,12 @@ const App = () => {
                   />
                </Route>
 
-              
-
                <Route path='/admin' element={<Protected_Admin />}>
+                  <Route
+                     path='/admin/create-teacher'
+                     element={<CreateTeacherPage />}
+                  />
+
                   <Route
                      path='/admin/DashBoard'
                      element={<DashboardPage />}
@@ -188,13 +194,12 @@ const App = () => {
                   <Route path='*' element={<ErrorPage />} />
                </Route>
 
-
                <Route path='/student' element={<Protected_Student />}>
                   <Route
                      path='/student/Dashboard'
                      element={<StudentGroup />}
                   />
-                   <Route
+                  <Route
                      path='/student/Group'
                      element={<StudentGroup />}
                   />

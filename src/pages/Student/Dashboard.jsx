@@ -1,14 +1,8 @@
-import React from 'react'
-import StudentTemplate from '../../components/Templates/Admin/StudentTemplate'
+import React from 'react';
+import StudentTemplate from '../../components/Templates/Admin/StudentTemplate';
 
 const Dashboard = () => {
-  return (
-   <StudentTemplate>
+   return <StudentTemplate></StudentTemplate>;
+};
 
-
-    
-   </StudentTemplate>
-  )
-}
-
-export default Dashboard
+export default Dashboard;
