@@ -7,7 +7,7 @@ export default defineConfig({
    server: {
       proxy: {
          '/api': {
-            target: import.meta.env.VITE_BACKEND_URL || 'https://ciitm-backend.onrender.com',
+            target: 'https://ciitm-backend.onrender.com',
             changeOrigin: true,
             secure: false, // Set to true if using HTTPS
          },
