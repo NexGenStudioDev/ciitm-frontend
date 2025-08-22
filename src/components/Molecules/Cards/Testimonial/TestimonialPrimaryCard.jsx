@@ -69,7 +69,9 @@ const TestimonialPrimaryCard = ({
             {message}
          </p>
 
-         <div className={`stars flex justify-between mt-4 ${starClass}`}>
+         <div
+            className={`stars flex justify-between mt-4 ${starClass}`}
+         >
             <span className='text-[1vw] max-[599px]:text-[3.5vw]'>
                {renderStars(rating)}
             </span>

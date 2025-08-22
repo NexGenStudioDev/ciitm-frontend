@@ -10,7 +10,7 @@ const ViewBill = () => {
    const [error, setError] = useState('');
    const [billData, setBillData] = useState({
       studentName: '',
-      date: '',   
+      date: '',
       billNo: '',
       studentId: '',
       courseName: '',
@@ -22,8 +22,6 @@ const ViewBill = () => {
    });
 
    useEffect(() => {
-     
-
       console.log('Payment_id: Code chala', Payment_id);
 
       async function fetchBillData() {
@@ -42,9 +40,7 @@ const ViewBill = () => {
                paymentMode: data[0].PaymentMethod,
                description: data[0].PaymentType,
                amount: data[0].AmountPaid,
-
-
-           });
+            });
          } catch (err) {
             setError('Failed to fetch bill data');
             console.error(err);
@@ -55,7 +51,6 @@ const ViewBill = () => {
    }, [Payment_id]);
 
    // Fallback values if billData is not loaded yet
- 
 
    return (
       <AdminTemplate pageName='View Bill'>
@@ -73,9 +68,11 @@ const ViewBill = () => {
                      <h3 className='font-semibold text-white  print:text-black text-lg md:text-xl lg:text-2xl'>
                         CIITM DHANBAD
                      </h3>
-                     <p className="print:text-black">Near XYZ Road, Dhanbad</p>
+                     <p className='print:text-black'>
+                        Near XYZ Road, Dhanbad
+                     </p>
                   </div>
-                  <div className='Institute_Info_Right text-right print:text-black ' >
+                  <div className='Institute_Info_Right text-right print:text-black '>
                      <p>+91-XXXXXXXXXX</p>
                      <p>✉️ info@ciitmdhanbad.ac.in</p>
                   </div>
@@ -89,7 +86,8 @@ const ViewBill = () => {
                         <p className='min-[1000px]:text-[1.1vw] print:text-black'>
                            Date <br />
                            <span className='text-white font-semibold text-[1.7vw] min-[1000px]:text-[0.8vw] print:text-black'>
-                              {Date(billData.date).toLocaleString() || '--'}
+                              {Date(billData.date).toLocaleString() ||
+                                 '--'}
                            </span>
                         </p>
                      </div>
@@ -162,13 +160,13 @@ const ViewBill = () => {
                </div>
 
                {/* Description and Amount */}
-               <div className="w-full bg-[#2E2929] h-[6vh] flex items-center justify-between px-8 text-[#A49C9C]  text-[1.7vw] min-[1000px]:text-[1.1vw] print:border-t-2 print:border-b-2 print:border-black print:text-black">
+               <div className='w-full bg-[#2E2929] h-[6vh] flex items-center justify-between px-8 text-[#A49C9C]  text-[1.7vw] min-[1000px]:text-[1.1vw] print:border-t-2 print:border-b-2 print:border-black print:text-black'>
                   <p>Description</p>
-                  <div className="w-[24%] h-[95%]  flex item-center py-2">
-                     <p className="ml-[1vw]">Amount</p>
+                  <div className='w-[24%] h-[95%]  flex item-center py-2'>
+                     <p className='ml-[1vw]'>Amount</p>
                   </div>
                </div>
-               <div className="Bill_Item h-[25vh] w-full flex items-center justify-between px-8 text-[#A49C9C] text-[1.1vw] print:bg-gray-600">
+               <div className='Bill_Item h-[25vh] w-full flex items-center justify-between px-8 text-[#A49C9C] text-[1.1vw] print:bg-gray-600'>
                   <p className='w-[76%] h-full text-left p-[1.5vw] text-[1.7vw] min-[1000px]:text-[1.2vw]'>
                      {billData.description || '--'}
                   </p>
@@ -178,24 +176,30 @@ const ViewBill = () => {
                </div>
 
                {/* Total */}
-               <div className="w-full bg-[#2E2929] h-[6vh] flex items-center justify-end  text-[#A49C9C] text-[1.1vw] print:bg-gray-600 print:border-t-2 print:border-b-2 print:border-black ">
-                  <p className='mr-[2.5vw] text-[1.7vw] min-[1000px]:text-[1.2vw]'> Total</p>
-                  <div className="w-[26%]  h-full flex items-center">
-                     <p className="ml-[1.8vw] text-[1.7vw] min-[1000px]:text-[1.2vw]">
+               <div className='w-full bg-[#2E2929] h-[6vh] flex items-center justify-end  text-[#A49C9C] text-[1.1vw] print:bg-gray-600 print:border-t-2 print:border-b-2 print:border-black '>
+                  <p className='mr-[2.5vw] text-[1.7vw] min-[1000px]:text-[1.2vw]'>
+                     {' '}
+                     Total
+                  </p>
+                  <div className='w-[26%]  h-full flex items-center'>
+                     <p className='ml-[1.8vw] text-[1.7vw] min-[1000px]:text-[1.2vw]'>
                         ₹ {billData.amount || 0}
                      </p>
                   </div>
                </div>
 
                {/* Print Button */}
-               <div className="w-full flex items-center justify-center">
-                  <button className='bg-[#FF4D4D] text-white px-6 py-2 rounded-md mt-8 print:hidden' onClick={() => window.print()}>
+               <div className='w-full flex items-center justify-center'>
+                  <button
+                     className='bg-[#FF4D4D] text-white px-6 py-2 rounded-md mt-8 print:hidden'
+                     onClick={() => window.print()}
+                  >
                      Print Bill
                   </button>
                </div>
                {/* Error Message */}
                {error && (
-                  <div className="w-full text-center text-red-500 mt-4">
+                  <div className='w-full text-center text-red-500 mt-4'>
                      {error}
                   </div>
                )}

@@ -64,12 +64,11 @@ const Login = () => {
 
          if (Check_Role === 'student') {
             navigate('/student/Dashboard');
-         }else if (Check_Role === 'admin') {
+         } else if (Check_Role === 'admin') {
             navigate('/admin/DashBoard');
-         }else{
+         } else {
             throw new Error('Invalid Role');
          }
-
       } catch (error) {
          Swal.fire({
             icon: 'error',

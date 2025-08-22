@@ -5,19 +5,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @media print {
    @page {
-     margin: 0;
-     size: auto; /* Let browser decide or force A4, etc. */
+      margin: 0;
+      size: auto; /* Let browser decide or force A4, etc. */
    }
- 
-   html, body {
-     margin: 0 !important;
-     padding: 0 !important;
+
+   html,
+   body {
+      margin: 0 !important;
+      padding: 0 !important;
    }
- }
- 
+}
 
 /* Custom scrollbar styles */
 ::-webkit-scrollbar {

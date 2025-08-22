@@ -1,139 +1,111 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useRazorpay } from 'react-razorpay';
-import logo from '../../../assets/images/ciitmLogo.png';
-import axios from 'axios';
-import Input from './Input';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 import Swal from 'sweetalert2';
+import { load } from '@cashfreepayments/cashfree-js';
 
 const Payment = () => {
-   let student = useSelector(state => state.Payment.Payment_Info);
-   const [Reload, setReload] = useState(true);
+   const [amount, setAmount] = useState('');
+   const [loading, setLoading] = useState(false);
+   const [paymentType, setPaymentType] = useState('');
 
-   const [Amount, setAmount] = useState(null);
-   const [Order_Id, setOrder_Id] = useState('');
+   const payment = useSelector(state => state.Payment.Payment_Info);
 
-   useEffect(() => {
-      if (!student) {
-         setReload(false);
-      }
-
-      setReload(true);
-   }, [student]);
-
-   // let Rayzor_Pay_id = import.meta.env.VITE_RAZORPAY_KEY_ID;
-
-   // if (!Rayzor_Pay_id) {
-   //    alert('Razorpay Key ID is not configured');
-   //    return;
-   // }
-
-   // const { error, isLoading, Razorpay } = useRazorpay();
-
-   // if (isLoading) {
-
-   //    return;
-   // }
-
-   // if (error) {
-   //    alert('Error loading Razorpay');
-   //    return;
-   // }
-
-   let Handle_Input = async e => {
-      try {
-         const amount = e.target.value;
-         setAmount(amount);
-      } catch (error) {
-         console.log('error:', error);
-      }
-   };
+   const handleInput = e => setAmount(e.target.value);
+   const handleTypeChange = e => setPaymentType(e.target.value);
 
    const handlePayment = async () => {
-      Swal.fire({
-         title: 'Under Development',
-         icon: 'warning',
-         text: 'Payment Feature is under development',
-         allowOutsideClick: false,
-      });
-      // try {
-      //    const response = await axios.post('/api/create/payment', {
-      //       amount: Number(Amount),
-      //       currency: 'INR',
-      //       receipt: 'order_rcptid_11',
-      //       payment_capture: 1,
-      //    });
+      const student = payment?.student;
 
-      //    setOrder_Id(response.data.id);
+      console.log('studnet', student)
 
-      //    console.log('student', student);
+      if (!amount || Number(amount) <= 0) {
+         Swal.fire('Invalid Amount', 'Please enter a valid payment amount.', 'warning');
+         return;
+      }
 
-      //    const options = {
-      //       key: Rayzor_Pay_id,
-      //       amount: Number(Amount) * 100,
-      //       currency: 'INR',
-      //       name: 'CIITM DHANBAD',
-      //       description: 'Pay for your Future',
-      //       image: logo,
-      //       order_id: Order_Id,
-      //       handler: async response => {
-      //          console.log('res front', response);
+      if (!student) {
+         Swal.fire('Error', 'Student info not available.', 'error');
+         return;
+      }
 
-      //          try {
-      //             const res = await axios.post('/api/pay/verify', {
-      //                Unique_id: student.Student_id,
-      //                course_Fee: student.course.coursePrice,
-      //                payment_Date: new Date().toISOString(),
-      //                payment_id: response.razorpay_payment_id,
-      //             });
+      if (!paymentType) {
+         Swal.fire('Error', 'Please select a Payment Type.', 'warning');
+         return;
+      }
 
-      //             console.log('res', res.data);
-      //          } catch (error) {
-      //             console.error(error);
-      //             alert(
-      //                'An error occurred while verifying your payment',
-      //             );
-      //          }
-      //       },
-      //       prefill: {
-      //          name: 'dsfs',
-      //          email: student.student.email[0],
-      //          contact: student.student.contactNumber,
-      //          Student_id: student.Student_id,
-      //       },
-      //       theme: {
-      //          color: 'black',
-      //       },
-      //    };
+      try {
+         setLoading(true);
 
-      //    const razorpayInstance = new Razorpay(options);
-      //    razorpayInstance.open();
-      // } catch (error) {
-      //    console.error(error);
-      //    alert('An error occurred while processing your payment');
-      // }
+         const payload = {
+            order_amount: Number(amount),
+            customer_id: payment._id,
+            customer_name: `${student.firstName} ${student.lastName}`,
+            customer_phone: student.contactNumber,
+            customer_email: student.email[0],
+            uniqueId: payment.uniqueId,
+            studentId: payment.studentId,
+            PaymentType: paymentType,
+         };
+
+         const res = await axios.post('/api/v1/Student/createOrder', payload);
+
+         let cashfree = await load({ mode: "sandbox" });
+
+         const payment_session_id = res?.data?.data?.payment_session_id;
+
+         if (!payment_session_id) {
+            throw new Error('Payment session ID not received.');
+         }
+
+         cashfree.checkout({
+            paymentSessionId: payment_session_id,
+            redirectTarget: '_self',
+         });
+
+      } catch (error) {
+         console.error('Payment error:', error);
+         Swal.fire(
+            'Error',
+            error?.response?.data?.message ||
+               error.message ||
+               'Failed to create payment order',
+            'error',
+         );
+      } finally {
+         setLoading(false);
+      }
    };
-   return (
-      <div className='bg-[#FAFAFA] border-x-[0.62px] border-b-[0.62px] border-[#D7D7D79E] p-8'>
-         {Reload && (
-            <>
-               <input
-                  className='bg-white border-[1px] border-[#D7D7D79E] rounded-lg px-4 py-3 placeholder:text-[.9vw] max-[599px]:placeholder:text-[2.9vw] outline-none'
-                  onInput={e => Handle_Input(e)}
-                  type='text'
-                  name='amount'
-                  placeholder='Enter Amount'
-                  id='amount'
-               />
 
-               <button
-                  className='bg-green-600 ml-[2vw] p-[0.7vw] text-white rounded-md font-medium'
-                  onClick={() => handlePayment()}
-               >
-                  Pay Your Fee
-               </button>
-            </>
-         )}
+   return (
+      <div className='bg-[#FAFAFA] border-x-[0.62px] border-b-[0.62px] border-[#D7D7D79E] p-8 flex gap-[2vw]'>
+         <select
+            className='bg-white border-[1px] border-[#D7D7D79E] rounded-lg px-4 py-3 mb-2 outline-none w-[35%]'
+            value={paymentType}
+            onChange={handleTypeChange}
+         >
+            <option value="">Select Payment Type</option>
+            <option value="Admission Fee">Admission Fee</option>
+            <option value="Farewell Fee">Farewell Fee</option>
+            <option value="Teacher Day Fee">Teacher Day Fee</option>
+            <option value="Exam Fee">Exam Fee</option>
+            <option value="Semester Fee">Semester Fee</option>
+            <option value="Other">Other</option>
+         </select>
+         <input
+            className='bg-white border-[1px] border-[#D7D7D79E] rounded-lg px-4 py-3 mr-4 mb-2 outline-none'
+            type='number'
+            value={amount}
+            onChange={handleInput}
+            placeholder='Enter Amount'
+         />
+         <button
+            className='bg-green-600 p-[0.7vw] text-white rounded-md font-medium'
+            onClick={handlePayment}
+            disabled={loading}
+         >
+            {loading ? 'Processing...' : 'Pay Your Fee'}
+         </button>
       </div>
    );
 };

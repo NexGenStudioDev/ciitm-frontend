@@ -21,8 +21,6 @@ const PaymentPage = memo(() => {
       }
    }, [payment]);
 
-   console.log('Student payment', payment);
-
    const details = [
       {
          Name: 'Name',

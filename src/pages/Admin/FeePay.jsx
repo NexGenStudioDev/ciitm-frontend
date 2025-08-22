@@ -16,7 +16,7 @@ const FeePay = () => {
    const [paymentMethod, setPaymentMethod] = useState('');
    const [studentData, setStudentData] = useState(null);
    const [amount, setAmount] = useState('');
-   const [PaymentType , setPaymentType] = useState('');
+   const [PaymentType, setPaymentType] = useState('');
    const [error, setError] = useState('');
 
    const fetchStudentData = async () => {
@@ -177,8 +177,6 @@ const FeePay = () => {
 
                   <div className='w-full flex flex-col items-center justify-center gap-4 mt-6'>
                      <div className='w-full flex flex-col gap-[2rem] items-center justify-center'>
-
-  
                         <Dropdown_Primary
                            width='85%'
                            height='5vh'

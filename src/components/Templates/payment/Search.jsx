@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import ValidateUniqueIdInput from '../../Atoms/Input/ValidateUniqueIdInput';
 import { ToastContainer, toast } from 'react-toastify';
+import { set } from 'react-hook-form';
 
 const Search = () => {
    const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Search = () => {
 
             if (response.data.success) {
                const data = response.data.data;
+               console.log('Payment Data:', data);
                dispatch(setPayment_Info(data));
             }
          }
@@ -42,7 +44,7 @@ const Search = () => {
       if (!payment) {
          setIsLoading(true);
       }
-   }, [payment, getValidationStatus]);
+   }, []);
 
    return (
       <div className='Student_Id_Container w-full bg-[#FAFAFA]  p-4'>
