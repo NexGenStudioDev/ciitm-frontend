@@ -96,14 +96,6 @@ export default function CreateTeacherPage() {
 				throw new Error('Missing auth token. Please log in as admin.');
 			}
 
-			// Dev-only bypass: simulate success when using placeholder dev token
-			if (token === 'dev-admin-token') {
-				toast.success('Teacher created successfully (dev)');
-				reset();
-				setTimeout(() => navigate('/admin/DashBoard'), 500);
-				return;
-			}
-
 			const res = await axios.post(
 				'/api/v1/admin/teacher/create',
 				payload,
