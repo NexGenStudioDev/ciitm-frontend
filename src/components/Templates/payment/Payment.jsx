@@ -63,7 +63,7 @@ const Payment = () => {
             paymentSessionId: payment_session_id,
             redirectTarget: '_self',
             oneClickCheckout: true,
-            returnUrl: `http://localhost:5173/success?order_id=${order_id}`,
+            returnUrl: `${import.meta.VITE_BACKEND_URL}/success?order_id=${order_id}`,
             
             style: {
                theme: 'dark', // or 'dark'
