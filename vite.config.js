@@ -7,7 +7,7 @@ export default defineConfig({
    server: {
       proxy: {
          '/api': {
-            target: 'http://localhost:7000', //  Use this URL if You are Working Locally:- https://ciitm-backend.onrender.com
+            target: import.meta.env.VITE_BACKEND_URL || 'https://ciitm-backend.onrender.com',
             changeOrigin: true,
             secure: false, // Set to true if using HTTPS
          },

@@ -41,6 +41,7 @@ import ViewBill from './pages/Admin/ViewBill';
 import StudentGroup from './pages/Student/StudentGroup';
 import Protected_Student from './components/Protected/Protected_Student';
 import Testimonial from './pages/Testimonial';
+import CreateTeacherPage from './pages/Admin/CreateTeacherPage';
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -121,6 +122,11 @@ const App = () => {
                </Route>
 
                <Route path='/admin' element={<Protected_Admin />}>
+                  <Route
+                     path='/admin/create-teacher'
+                     element={<CreateTeacherPage />}
+                  />
+
                   <Route
                      path='/admin/DashBoard'
                      element={<DashboardPage />}

@@ -5,8 +5,8 @@ const Google_Wrapper = ({ text }) => {
    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
    if (!clientId) {
-      alert('Google Client ID is not configured');
-      return null;
+      console.warn('Google Client ID is not configured');
+      return <span>{text}</span>;
    }
 
    return (
