@@ -43,6 +43,7 @@ import Protected_Student from './components/Protected/Protected_Student';
 import Testimonial from './pages/Testimonial';
 import CreateTeacherPage from './pages/Admin/CreateTeacherPage';
 import Success from './pages/Success';
+import Wallet from './pages/Student/Wallet';
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -204,6 +205,11 @@ const App = () => {
                   <Route
                      path='/student/Group'
                      element={<StudentGroup />}
+                  />
+
+                  <Route
+                     path='/student/Wallet'
+                     element={<Wallet />}
                   />
                </Route>
             </Routes>
