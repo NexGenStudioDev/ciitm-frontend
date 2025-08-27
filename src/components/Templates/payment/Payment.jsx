@@ -50,7 +50,7 @@ const Payment = () => {
 
          const res = await axios.post('/api/v1/Student/createOrder', payload);
 
-         let cashfree = await load({ mode: "sandbox" });
+         let cashfree = await load({ mode: "production" });
 
          const payment_session_id = res?.data?.data?.payment_session_id;
          const order_id = res?.data?.data?.order_id;
@@ -58,7 +58,7 @@ const Payment = () => {
          if (!payment_session_id) {
             throw new Error('Payment session ID not received.');
          }
-// /success
+
          cashfree.checkout({
             paymentSessionId: payment_session_id,
             redirectTarget: '_self',
