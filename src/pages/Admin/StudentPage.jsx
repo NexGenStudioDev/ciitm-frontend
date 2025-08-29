@@ -63,7 +63,7 @@ const StudentPage = () => {
          </Helmet>
 
          <AdminTemplate pageName={'Students'}>
-            <div className='findStudent_Container px-[2vw] h-[13vh] min-[900px]:h-[10vh] w-[93%] flex items-center justify-between gap-4 bg-[#1C1C1C] rounded-lg mb-[3vh]'>
+            <div className='findStudent_Container px-[2vw] h-[13vh] min-[900px]:h-[10vh] w-[93%] flex items-center justify-between gap-4 bg-[#1C1C1C] rounded-lg mt-[4vh] mb-[3vh]'>
                <Dropdown_Primary
                   options={studentOptions}
                   backgroundColor='#1C1C1C'
