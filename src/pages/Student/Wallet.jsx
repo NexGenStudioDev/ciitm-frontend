@@ -69,7 +69,7 @@ const Wallet = () => {
     if (points.length) {
       const idx = points[0].index;
       const feeType = feeLabels[idx];
-      navigate(`/wallet/${feeType.toLowerCase().replace(/ /g, '-')}`);
+      navigate(`/student/wallet/${feeType.toLowerCase().replace(/ /g, '-')}`);
     }
   };
 

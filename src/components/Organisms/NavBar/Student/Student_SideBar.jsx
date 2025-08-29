@@ -41,7 +41,7 @@ const Student_SideBar = ({CustomStyle}) => {
    };
    // CustomStyle
    return (
-      <div className={`w-80 h-[87vh]  bg-gradient-to-br from-white/90 via-white/70 to-white/40 backdrop-blur-2xl rounded-3xl flex flex-col shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-white/30 overflow-hidden relative ${CustomStyle}`}>
+      <div className={`w-80 h-[87vh] print:hidden max-[900px]:hidden bg-gradient-to-br from-white/90 via-white/70 to-white/40 backdrop-blur-2xl rounded-3xl flex flex-col shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-white/30 overflow-hidden relative ${CustomStyle}`}>
          {/* Animated background gradient */}
          <div className='absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 animate-pulse'></div>
 

@@ -11,11 +11,8 @@
       size: auto; /* Let browser decide or force A4, etc. */
    }
 
-   html,
-   body {
-      margin: 0 !important;
-      padding: 0 !important;
-   }
+   
+   
 }
 
 /* Custom scrollbar styles */
