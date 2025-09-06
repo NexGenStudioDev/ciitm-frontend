@@ -10,6 +10,8 @@ const Testimonials = () => {
    const testimonialData = useSelector(
       state => state.home.Testimonital,
    );
+
+
    const [testimonials, setTestimonials] = useState([]);
 
    useTestimonial();
@@ -61,15 +63,19 @@ const Testimonials = () => {
             </p>
          </div>
 
+
+
          {/* Slider */}
          <div className='carousel-container w-[55vw] max-[600px]:w-full overflow-hidden'>
             {testimonials.length > 1 ? (
                <Slider {...settings} className='slider opacity-100'>
                   {testimonials.map((t, idx) => (
+                  
                      <div
                         key={t.id || idx}
                         className='relative w-full flex justify-center'
                      >
+                        
                         <TestimonialPrimaryCard {...t} />
                      </div>
                   ))}

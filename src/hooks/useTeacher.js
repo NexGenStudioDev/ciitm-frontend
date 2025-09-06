@@ -12,7 +12,7 @@ const useTeacher = () => {
    let Handle_Teacher = async () => {
       if (!teacher) {
          let response = await axios.get(Find_Teacher_EndPoint);
-         dispatch(setTeacher(response.data.teacher));
+         dispatch(setTeacher(response.data.data));
       }
    };
 

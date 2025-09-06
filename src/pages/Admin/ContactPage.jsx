@@ -65,16 +65,19 @@ const ContactPage = memo(() => {
             <FormTemplate PageName='Contact'>
                <AdminContactTable_Title />
 
-               <p className='text-red-500 text-center w-full text-[1.1vw]'>
-                  {Message}
-               </p>
+              {isError ? (
+                 <p className='text-red-500 text-center w-full text-[1.1vw]'>
+                 {Message}
+              </p>
+              ) : (
 
-               {!isError && (
-                  <AdminContactData_Table
-                     Data={contactData}
-                     isLoading={isLoading}
-                  />
-               )}
+               <AdminContactData_Table
+               Data={contactData}
+               isLoading={isLoading}
+               />
+              )}
+
+              
             </FormTemplate>
          </AdminTemplate>
       </>
