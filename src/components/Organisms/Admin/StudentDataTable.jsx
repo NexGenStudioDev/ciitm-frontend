@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 let TableHeading_Data = [
    {
       text: 'S.no',
-      style: 'max-[348px]:text-[3.5vw] w-[10%] bg-red-200 text-center align-middle bg-[#090909] border-[#322F2F] text-white max-[553px]:h-[7vh] max-[553px]:text-[2.5vw] max-[775px]:text-[1.8vw] md:text-md rounded-tl-2xl',
+      style: 'max-[348px]:text-[3.5vw] w-[10%] text-center align-middle bg-[#090909] border-[#322F2F] text-white max-[553px]:h-[7vh] max-[553px]:text-[2.5vw] max-[775px]:text-[1.8vw] md:text-md rounded-tl-2xl',
    },
    {
       text: 'Name',
@@ -17,7 +17,7 @@ let TableHeading_Data = [
    },
    {
       text: 'Student ID',
-      style: 'max-[348px]:text-[3vw] w-[30%]  bg-red-300 text-white text-center h-[5vh] text-sm p-[0.9vw] md:text-md max-[553px]:text-[2.5vw] max-[775px]:text-[1.8vw]',
+      style: 'max-[348px]:text-[3vw] w-[30%]  bg-[#090909]  text-white text-center h-[5vh] text-sm p-[0.9vw] md:text-md max-[553px]:text-[2.5vw] max-[775px]:text-[1.8vw]',
    },
    {
       text: 'Mobile No',

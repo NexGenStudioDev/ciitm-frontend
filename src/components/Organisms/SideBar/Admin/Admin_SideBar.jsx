@@ -13,9 +13,19 @@ import gsap from 'gsap';
 import AdminSidebarLink from '../../../Atoms/Links/AdminSidebarLink';
 import { FaBookBookmark } from 'react-icons/fa6';
 import { PiChalkboardTeacher } from 'react-icons/pi';
+import { MdSpaceDashboard } from 'react-icons/md';
 
 const links = [
-   { name: 'Home', link: '/admin/DashBoard', icon: <BiHomeSmile /> },
+   {
+      name: 'Go to Website',
+      link: '/',
+      icon: <BiHomeSmile />,
+   },
+   {
+      name: 'Dashboard',
+      link: '/admin/DashBoard',
+      icon: <MdSpaceDashboard />,
+   },
    {
       name: 'Earnings',
       link: '/admin/Student/Earning',
@@ -100,10 +110,10 @@ const Admin_SideBar = () => {
    return (
       <div
          ref={sideBarRef}
-         className='Side_bar fixed z-10 w-screen h-screen  ease-in-out  bg-black p-[2vw]  flex-col  overflow-hidden  min-[1000px]:relative md:w-[30%] lg:w-[25%]  md:h-screen  md:bg-[#1C1C1C]  md:ml-[1.5vw]  md:rounded-xl  md:border  md:border-[#322F2F]  min-[999px]:mt-[3.7vh]    print:hidden 
+         className='Side_bar fixed z-10 w-screen h-screen  ease-in-out  bg-black p-[2vw]  flex-col items-center justify-center overflow-hidden  min-[1000px]:relative md:w-[30%] lg:w-[25%]  md:h-[130vh]  md:bg-[#1C1C1C]  md:ml-[1.5vw]  md:rounded-xl  md:border  md:border-[#322F2F]  min-[999px]:mt-[3.7vh]  mb-[15vh]  print:hidden 
       '
       >
-         <div className='w-full h-[70%] flex flex-col mt-[12vh] md:mt-[4vh] gap-[2vh]'>
+         <div className='w-full h-[70%] flex flex-col mt-[22vh] md:mt-[4vh] gap-[3vh]'>
             {links.map((link, index) => (
                <AdminSidebarLink
                   key={index}

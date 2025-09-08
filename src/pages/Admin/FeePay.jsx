@@ -101,7 +101,7 @@ const FeePay = () => {
 
    return (
       <AdminTemplate pageName='Fee Pay'>
-         <div className='findStudent_Container w-[90%] px-[2vw] h-[10vh] flex items-center justify-stretch gap-4 bg-[#1C1C1C] rounded-lg mb-[3vh]'>
+         <div className='findStudent_Container w-[90%] px-[2vw] h-[10vh] flex items-center justify-stretch gap-4 bg-[#1C1C1C] rounded-lg mt-[3.3vh] mb-[3vh]'>
             <ValidateUniqueIdInput
                disabled={false}
                getStudentId={data => setStudentId(data)}

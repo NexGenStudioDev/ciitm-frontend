@@ -1,12 +1,13 @@
 import React from 'react';
+import { MdStar } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { MdDelete } from 'react-icons/md';
+import { deleteTestimonial } from '../../../../store/Testimonials.slice';
 
 const renderStars = (count = 0) => {
    return [...Array(5)].map((_, i) => (
-      <span
-         key={i}
-         className={`inline-block ${i < count ? 'text-yellow-400' : 'text-gray-300'}`}
-      >
-         ⭐
+      <span key={i} className={`inline-block text-yellow-400`}>
+         <MdStar />
       </span>
    ));
 };
@@ -14,7 +15,8 @@ const renderStars = (count = 0) => {
 const TestimonialPrimaryCard = ({
    image,
    name,
-   jobRole,
+   _id,
+   job_Role,
    message,
    rating,
    containerClass = '',
@@ -24,11 +26,30 @@ const TestimonialPrimaryCard = ({
    messageClass = '',
    starClass = '',
 }) => {
+   let dispatch = useDispatch();
+   const user = useSelector(state => state.auth.user);
+
+   const Handle_Testimonial_Delete = _id => {
+      dispatch(deleteTestimonial({ _id }));
+    
+   };
+
    return (
       <div
-         className={`card cursor-grab w-[30vw] max-[599px]:w-full bg-white text-black rounded-xl px-6 py-8  shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between min-h-[340px] max-h-[340px] ${containerClass}`}
-         style={{ minHeight: '340px', maxHeight: '340px' }}
+         className={`card cursor-grab w-[30vw] max-[599px]:w-full bg-white text-black rounded-xl px-6 py-8  shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between  h-full ${containerClass}`}
+
       >
+         {user?.role === 'admin' && (
+            <div className='w-full h-[5vh] flex items-center justify-end text-[2rem]'>
+               <div
+                  className='bg-black text-white rounded-full p-2 cursor-pointer'
+                  onClick={() => Handle_Testimonial_Delete(_id)}
+               >
+                  <MdDelete />
+               </div>
+            </div>
+         )}
+
          <div className='profile flex items-center gap-4'>
             <div
                className={`image w-[3.5vw] max-[599px]:w-[12vw] h-[3.5vw] max-[599px]:h-[12vw] rounded-full overflow-hidden ${imageClass}`}
@@ -48,7 +69,7 @@ const TestimonialPrimaryCard = ({
                <p
                   className={`position text-[1vw] max-[599px]:text-[3vw] ${roleClass}`}
                >
-                  {jobRole}
+                  {job_Role}
                </p>
             </div>
          </div>

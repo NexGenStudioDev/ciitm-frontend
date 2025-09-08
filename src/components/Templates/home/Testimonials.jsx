@@ -10,6 +10,7 @@ const Testimonials = () => {
    const testimonialData = useSelector(
       state => state.home.Testimonital,
    );
+
    const [testimonials, setTestimonials] = useState([]);
 
    useTestimonial();
@@ -76,6 +77,7 @@ const Testimonials = () => {
                </Slider>
             ) : testimonials.length === 1 ? (
                <div className='relative w-full flex justify-center'>
+                  
                   <TestimonialPrimaryCard {...testimonials[0]} />
                </div>
             ) : (

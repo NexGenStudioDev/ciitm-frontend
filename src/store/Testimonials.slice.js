@@ -12,13 +12,11 @@ const testimonials_Slice = createSlice({
 
       deleteTestimonial: (state, action) => {
          console.log('action', action);
-         console.log('state', state);
-         let find_index = state.testimonials.findIndex(
-            item => item._id === action._id,
+         const find_index = state.testimonials.findIndex(
+            item => item._id === action.payload._id,
          );
          if (find_index !== -1) {
             state.testimonials.splice(find_index, 1);
-            state.testimonials = [...state.testimonials];
          }
       },
    },

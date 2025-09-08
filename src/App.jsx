@@ -44,6 +44,8 @@ import Testimonial from './pages/Testimonial';
 import CreateTeacherPage from './pages/Admin/CreateTeacherPage';
 import Success from './pages/Success';
 import Wallet from './pages/Student/Wallet';
+import FeeView from './pages/Student/FeeView';
+import StudentBill from './pages/Student/StudentBill';
 
 // ✅ Scroll Position Handler
 const ScrollRestoration = () => {
@@ -206,10 +208,18 @@ const App = () => {
                      path='/student/Group'
                      element={<StudentGroup />}
                   />
-
+                  {/* wallet/admission-fee */}
                   <Route
                      path='/student/Wallet'
                      element={<Wallet />}
+                  />
+                  <Route
+                     path='/student/wallet/:FeeTypeName'
+                     element={<FeeView />}
+                  />
+                  <Route
+                     path='/student/fee/view/:BillId'
+                     element={<StudentBill />}
                   />
                </Route>
             </Routes>
