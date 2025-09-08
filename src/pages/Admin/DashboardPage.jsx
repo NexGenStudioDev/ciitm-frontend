@@ -63,17 +63,17 @@ const DashboardPage = () => {
          </Helmet>
 
          <AdminTemplate pageName={'Dashboard'}>
-           <div className="h-[80vh] flex flex-col justify-between w-full">
-           {isError && (
-               <div className='text-red-500 text-center mb-4'>
-                  Error: {ErrorMessage}
-               </div>
-            )}
+            <div className='h-[80vh] flex flex-col justify-between w-full'>
+               {isError && (
+                  <div className='text-red-500 text-center mb-4'>
+                     Error: {ErrorMessage}
+                  </div>
+               )}
 
-            {!isError && <DashboardCardSection Cards={Cards} />}
+               {!isError && <DashboardCardSection Cards={Cards} />}
 
-            <QuickLinkSection links={QuickLinkData} />
-           </div>
+               <QuickLinkSection links={QuickLinkData} />
+            </div>
          </AdminTemplate>
       </>
    );

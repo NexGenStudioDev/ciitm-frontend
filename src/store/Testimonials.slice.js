@@ -11,7 +11,7 @@ const testimonials_Slice = createSlice({
       },
 
       deleteTestimonial: (state, action) => {
-         console.log('action' , action)
+         console.log('action', action);
          const find_index = state.testimonials.findIndex(
             item => item._id === action.payload._id,
          );

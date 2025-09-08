@@ -41,7 +41,11 @@ const Navbar = () => {
          }
       };
       document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+      return () =>
+         document.removeEventListener(
+            'mousedown',
+            handleClickOutside,
+         );
    }, []);
 
    const navLinks = [
@@ -66,7 +70,10 @@ const Navbar = () => {
                      {link.label}
                   </NavLink>
                ) : (
-                  <div key={link.to} className='relative dropdown-container'>
+                  <div
+                     key={link.to}
+                     className='relative dropdown-container'
+                  >
                      <button
                         className='flex items-center gap-1'
                         onClick={toggleDropdown}
@@ -74,32 +81,50 @@ const Navbar = () => {
                         {link.label}
                         <IoChevronDown
                            size={16}
-                           className={isDropdownOpen ? 'rotate-180' : ''}
+                           className={
+                              isDropdownOpen ? 'rotate-180' : ''
+                           }
                         />
                      </button>
                      {isDropdownOpen && (
                         <div className='absolute bg-white text-black shadow rounded w-40'>
-                           <NavLink to='/admission' onClick={() => setIsMenuOpen(false)} className='block px-4 py-2'>
+                           <NavLink
+                              to='/admission'
+                              onClick={() => setIsMenuOpen(false)}
+                              className='block px-4 py-2'
+                           >
                               Admission
                            </NavLink>
-                           <NavLink to='/status' onClick={() => setIsMenuOpen(false)} className='block px-4 py-2'>
+                           <NavLink
+                              to='/status'
+                              onClick={() => setIsMenuOpen(false)}
+                              className='block px-4 py-2'
+                           >
                               Check Status
                            </NavLink>
-                           <NavLink to='/testimonial' onClick={() => setIsMenuOpen(false)} className='block px-4 py-2'>
+                           <NavLink
+                              to='/testimonial'
+                              onClick={() => setIsMenuOpen(false)}
+                              className='block px-4 py-2'
+                           >
                               Testimonial
                            </NavLink>
-                           <NavLink to='/payment' onClick={() => setIsMenuOpen(false)} className='block px-4 py-2'>
+                           <NavLink
+                              to='/payment'
+                              onClick={() => setIsMenuOpen(false)}
+                              className='block px-4 py-2'
+                           >
                               Payment
                            </NavLink>
                         </div>
                      )}
                   </div>
-               )
+               ),
             )}
 
             {/* Add Login and Registration buttons for mobile */}
             {user?.role !== 'admin' ? (
-               <div className="flex flex-col gap-4 w-full px-8">
+               <div className='flex flex-col gap-4 w-full px-8'>
                   <NavLink
                      to='/login'
                      onClick={() => setIsMenuOpen(false)}
@@ -139,7 +164,10 @@ const Navbar = () => {
                         {link.label}
                      </NavLink>
                   ) : (
-                     <div key={link.to} className='relative dropdown-container'>
+                     <div
+                        key={link.to}
+                        className='relative dropdown-container'
+                     >
                         <button
                            className='flex items-center gap-1'
                            onClick={toggleDropdown}
@@ -147,27 +175,41 @@ const Navbar = () => {
                            {link.label}
                            <IoChevronDown
                               size={16}
-                              className={isDropdownOpen ? 'rotate-180' : ''}
+                              className={
+                                 isDropdownOpen ? 'rotate-180' : ''
+                              }
                            />
                         </button>
                         {isDropdownOpen && (
                            <div className='absolute bg-white text-black shadow rounded w-40'>
-                              <NavLink to='/admission' className='block px-4 py-2'>
+                              <NavLink
+                                 to='/admission'
+                                 className='block px-4 py-2'
+                              >
                                  Admission
                               </NavLink>
-                              <NavLink to='/status' className='block px-4 py-2'>
+                              <NavLink
+                                 to='/status'
+                                 className='block px-4 py-2'
+                              >
                                  Check Status
                               </NavLink>
-                              <NavLink to='/testimonial' className='block px-4 py-2'>
+                              <NavLink
+                                 to='/testimonial'
+                                 className='block px-4 py-2'
+                              >
                                  Testimonial
                               </NavLink>
-                              <NavLink to='/payment' className='block px-4 py-2'>
+                              <NavLink
+                                 to='/payment'
+                                 className='block px-4 py-2'
+                              >
                                  Payment
                               </NavLink>
                            </div>
                         )}
                      </div>
-                  )
+                  ),
                )}
             </div>
 
@@ -189,7 +231,10 @@ const Navbar = () => {
                   </>
                ) : (
                   <NavLink to='/admin/DashBoard'>
-                     <FaUserCircle size={28} className='text-[#333]' />
+                     <FaUserCircle
+                        size={28}
+                        className='text-[#333]'
+                     />
                   </NavLink>
                )}
             </div>

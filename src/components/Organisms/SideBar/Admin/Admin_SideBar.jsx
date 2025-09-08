@@ -13,7 +13,7 @@ import gsap from 'gsap';
 import AdminSidebarLink from '../../../Atoms/Links/AdminSidebarLink';
 import { FaBookBookmark } from 'react-icons/fa6';
 import { PiChalkboardTeacher } from 'react-icons/pi';
-import { MdSpaceDashboard } from "react-icons/md";
+import { MdSpaceDashboard } from 'react-icons/md';
 
 const links = [
    {
@@ -21,7 +21,11 @@ const links = [
       link: '/',
       icon: <BiHomeSmile />,
    },
-   { name: 'Dashboard', link: '/admin/DashBoard', icon: <MdSpaceDashboard /> },
+   {
+      name: 'Dashboard',
+      link: '/admin/DashBoard',
+      icon: <MdSpaceDashboard />,
+   },
    {
       name: 'Earnings',
       link: '/admin/Student/Earning',
@@ -57,8 +61,7 @@ const links = [
       name: 'Update Status',
       link: '/admin/update/status',
       icon: <MdSystemUpdateAlt />,
-   }
-
+   },
 ];
 
 const Admin_SideBar = () => {

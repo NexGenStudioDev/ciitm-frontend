@@ -208,15 +208,19 @@ const App = () => {
                      path='/student/Group'
                      element={<StudentGroup />}
                   />
-{/* wallet/admission-fee */}
+                  {/* wallet/admission-fee */}
                   <Route
                      path='/student/Wallet'
                      element={<Wallet />}
                   />
                   <Route
-                   path='/student/wallet/:FeeTypeName' 
-                   element={<FeeView />} />
-                   <Route path='/student/fee/view/:BillId' element={<StudentBill />} />
+                     path='/student/wallet/:FeeTypeName'
+                     element={<FeeView />}
+                  />
+                  <Route
+                     path='/student/fee/view/:BillId'
+                     element={<StudentBill />}
+                  />
                </Route>
             </Routes>
          </BrowserRouter>

@@ -183,6 +183,7 @@ src/
 └── 📁 config/             # Configuration files
     └── socket.mjs         # Socket.IO configuration
 ```
+
 ---
 
 ## 🚀 Getting Started
