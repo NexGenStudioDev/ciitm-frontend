@@ -3,6 +3,7 @@ import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
 import { deleteTestimonial } from '../../../../store/Testimonials.slice';
+import { toast } from 'react-toastify';
 
 const renderStars = (count = 0) => {
    return [...Array(5)].map((_, i) => (
@@ -28,10 +29,20 @@ const TestimonialPrimaryCard = ({
 }) => {
    let dispatch = useDispatch();
    const user = useSelector(state => state.auth.user);
+   const { loading } = useSelector((state) => state.testimonials);
 
-   const Handle_Testimonial_Delete = _id => {
-      dispatch(deleteTestimonial({ _id }));
-    
+   const handleTestimonialDelete = () => {
+
+      if (window.confirm('Are you sure you want to delete this testimonial?')) {
+         dispatch(deleteTestimonial(_id))
+            .unwrap()
+            .then(() => {
+               toast.success('Testimonial deleted successfully!'); // Optional: Show success toast
+            })
+            .catch((err) => {
+               toast.error(err || 'Failed to delete testimonial'); // Optional: Show error toast
+            });
+      }
    };
 
    return (
@@ -40,13 +51,15 @@ const TestimonialPrimaryCard = ({
 
       >
          {user?.role === 'admin' && (
-            <div className='w-full h-[5vh] flex items-center justify-end text-[2rem]'>
-               <div
-                  className='bg-black text-white rounded-full p-2 cursor-pointer'
-                  onClick={() => Handle_Testimonial_Delete(_id)}
+            <div className="w-full h-[5vh] flex items-center justify-end text-[2rem]">
+               <button
+                  className="bg-black text-white rounded-full p-2 cursor-pointer"
+                  onClick={handleTestimonialDelete}
+                  disabled={loading}
+                  aria-label="Delete testimonial"
                >
                   <MdDelete />
-               </div>
+               </button>
             </div>
          )}
 
