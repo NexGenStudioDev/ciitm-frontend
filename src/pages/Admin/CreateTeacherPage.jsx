@@ -21,7 +21,8 @@ const schema = yup.object({
       .string()
       .email('Enter a valid email')
       .required('Email is required'),
-   image: yup.string().required('Image is required'),
+   // image: yup.string().required('Image is required'),//This check only strigs not for files
+      image: yup.mixed().required('Image is required'),
    role: yup.string().required('Role is required'),
    Specialization: yup
       .string()
@@ -128,7 +129,8 @@ export default function CreateTeacherPage() {
          if (key !== 'image') formData.append(key, value);
       });
 
-      formData.append('Avtar', imageFile || DEFAULT_AVATAR);
+      // formData.append('Avtar', imageFile || DEFAULT_AVATAR);
+      formData.append('image', imageFile || DEFAULT_AVATAR);//Shema uses image there is no database input with name "avtar"
       console.log(formData);
 
       try {
@@ -149,6 +151,7 @@ export default function CreateTeacherPage() {
             res?.data?.message || 'Teacher created successfully',
          );
          reset();
+         fileRef.current.value="";//clear manually
          setImagePreview(DEFAULT_AVATAR);
          setImageFile(null);
          setStep(0);
@@ -168,9 +171,14 @@ export default function CreateTeacherPage() {
          content: (
             <>
                <ImageUploadPreview
+                  fileRef={fileRef}
                   imagePreview={imagePreview}
                   onImageChange={handleImageChange}
-                  errors={errors}
+                  errors={errors.image && (           //validation for image is set
+                  <p className="text-red-500 text-sm mt-1">
+                           {errors.image.message}
+                  </p>
+)}
                />
                <InputField
                   label='Name'
