@@ -21,8 +21,7 @@ const schema = yup.object({
       .string()
       .email('Enter a valid email')
       .required('Email is required'),
-   // image: yup.string().required('Image is required'),//This check only strigs not for files
-      image: yup.mixed().required('Image is required'),
+   image: yup.mixed().required('Image is required'),
    role: yup.string().required('Role is required'),
    Specialization: yup
       .string()
