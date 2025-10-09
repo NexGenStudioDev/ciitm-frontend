@@ -227,6 +227,7 @@ installed:
    ```
 
 5. **Build for production**
+
    ```bash
    npm run build
    ```
@@ -473,7 +474,7 @@ how you can contribute:
 
 ### **Get Help**
 
-- 📧 **Email**: abhishek.nexgen.dev@gmail.com
+- 📧 **Email**: <abhishek.nexgen.dev@gmail.com>
 - 🐙 **GitHub Issues**:
   [Report bugs or request features](https://github.com/Coder-Studies/ciitm-frontend/issues)
 - 💬 **Discussions**: Join our community discussions
@@ -540,13 +541,13 @@ and provide a seamless experience for students and administrators.
 This project uses a **special license** to protect the code and allow
 fair use.
 
-### ✅ You Can:
+### ✅ You Can
 
 - Read and learn from the code
 - Contribute to this project
 - Show your **accepted work** in your portfolio (with credit)
 
-### ❌ You Can’t:
+### ❌ You Can’t
 
 - Host this project on your own website or server
 - Sell or use the code for paid work, startups, or companies
@@ -556,7 +557,7 @@ fair use.
 
 ---
 
-### 📸 If You Add This to Your Portfolio:
+### 📸 If You Add This to Your Portfolio
 
 - You can only show what **you personally made**
 - You must say it’s part of **ciitm-frontend** by **Coder-Studies**
@@ -566,7 +567,7 @@ fair use.
 
 ---
 
-### ⚠️ Legal Info:
+### ⚠️ Legal Info
 
 If someone breaks the license:
 
@@ -578,7 +579,42 @@ If someone breaks the license:
 
 ---
 
-### 📬 Contact:
+## 👥 Contributors
+
+### ✨ The Amazing People Behind This Project
+
+We're incredibly grateful to everyone who has contributed to the CIITM Frontend project. Your time, expertise, and passion drive this project forward and make it better every day!
+
+<div align="center">
+  <a href="https://github.com/NexGenStudioDev/ciitm-frontend/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=NexGenStudioDev/ciitm-frontend" />
+  </a>
+</div>
+
+
+
+
+
+### 🌟 Wall of Fame
+
+Each contributor brings unique skills and perspectives that have shaped this project:
+
+- **Code Warriors** - Those who build features and squash bugs
+- **Documentation Heroes** - Those who make our project understandable
+- **Design Visionaries** - Those who make our interface beautiful
+- **Issue Reporters** - Those who help us identify problems
+
+### 🚀 Join Our Community
+
+Want to see yourself here? We'd love to have your contributions!
+
+1. Check out our [contribution guidelines](#-contributing)
+2. Find an [open issue](https://github.com/NexGenStudioDev/ciitm-frontend/issues) or create one
+3. Make your mark on this exciting project
+
+Every pull request, issue report, and suggestion helps us build a better platform for CIITM Dhanbad.
+
+### 📬 Contact
 
 For questions, permission, or legal concerns, reach out:
 
