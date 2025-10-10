@@ -1,6 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import arrow from '../../../assets/images/arrow.png';
 import H2 from '../../Atoms/Heading/H2';
 import H4 from '../../Atoms/Heading/H4';
 import P4 from '../../Atoms/Paragraph/P4';
@@ -11,6 +10,7 @@ const Empower = () => {
       image2: null,
       image3: null,
    });
+
    const [textContent, setTextContent] = useState({
       headingFirst: '',
       headingSecond: '',
@@ -56,65 +56,62 @@ const Empower = () => {
    } = textContent;
 
    return (
-      <div className='flex my-10 max-[599px]:my-0 relative'>
-         <img
-            src={arrow}
-            alt='Arrow indicating direction'
-            className='arrow-image absolute top-1/2 left-[39vw] -translate-x-1/2 -translate-y-1/2 h-[13vw]'
-         />
+      <section className='bg-white text-[#333] py-12 md:py-20'>
+         <div className='max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center'>
+            {/* IMAGE COLUMN: visible only on md and larger */}
+            <div className='hidden md:flex justify-center md:justify-start'>
+               <div className='relative w-full max-w-[480px]'>
+                  <div className='overflow-hidden rounded-2xl shadow-lg'>
+                     <img
+                        src={image1 || image2 || image3}
+                        alt='Empower visual'
+                        className='w-full h-full object-cover'
+                     />
+                  </div>
 
-         <div className='empower-img-div relative w-1/2 h-full md:flex justify-center items-center'>
-            <div className='max-h-[17vw] max-w-[17vw] bg-black rounded-full absolute left-[3vw] top-[1vw]'>
-               {image1 && (
-                  <img
-                     src={image1}
-                     alt='Empower image 1'
-                     className='h-full w-full object-cover rounded-full'
-                  />
-               )}
+                  {/* optional thumbnails — still only on md+ */}
+                  <div className='hidden md:flex gap-4 mt-4'>
+                     {image2 && (
+                        <img
+                           src={image2}
+                           alt='secondary 1'
+                           className='w-1/2 rounded-lg object-cover shadow-md'
+                        />
+                     )}
+                     {image3 && (
+                        <img
+                           src={image3}
+                           alt='secondary 2'
+                           className='w-1/2 rounded-lg object-cover shadow-md'
+                        />
+                     )}
+                  </div>
+               </div>
             </div>
 
-            <div className='h-[10vh] w-[10vh] md:h-[12vw] md:w-[12vw] rounded-full absolute left-[22vw] top-[19vh]'>
-               {image2 && (
-                  <img
-                     src={image2}
-                     alt='Empower image 2'
-                     className='h-full w-full object-cover rounded-full'
-                  />
-               )}
-            </div>
+            {/* TEXT COLUMN: spans full width on small screens */}
+            <div>
+               <H2 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-3 max-w-[48ch]'>
+                  {headingFirst}
+               </H2>
 
-            <div className='h-[16vw] w-[16vw] rounded-full absolute left-[8vw] top-[30vh] md:top-[40vh] bg-red-600  '>
-               {image3 && (
-                  <img
-                     src={image3}
-                     alt='Empower image 3'
-                     className='h-full w-full object-cover rounded-full'
-                  />
-               )}
+               <H4 Tailwind_utility_Class='text-base md:text-lg font-medium mb-4 max-w-[60ch]'>
+                  {headingSecond}
+               </H4>
+
+               <P4 Tailwind_utility_Class='text-sm md:text-base mb-6 leading-relaxed max-w-[70ch]'>
+                  {paragraphFirst}
+                  <br />
+                  <br />
+                  {paragraphSecond}
+               </P4>
+
+               <button className='bg-[#333] text-white px-4 py-2 rounded-md shadow-sm hover:bg-[#444] transition-colors duration-200'>
+                  Read More
+               </button>
             </div>
          </div>
-
-         <div className='empower-text md:w-1/2 relative'>
-            <H2 className="text-[3vw] max-[599px]:text-[6vw] max-[1440px]:text-[3vw] font-['Montserrat'] font-bold my-2 max-[599px]:my-2  w-[37vw] max-[599px]:w-full text-[#333333]">
-               {headingFirst}
-            </H2>
-
-            <H4 Tailwind_utility_Class="text-[1.6vw] max-[599px]:text-[4vw] font-['Montserrat'] font-medium max-[599px]:font-bold my-2 max-[599px]:my-2 max-[599px]:leading-tight w-[37vw] max-[599px]:w-full text-[#333333]">
-               {headingSecond}
-            </H4>
-
-            <P4 Tailwind_utility_Class="text-[0.9vw] max-[599px]:mt-4 max-[599px]:text-[3vw] mt-4 font-medium w-[35vw] max-[599px]:w-full text-[#333333] font-['Poppins']">
-               {paragraphFirst}
-               <br />
-               <br />
-               {paragraphSecond}
-            </P4>
-            <button className='my-[2vh] bg-[#333] font-["Poppins"] text-white py-2 px-4 rounded-lg'>
-               Read More
-            </button>
-         </div>
-      </div>
+      </section>
    );
 };
 

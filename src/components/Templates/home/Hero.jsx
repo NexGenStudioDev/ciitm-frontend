@@ -48,8 +48,11 @@ const Hero = React.memo(() => {
          </div>
 
          <div className='card-container absolute bottom-[3vh] right-[2vw] lg:h-full w-full sm:max-w-md lg:w-1/2 flex items-end justify-end pb-10 flex-col gap-4 -mb-20'>
-            <NoticeCard title='Download Free Call' />
-            <NoticeCard title='Apply online admission 2025-2026' />
+            <NoticeCard title='Download Free Call' offset={0} />
+            <NoticeCard
+               title='Apply online admission 2025-2026'
+               offset={80}
+            />
          </div>
       </section>
    );
