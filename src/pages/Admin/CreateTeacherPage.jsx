@@ -21,7 +21,9 @@ const schema = yup.object({
       .string()
       .email('Enter a valid email')
       .required('Email is required'),
-   image: yup.string().required('Image is required'),
+
+   image: yup.mixed().required('Image is required'),
+
    role: yup.string().required('Role is required'),
    Specialization: yup
       .string()
@@ -128,7 +130,8 @@ export default function CreateTeacherPage() {
          if (key !== 'image') formData.append(key, value);
       });
 
-      formData.append('Avtar', imageFile || DEFAULT_AVATAR);
+      
+      formData.append('image', imageFile);//Schema uses image there is no database input with name "avtar" and imageFile should always exist but DEFAULT_AVATAR is a string so can break server side multipart data handling
       console.log(formData);
 
       try {
@@ -149,6 +152,7 @@ export default function CreateTeacherPage() {
             res?.data?.message || 'Teacher created successfully',
          );
          reset();
+         fileRef.current.value="";//clear manually
          setImagePreview(DEFAULT_AVATAR);
          setImageFile(null);
          setStep(0);
@@ -168,6 +172,7 @@ export default function CreateTeacherPage() {
          content: (
             <>
                <ImageUploadPreview
+                  fileRef={fileRef}
                   imagePreview={imagePreview}
                   onImageChange={handleImageChange}
                   errors={errors}

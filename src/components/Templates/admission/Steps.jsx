@@ -29,6 +29,7 @@ const Steps = () => {
       }
    }, []);
 
+     
    let admission = useSelector(state => state.admission.admission);
 
    let dispatch = useDispatch();
@@ -174,6 +175,7 @@ const Steps = () => {
          JSON.stringify(formData),
       );
       return true;
+
    };
 
    const handleNext = () => {
