@@ -1,17 +1,18 @@
 import React, { useRef } from 'react';
 
 export default function ImageUploadPreview({
+   fileRef,
    imagePreview,
    onImageChange,
    errors,
 }) {
-   let imageRef = useRef();
+   // let imageRef = useRef(); removed imageRef instead uses the parent's fileRef being passed through prop so that it is directly bound to the childs <input>
 
    return (
       <div className='flex flex-col items-center mb-6 w-full'>
          <div
             onClick={() => {
-               imageRef.current.click();
+               fileRef.current.click();
             }}
             className='w-[10vw] h-[10vw] rounded-full overflow-hidden border-4 border-blue-600 mb-3 shadow-md'
          >
@@ -26,7 +27,7 @@ export default function ImageUploadPreview({
          </label>
          <input
             type='file'
-            ref={imageRef}
+            ref={fileRef}
             accept='image/*'
             onChange={onImageChange}
             className='w-full p-2 bg-[#1F1F1F] text-white rounded border border-gray-700 hidden'
