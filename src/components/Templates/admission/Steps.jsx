@@ -20,6 +20,14 @@ const Steps = () => {
       useState(false);
    const [formData, setFormData] = useState({});
    const [Avtor, setAvtor] = useState(null);
+   const [missingFields, setMissingFields] = useState([]);
+
+   useEffect(() => {
+      const savedData = sessionStorage.getItem('admissionFormData');
+      if (savedData) {
+         setFormData(JSON.parse(savedData));
+      }
+   }, []);
 
    let admission = useSelector(state => state.admission.admission);
 
@@ -136,16 +144,35 @@ const Steps = () => {
 
    const validateStep = () => {
       const requiredFields = [];
-
+      const missing = [];
       if (activeStep === 0) {
          requiredFields.push('firstName', 'lastName', 'email');
       } else if (activeStep === 1) {
          requiredFields.push('fatherName', 'motherName');
       } else if (activeStep === 4 && !image) {
          setIsModalOpen(true);
+         setMissingFields(['Profile Picture']);
+         return false;
+      }
+      for (let field of requiredFields) {
+         if (!formData[field] || formData[field].trim() === '') {
+            const formatted = field
+               .replace(/([A-Z])/g, ' $1')
+               .replace(/^./, str => str.toUpperCase());
+            missing.push(formatted);
+         }
+      }
+
+      if (missing.length > 0) {
+         setMissingFields(missing);
+         setIsModalOpen(true);
          return false;
       }
 
+      sessionStorage.setItem(
+         'admissionFormData',
+         JSON.stringify(formData),
+      );
       return true;
    };
 
@@ -289,6 +316,7 @@ const Steps = () => {
             onClose={() => setIsModalOpen(false)}
             title='Incomplete Form'
             message='Please fill in all fields before proceeding!'
+            missingFields={missingFields}
          />
       </>
    );

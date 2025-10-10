@@ -1,6 +1,12 @@
 import React from 'react';
 
-const StepValidateModal = ({ isOpen, onClose, title, message }) => {
+const StepValidateModal = ({
+   isOpen,
+   onClose,
+   title,
+   message,
+   missingFields,
+}) => {
    if (!isOpen) return null;
 
    return (
@@ -11,6 +17,13 @@ const StepValidateModal = ({ isOpen, onClose, title, message }) => {
                {title}
             </h2>
             <p className='mt-4 text-gray-600'>{message}</p>
+            {missingFields?.length > 0 && (
+               <ul className='mt-3 list-disc pl-6 text-red-500'>
+                  {missingFields.map(field => (
+                     <li key={field}>{field}</li>
+                  ))}
+               </ul>
+            )}
             <button
                onClick={onClose}
                className='mt-6 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition'
