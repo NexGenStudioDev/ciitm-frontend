@@ -21,6 +21,7 @@ const Steps = () => {
    const [formData, setFormData] = useState({});
    const [Avtor, setAvtor] = useState(null);
    const [missingFields, setMissingFields] = useState([]);
+   const [showErrors, setShowErrors] = useState(false);
 
    useEffect(() => {
       const savedData = sessionStorage.getItem('admissionFormData');
@@ -117,6 +118,8 @@ const Steps = () => {
             <YourInfo
                handleInputChange={handleInputChange}
                handleDropdownChange={handleDropdownChange}
+               errors={missingFields}
+               showErrors={showErrors}
             />
          ),
       },
@@ -144,19 +147,44 @@ const Steps = () => {
    ];
 
    const validateStep = () => {
-      const requiredFields = [];
+      const stepValidationConfig = {
+         0: [
+            'firstName',
+            'lastName',
+            'email',
+            'fatherName',
+            'motherName',
+            'AadharCardNumber',
+            'contactNumber',
+            'dateOfBirth',
+            'gender',
+            'nationality',
+            'street',
+            'city',
+            'state',
+            'pinCode',
+         ],
+         1: ['Gname', 'Grelation', 'GcontactNumber'],
+         2: [], // AreYouHuman step
+         3: [
+            'tenthBoard',
+            'tenthGrade',
+            'twelfthMarks',
+            'twelfthGrade',
+         ],
+         4: ['university', 'courseName', 'mode'],
+      };
+
       const missing = [];
-      if (activeStep === 0) {
-         requiredFields.push('firstName', 'lastName', 'email');
-      } else if (activeStep === 1) {
-         requiredFields.push('fatherName', 'motherName');
-      } else if (activeStep === 4 && !image) {
-         setIsModalOpen(true);
-         setMissingFields(['Profile Picture']);
-         return false;
-      }
-      for (let field of requiredFields) {
-         if (!formData[field] || formData[field].trim() === '') {
+      const requiredFields = stepValidationConfig[activeStep] || [];
+
+      for (const field of requiredFields) {
+         const value = formData[field];
+         if (
+            value === undefined ||
+            value === null ||
+            (typeof value === 'string' && value.trim() === '')
+         ) {
             const formatted = field
                .replace(/([A-Z])/g, ' $1')
                .replace(/^./, str => str.toUpperCase());
@@ -164,24 +192,28 @@ const Steps = () => {
          }
       }
 
-      if (missing.length > 0) {
-         setMissingFields(missing);
-         setIsModalOpen(true);
-         return false;
+      if (activeStep === 4 && !image) {
+         missing.push('Profile Picture');
       }
 
       sessionStorage.setItem(
          'admissionFormData',
          JSON.stringify(formData),
       );
-      return true;
+      
+
+
+      setMissingFields(missing);
+      return missing.length === 0;
 
    };
 
    const handleNext = () => {
+      setShowErrors(true);
       if (validateStep()) {
          if (activeStep < steps.length - 1) {
             setActiveStep(prevStep => prevStep + 1);
+            setShowErrors(false);
          }
       }
    };
@@ -312,7 +344,6 @@ const Steps = () => {
                </div>
             )}
          </form>
-
          <StepValidateModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
