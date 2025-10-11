@@ -10,7 +10,6 @@ import { setContact } from '../../store/AdminUi';
 import Swal from 'sweetalert2';
 import AdminContactData_Table from '../../components/Organisms/Admin/AdminContactData_Table';
 import { setNavigator } from '../../store/NavigatorSlice';
-import { Helmet } from 'react-helmet-async';
 
 const ContactPage = memo(() => {
    let dispatch = useDispatch();
@@ -53,13 +52,11 @@ const ContactPage = memo(() => {
 
    return (
       <>
-         <Helmet>
-            <title>Admin Contact Page</title>
-            <meta
-               name='description'
-               content="CIITM Admin Contact Page - Manage your institution's contact data efficiently."
-            />
-         </Helmet>
+         <title>Admin Contact Page</title>
+         <meta
+            name='description'
+            content="CIITM Admin Contact Page - Manage your institution's contact data efficiently."
+         />
 
          <AdminTemplate pageName='Contact Us'>
             <FormTemplate PageName='Contact'>

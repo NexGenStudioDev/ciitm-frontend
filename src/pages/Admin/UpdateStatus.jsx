@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ValidateUniqueIdInput from '../../components/Atoms/Input/ValidateUniqueIdInput';
-import { Helmet } from 'react-helmet-async';
+
 import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTemplate_Secondary';
 import axios from 'axios';
@@ -148,15 +148,14 @@ const UpdateStatus = () => {
 
    return (
       <>
-         <Helmet>
-            <title>
-               Update Student Application Status - CIITM Admin
-            </title>
-            <meta
-               name='description'
-               content='Update student application status - Manage student enrollment and verification efficiently.'
-            />
-         </Helmet>
+         <title>
+            Update Student Application Status - CIITM Admin
+         </title>
+         <meta
+            name='description'
+            content='Update student application status - Manage student enrollment and verification efficiently.'
+         />
+
          <AdminTemplate pageName={'Update Student Status'}>
             {/* Combined Form */}
             <div className='w-[94%] max-[553px]:w-[87%] mb-6'>
