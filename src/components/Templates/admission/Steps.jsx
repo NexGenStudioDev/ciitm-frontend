@@ -21,6 +21,15 @@ const Steps = () => {
    const [formData, setFormData] = useState({});
    const [Avtor, setAvtor] = useState(null);
 
+
+      useEffect(() => {
+      const savedData = sessionStorage.getItem('admissionFormData');
+      if (savedData) {
+          setFormData(JSON.parse(savedData));
+      }
+      }, []);
+      
+
    let admission = useSelector(state => state.admission.admission);
 
    let dispatch = useDispatch();
@@ -145,8 +154,19 @@ const Steps = () => {
          setIsModalOpen(true);
          return false;
       }
-
+      //check values in formData
+      for(let field of requiredFields){
+         if(!formData[field] || formData[field].trim()===''){
+            setIsModalOpen(true);
+            return false;
+         }
+            
+      }
+      //Save current changes
+      sessionStorage.setItem('admissionFormData', JSON.stringify(formData));
+      
       return true;
+
    };
 
    const handleNext = () => {

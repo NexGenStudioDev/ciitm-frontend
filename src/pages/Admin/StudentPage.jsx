@@ -3,7 +3,6 @@ import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import FormTemplate from '../../components/Templates/Admin/form/FormTemplate';
 import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
 import StudentDataTable from '../../components/Organisms/Admin/StudentDataTable';
-import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { set } from 'react-hook-form';
 
@@ -54,13 +53,11 @@ const StudentPage = () => {
 
    return (
       <>
-         <Helmet>
-            <title>Student Page - CIITM Admin</title>
-            <meta
-               name='description'
-               content="CIITM Admin Student Page - Manage your institution's student data efficiently."
-            />
-         </Helmet>
+         <title>Student Page - CIITM Admin</title>
+         <meta
+            name='description'
+            content="CIITM Admin Student Page - Manage your institution's student data efficiently."
+         />
 
          <AdminTemplate pageName={'Students'}>
             <div className='findStudent_Container px-[2vw] h-[13vh] min-[900px]:h-[10vh] w-[93%] flex items-center justify-between gap-4 bg-[#1C1C1C] rounded-lg mt-[4vh] mb-[3vh]'>
