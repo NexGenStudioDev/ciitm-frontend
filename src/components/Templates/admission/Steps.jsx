@@ -12,17 +12,34 @@ import axios from 'axios';
 import admissionConstant from './admission.constant.mjs';
 
 const Steps = () => {
-   const [isModalOpen, setIsModalOpen] = useState(false);
+   
    const [activeStep, setActiveStep] = useState(0);
    const [isLoading, setIsLoading] = useState(false);
    const [image, setImage] = useState(null);
    const [imageUploadSuccess, setImageUploadSuccess] =
       useState(false);
-   const [formData, setFormData] = useState({});
+  
    const [Avtor, setAvtor] = useState(null);
    const [missingFields, setMissingFields] = useState([]);
    const [showErrors, setShowErrors] = useState(false);
-
+   
+    const [formData, setFormData] = useState({
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      fatherName: '',
+      motherName: '',
+      AadharCardNumber: '',
+      email: '',
+      contactNumber: '',
+      dateOfBirth: '',
+      gender: '',
+      nationality: '',
+      street: '',
+      city: '',
+      state: '',
+      pinCode: '',
+   });
    useEffect(() => {
       const savedData = sessionStorage.getItem('admissionFormData');
       if (savedData) {
@@ -41,6 +58,9 @@ const Steps = () => {
          ...prevData,
          [name]: value,
       }));
+
+     setMissingFields((prev) => prev.filter((err) => !err.toLowerCase().includes(name.toLowerCase())));
+
    };
 
    const handleDropdownChange = (name, value) => {
@@ -208,14 +228,22 @@ const Steps = () => {
 
    };
 
-   const handleNext = () => {
+   const handleNext = (e) => {
+       e.preventDefault();// Prevent accidental page reload
       setShowErrors(true);
       if (validateStep()) {
          if (activeStep < steps.length - 1) {
             setActiveStep(prevStep => prevStep + 1);
             setShowErrors(false);
          }
-      }
+      }else {
+   //  setIsModalOpen(true);
+
+      const firstErrorField = document.querySelector('.input-error');
+      firstErrorField?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+      
    };
 
    const handlePrevious = () => {
@@ -344,13 +372,13 @@ const Steps = () => {
                </div>
             )}
          </form>
-         <StepValidateModal
+         {/* <StepValidateModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             title='Incomplete Form'
             message='Please fill in all fields before proceeding!'
             missingFields={missingFields}
-         />
+         /> */}
       </>
    );
 };

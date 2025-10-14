@@ -9,7 +9,7 @@ import {
 const Dropdown = ({
    placeholder,
    options,
-   handleSelect,
+   onChange,
    name,
    isRequired = false,
    errorMessage = 'This field is required.',
@@ -50,7 +50,8 @@ const Dropdown = ({
    // Sync selectedOption with Redux
    useEffect(() => {
       if (selectedOption !== placeholder) {
-         if (find_index !== -1) {
+         const idx = admission.findIndex(item => item.name === name);
+         if (idx !== -1) {
             dispatch(
                setOneAdmission({ name, value: selectedOption }),
             );
@@ -58,7 +59,7 @@ const Dropdown = ({
             dispatch(setAdmission({ name, value: selectedOption }));
          }
       }
-   }, [selectedOption]);
+   }, [selectedOption,admission]);
 
    const validateDropdown = () => {
       if (
@@ -72,6 +73,7 @@ const Dropdown = ({
    };
    const handleOptionClick = option => {
       setSelectedOption(option);
+      onChange && onChange({ target: { name, value: option } });
       setIsOpen(false);
       setIsError(false);
    };

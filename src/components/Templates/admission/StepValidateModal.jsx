@@ -24,7 +24,7 @@ const StepValidateModal = ({
                   ))}
                </ul>
             )}
-            <button
+            <button type="button"
                onClick={onClose}
                className='mt-6 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition'
             >
