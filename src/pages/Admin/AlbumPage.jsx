@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTemplate_Secondary';
-import { Helmet } from 'react-helmet-async';
 import { IoIosCloudUpload } from 'react-icons/io';
 import Image_Form_Title from '../../components/Molecules/Admin/image/Image_Form_Title';
 import Input_Primary from '../../components/Atoms/Input/Input_Primary';
@@ -50,13 +49,11 @@ const AlbumPage = () => {
 
    return (
       <>
-         <Helmet>
-            <title>Create Album - CIITM Admin</title>
-            <meta
-               name='description'
-               content="CIITM Admin Create Album Page - Manage your institution's album data efficiently."
-            />
-         </Helmet>
+         <title>Create Album - CIITM Admin</title>
+         <meta
+            name='description'
+            content="CIITM Admin Create Album Page - Manage your institution's album data efficiently."
+         />
 
          <AdminTemplate pageName='Create Album'>
             <FormTemplate_Secondary>

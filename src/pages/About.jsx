@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+
 import History from '../components/Templates/about/History';
 import AboutHero from '../components/Templates/about/AboutHero';
 import Teachers from '../components/Templates/about/Teachers';
@@ -21,10 +21,8 @@ const About = () => {
 
    return (
       <>
-         <Helmet>
-            <title>About - CIITM Dhanbad</title>
-            <meta name='description' content='About My Website' />
-         </Helmet>
+         <title>About - CIITM Dhanbad</title>
+         <meta name='description' content='About My Website' />
 
          <AboutHero />
          <History />

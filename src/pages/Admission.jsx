@@ -1,14 +1,13 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+
 import AdmissionForm from '../components/Templates/admission/AdmissionForm';
 
 const Admission = () => {
    return (
       <div className='py-20'>
-         <Helmet>
-            <title>Admission - CIITM Dhanbad</title>
-            <meta name='description' content='Admission Form' />
-         </Helmet>
+         <title>Admission - CIITM Dhanbad</title>
+         <meta name='description' content='Admission Form' />
+
          <AdmissionForm />
       </div>
    );

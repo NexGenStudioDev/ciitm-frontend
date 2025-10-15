@@ -2,7 +2,6 @@ import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTemplate_Secondary';
 import Image_Form_Title from '../../components/Molecules/Admin/image/Image_Form_Title';
 import Dropdown_Primary from '../../components/Atoms/Dropdown/Dropdown_Primary';
-import { Helmet } from 'react-helmet-async';
 import { IoIosCloudUpload } from 'react-icons/io';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -97,13 +96,11 @@ const ImagePage = () => {
 
    return (
       <>
-         <Helmet>
-            <title>Create Image - CIITM Admin</title>
-            <meta
-               name='description'
-               content="CIITM Admin Create Image Page - Manage your institution's image data efficiently."
-            />
-         </Helmet>
+         <title>Create Image - CIITM Admin</title>
+         <meta
+            name='description'
+            content="CIITM Admin Create Image Page - Manage your institution's image data efficiently."
+         />
 
          <AdminTemplate pageName='Create Image'>
             <FormTemplate_Secondary>

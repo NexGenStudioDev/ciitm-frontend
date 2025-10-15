@@ -4,7 +4,6 @@ import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import QuickLinkSection from '../../components/Organisms/Admin/QuickLinkSection';
 import DashboardCardSection from '../../components/Molecules/Admin/Dashboard/DashboardCardSection';
 import socket from '../../config/socket.mjs';
-import { Helmet } from 'react-helmet-async';
 
 let QuickLinkData = [
    {
@@ -54,13 +53,11 @@ const DashboardPage = () => {
 
    return (
       <>
-         <Helmet>
-            <title>Admin DashBoard</title>
-            <meta
-               name='description'
-               content="CIITM Admin Dashboard - Manage your institution's data efficiently."
-            />
-         </Helmet>
+         <title>Admin DashBoard</title>
+         <meta
+            name='description'
+            content="CIITM Admin Dashboard - Manage your institution's data efficiently."
+         />
 
          <AdminTemplate pageName={'Dashboard'}>
             <div className='h-[80vh] flex flex-col justify-between w-full'>
