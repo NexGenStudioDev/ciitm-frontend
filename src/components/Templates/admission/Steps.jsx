@@ -12,24 +12,42 @@ import axios from 'axios';
 import admissionConstant from './admission.constant.mjs';
 
 const Steps = () => {
-   const [isModalOpen, setIsModalOpen] = useState(false);
+   
    const [activeStep, setActiveStep] = useState(0);
    const [isLoading, setIsLoading] = useState(false);
    const [image, setImage] = useState(null);
    const [imageUploadSuccess, setImageUploadSuccess] =
       useState(false);
-   const [formData, setFormData] = useState({});
+  
    const [Avtor, setAvtor] = useState(null);
-
-
-      useEffect(() => {
+   const [missingFields, setMissingFields] = useState([]);
+   const [showErrors, setShowErrors] = useState(false);
+   
+    const [formData, setFormData] = useState({
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      fatherName: '',
+      motherName: '',
+      AadharCardNumber: '',
+      email: '',
+      contactNumber: '',
+      dateOfBirth: '',
+      gender: '',
+      nationality: '',
+      street: '',
+      city: '',
+      state: '',
+      pinCode: '',
+   });
+   useEffect(() => {
       const savedData = sessionStorage.getItem('admissionFormData');
       if (savedData) {
-          setFormData(JSON.parse(savedData));
+         setFormData(JSON.parse(savedData));
       }
-      }, []);
-      
+   }, []);
 
+     
    let admission = useSelector(state => state.admission.admission);
 
    let dispatch = useDispatch();
@@ -40,6 +58,9 @@ const Steps = () => {
          ...prevData,
          [name]: value,
       }));
+
+     setMissingFields((prev) => prev.filter((err) => !err.toLowerCase().includes(name.toLowerCase())));
+
    };
 
    const handleDropdownChange = (name, value) => {
@@ -117,6 +138,8 @@ const Steps = () => {
             <YourInfo
                handleInputChange={handleInputChange}
                handleDropdownChange={handleDropdownChange}
+               errors={missingFields}
+               showErrors={showErrors}
             />
          ),
       },
@@ -144,37 +167,83 @@ const Steps = () => {
    ];
 
    const validateStep = () => {
-      const requiredFields = [];
+      const stepValidationConfig = {
+         0: [
+            'firstName',
+            'lastName',
+            'email',
+            'fatherName',
+            'motherName',
+            'AadharCardNumber',
+            'contactNumber',
+            'dateOfBirth',
+            'gender',
+            'nationality',
+            'street',
+            'city',
+            'state',
+            'pinCode',
+         ],
+         1: ['Gname', 'Grelation', 'GcontactNumber'],
+         2: [], // AreYouHuman step
+         3: [
+            'tenthBoard',
+            'tenthGrade',
+            'twelfthMarks',
+            'twelfthGrade',
+         ],
+         4: ['university', 'courseName', 'mode'],
+      };
 
-      if (activeStep === 0) {
-         requiredFields.push('firstName', 'lastName', 'email');
-      } else if (activeStep === 1) {
-         requiredFields.push('fatherName', 'motherName');
-      } else if (activeStep === 4 && !image) {
-         setIsModalOpen(true);
-         return false;
-      }
-      //check values in formData
-      for(let field of requiredFields){
-         if(!formData[field] || formData[field].trim()===''){
-            setIsModalOpen(true);
-            return false;
+      const missing = [];
+      const requiredFields = stepValidationConfig[activeStep] || [];
+
+      for (const field of requiredFields) {
+         const value = formData[field];
+         if (
+            value === undefined ||
+            value === null ||
+            (typeof value === 'string' && value.trim() === '')
+         ) {
+            const formatted = field
+               .replace(/([A-Z])/g, ' $1')
+               .replace(/^./, str => str.toUpperCase());
+            missing.push(formatted);
          }
-            
       }
-      //Save current changes
-      sessionStorage.setItem('admissionFormData', JSON.stringify(formData));
+
+      if (activeStep === 4 && !image) {
+         missing.push('Profile Picture');
+      }
+
+      sessionStorage.setItem(
+         'admissionFormData',
+         JSON.stringify(formData),
+      );
       
-      return true;
+
+
+      setMissingFields(missing);
+      return missing.length === 0;
 
    };
 
-   const handleNext = () => {
+   const handleNext = (e) => {
+       e.preventDefault();// Prevent accidental page reload
+      setShowErrors(true);
       if (validateStep()) {
          if (activeStep < steps.length - 1) {
             setActiveStep(prevStep => prevStep + 1);
+            setShowErrors(false);
          }
-      }
+      }else {
+   //  setIsModalOpen(true);
+
+      const firstErrorField = document.querySelector('.input-error');
+      firstErrorField?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+      
    };
 
    const handlePrevious = () => {
@@ -303,13 +372,13 @@ const Steps = () => {
                </div>
             )}
          </form>
-
-         <StepValidateModal
+         {/* <StepValidateModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             title='Incomplete Form'
             message='Please fill in all fields before proceeding!'
-         />
+            missingFields={missingFields}
+         /> */}
       </>
    );
 };
