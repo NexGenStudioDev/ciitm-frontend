@@ -7,28 +7,3 @@ enabled = true
 [analyzers.meta]
 # Skip documentation coverage for certain constructs if needed
 # skip_doc_coverage = ["class-expression", "method-definition"]
-
-# Configure specific rules
-rules = [
-  "JS-0232",  # Found duplicate module imports
-  "JS-0128",  # Should not have unused variables
-  "JS-0424",  # Found unnecessary fragments
-  "JS-0415",  # Validation of JSX maximum depth
-  "JS-0752",  # label tags should have a text label and an associated control
-  "JS-D1001", # Documentation comments not found for functions and classes
-  "JS-C1003", # Avoid using wildcard imports
-  "JS-R1000"  # Found multiple import of the same path
-]
-
-# Exclude certain files or directories if needed
-exclude = [
-  "node_modules/**",
-  "dist/**",
-  "build/**",
-  "*.min.js"
-]
-# Include specific file patterns
-include = [
-  "src/**/*.js",
-  "src/**/*.jsx"
-]
