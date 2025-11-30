@@ -42,6 +42,7 @@ import StudentGroup from './pages/Student/StudentGroup';
 import Protected_Student from './components/Protected/Protected_Student';
 import Testimonial from './pages/Testimonial';
 import CreateTeacherPage from './pages/Admin/CreateTeacherPage';
+import AdminRoleManagement from './pages/Admin/AdminRoleManagement';
 import Success from './pages/Success';
 import Wallet from './pages/Student/Wallet';
 import FeeView from './pages/Student/FeeView';
@@ -194,6 +195,11 @@ const App = () => {
                   <Route
                      path='/admin/update/status'
                      element={<UpdateStatus />}
+                  />
+
+                  <Route
+                     path='/admin/role-management'
+                     element={<AdminRoleManagement />}
                   />
 
                   <Route path='*' element={<ErrorPage />} />
