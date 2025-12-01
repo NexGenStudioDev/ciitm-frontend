@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+
+import React, { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import InputField from './InputField';
 import Dropdown from './DropDown';
+
 
 const YourInfo = ({ formData, handleInputChange, errors, showErrors }) => {
   const [activeBox, setActiveBox] = useState(null);
@@ -8,286 +11,327 @@ const YourInfo = ({ formData, handleInputChange, errors, showErrors }) => {
   const getBorderClass = (fieldName) =>
     activeBox === fieldName ? 'border-blue-500' : 'border-gray-300';
 
+  const hasError = useCallback(
+    (label, key) =>
+      showErrors &&
+      Array.isArray(errors) &&
+      (errors.includes(label) || errors.includes(key)),
+    [errors, showErrors]
+  );
+
+  const safeValue = (key) =>
+    formData?.[key] !== undefined && formData?.[key] !== null
+      ? String(formData[key])
+      : '';
+
+  const onFocus = useCallback((name) => () => setActiveBox(name), []);
+  const onBlur = useCallback(() => () => setActiveBox(null), []);
+
   return (
-    <div className='sm:grid flex flex-col w-full 2xl:grid-cols-5 sm:grid-cols-2 md:grid-cols-4 sm:gap-x-4 gap-y-10'>
+    <div className="sm:grid flex flex-col w-full 2xl:grid-cols-5 sm:grid-cols-2 md:grid-cols-4 sm:gap-x-4 gap-y-10">
+
       {/* First Name */}
-      <InputField
-        placeholder='First Name'
-        type='text'
+      <FieldWrapper
+        id="firstName"
+        label="First Name"
+        type="text"
         required
-        name='firstName'
-        value={formData.firstName || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('firstName')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('firstName')} rounded-md p-2 ${
-          showErrors && errors.includes('First Name') ? 'input-error' : ''
-        }`}
+        value={safeValue('firstName')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('First Name') && (
-        <p className='text-red-500 text-sm mt-1'>First Name is required</p>
-      )}
 
       {/* Middle Name */}
-      <InputField
-        placeholder='Middle Name'
-        type='text'
-        name='middleName'
-        value={formData.middleName || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('middleName')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('middleName')} rounded-md p-2 ${
-          showErrors && errors.includes('Middle Name') ? 'input-error' : ''
-        }`}
+      <FieldWrapper
+        id="middleName"
+        label="Middle Name"
+        type="text"
+        value={safeValue('middleName')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('Middle Name') && (
-        <p className='text-red-500 text-sm mt-1'>Middle Name is required</p>
-      )}
 
       {/* Last Name */}
-      <InputField
-        placeholder='Last Name'
-        type='text'
+      <FieldWrapper
+        id="lastName"
+        label="Last Name"
+        type="text"
         required
-        name='lastName'
-        value={formData.lastName || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('lastName')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('lastName')} rounded-md p-2 ${
-          showErrors && errors.includes('Last Name') ? 'input-error' : ''
-        }`}
+        value={safeValue('lastName')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('Last Name') && (
-        <p className='text-red-500 text-sm mt-1'>Last Name is required</p>
-      )}
 
       {/* Father's Name */}
-      <InputField
-        placeholder="Father's Name"
-        type='text'
+      <FieldWrapper
+        id="fatherName"
+        label="Father's Name"
+        type="text"
         required
-        name='fatherName'
-        value={formData.fatherName || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('fatherName')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('fatherName')} rounded-md p-2 ${
-          showErrors && errors.includes("Father's Name") ? 'input-error' : ''
-        }`}
+        value={safeValue('fatherName')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes("Father's Name") && (
-        <p className='text-red-500 text-sm mt-1'>Father's Name is required</p>
-      )}
 
       {/* Mother's Name */}
-      <InputField
-        placeholder="Mother's Name"
-        type='text'
+      <FieldWrapper
+        id="motherName"
+        label="Mother's Name"
+        type="text"
         required
-        name='motherName'
-        value={formData.motherName || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('motherName')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('motherName')} rounded-md p-2 ${
-          showErrors && errors.includes("Mother's Name") ? 'input-error' : ''
-        }`}
+        value={safeValue('motherName')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes("Mother's Name") && (
-        <p className='text-red-500 text-sm mt-1'>Mother's Name is required</p>
-      )}
 
       {/* Aadhar Number */}
-      <InputField
-        placeholder='Aadhar Number'
-        type='number'
+      <FieldWrapper
+        id="AadharCardNumber"
+        label="Aadhar Number"
+        type="text"
+        inputMode="numeric"
         required
-        name='AadharCardNumber'
-        value={formData.AadharCardNumber || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('AadharCardNumber')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('AadharCardNumber')} rounded-md p-2 ${
-          showErrors && errors.includes('Aadhar Number') ? 'input-error' : ''
-        }`}
+        value={safeValue('AadharCardNumber')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('Aadhar Number') && (
-        <p className='text-red-500 text-sm mt-1'>Aadhar Number is required</p>
-      )}
 
       {/* Email */}
-      <InputField
-        placeholder='Email'
-        type='email'
+      <FieldWrapper
+        id="email"
+        label="Email"
+        type="email"
         required
-        name='email'
-        value={formData.email || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('email')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('email')} rounded-md p-2 ${
-          showErrors && errors.includes('Email') ? 'input-error' : ''
-        }`}
+        value={safeValue('email')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('Email') && (
-        <p className='text-red-500 text-sm mt-1'>Email is required</p>
-      )}
 
       {/* Contact Number */}
-      <InputField
-        placeholder='Contact No'
-        type='tel'
+      <FieldWrapper
+        id="contactNumber"
+        label="Contact No"
+        type="tel"
+        inputMode="tel"
         required
-        name='contactNumber'
-        value={formData.contactNumber || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('contactNumber')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('contactNumber')} rounded-md p-2 ${
-          showErrors && errors.includes('Contact No') ? 'input-error' : ''
-        }`}
+        value={safeValue('contactNumber')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('Contact No') && (
-        <p className='text-red-500 text-sm mt-1'>Contact No is required</p>
-      )}
 
       {/* Date of Birth */}
-      <InputField
-        placeholder='Date of Birth'
-        type='date'
+      <FieldWrapper
+        id="dateOfBirth"
+        label="Date of Birth"
+        type="date"
         required
-        name='dateOfBirth'
-        value={formData.dateOfBirth || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('dateOfBirth')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('dateOfBirth')} rounded-md p-2 ${
-          showErrors && errors.includes('Date of Birth') ? 'input-error' : ''
-        }`}
+        value={safeValue('dateOfBirth')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('Date of Birth') && (
-        <p className='text-red-500 text-sm mt-1'>Date of Birth is required</p>
-      )}
 
       {/* Gender */}
-      <Dropdown
-        placeholder='Gender'
-        name='gender'
+      <DropdownWrapper
+        id="gender"
+        label="Gender"
         required
-        value={formData.gender || ''}
+        value={safeValue('gender')}
         options={['Male', 'Female', 'Rather not to say']}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('gender')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('gender')} rounded-md p-2 ${
-          showErrors && errors.includes('Gender') ? 'input-error' : ''
-        }`}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('Gender') && (
-        <p className='text-red-500 text-sm mt-1'>Gender is required</p>
-      )}
 
       {/* Nationality */}
-      <Dropdown
-        placeholder='Select Nationality'
-        name='nationality'
+      <DropdownWrapper
+        id="nationality"
+        label="Select Nationality"
         required
-        value={formData.nationality || ''}
-        options={[
-          'India',
-          'Pakistan',
-          'Bangladesh',
-          'Sri Lanka',
-          'Nepal',
-          'Bhutan',
-          'Maldives',
-        ]}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('nationality')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('nationality')} rounded-md p-2 ${
-          showErrors && errors.includes('Select Nationality') ? 'input-error' : ''
-        }`}
+        value={safeValue('nationality')}
+        options={['India', 'Pakistan', 'Bangladesh', 'Sri Lanka', 'Nepal', 'Bhutan', 'Maldives']}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('Select Nationality') && (
-        <p className='text-red-500 text-sm mt-1'>Nationality is required</p>
-      )}
 
       {/* Street */}
-      <InputField
-        placeholder='Street'
-        type='text'
+      <FieldWrapper
+        id="street"
+        label="Street"
+        type="text"
         required
-        name='street'
-        value={formData.street || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('street')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('street')} rounded-md p-2 ${
-          showErrors && errors.includes('Street') ? 'input-error' : ''
-        }`}
+        value={safeValue('street')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('Street') && (
-        <p className='text-red-500 text-sm mt-1'>Street is required</p>
-      )}
 
       {/* City */}
-      <InputField
-        placeholder='City'
-        type='text'
+      <FieldWrapper
+        id="city"
+        label="City"
+        type="text"
         required
-        name='city'
-        value={formData.city || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('city')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('city')} rounded-md p-2 ${
-          showErrors && errors.includes('City') ? 'input-error' : ''
-        }`}
+        value={safeValue('city')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('City') && (
-        <p className='text-red-500 text-sm mt-1'>City is required</p>
-      )}
 
       {/* State */}
-      <InputField
-        placeholder='State'
-        type='text'
+      <FieldWrapper
+        id="state"
+        label="State"
+        type="text"
         required
-        name='state'
-        value={formData.state || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('state')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('state')} rounded-md p-2 ${
-          showErrors && errors.includes('State') ? 'input-error' : ''
-        }`}
+        value={safeValue('state')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('State') && (
-        <p className='text-red-500 text-sm mt-1'>State is required</p>
-      )}
 
       {/* Pin Code */}
-      <InputField
-        placeholder='Pin Code'
-        type='number'
+      <FieldWrapper
+        id="pinCode"
+        label="Pin Code"
+        type="text"
+        inputMode="numeric"
         required
-        name='pinCode'
-        value={formData.pinCode || ''}
-        onChange={handleInputChange}
-        onFocus={() => setActiveBox('pinCode')}
-        onBlur={() => setActiveBox(null)}
-        className={`border ${getBorderClass('pinCode')} rounded-md p-2 ${
-          showErrors && errors.includes('Pin Code') ? 'input-error' : ''
-        }`}
+        value={safeValue('pinCode')}
+        handleInputChange={handleInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        getBorderClass={getBorderClass}
+        hasError={hasError}
       />
-      {showErrors && errors.includes('Pin Code') && (
-        <p className='text-red-500 text-sm mt-1'>Pin Code is required</p>
-      )}
+
     </div>
   );
 };
 
-export default YourInfo;
+// --------- REUSABLE FIELD WRAPPER (InputField) ----------
+const FieldWrapper = ({
+  id,
+  label,
+  type,
+  required,
+  value,
+  inputMode,
+  handleInputChange,
+  onFocus,
+  onBlur,
+  getBorderClass,
+  hasError,
+}) => (
+  <div>
+    <InputField
+      id={id}
+      placeholder={label}
+      type={type}
+      required={required}
+      name={id}
+      inputMode={inputMode}
+      value={value}
+      onChange={handleInputChange}
+      onFocus={onFocus(id)}
+      onBlur={onBlur()}
+      className={`border ${getBorderClass(id)} rounded-md p-2`}
+      aria-invalid={hasError(label, id)}
+      aria-describedby={hasError(label, id) ? `err-${id}` : undefined}
+    />
+    {hasError(label, id) && (
+      <p id={`err-${id}`} className="text-red-500 text-sm mt-1">
+        {label} is required
+      </p>
+    )}
+  </div>
+);
+
+// --------- REUSABLE DROPDOWN WRAPPER ----------
+const DropdownWrapper = ({
+  id,
+  label,
+  required,
+  value,
+  options,
+  handleInputChange,
+  onFocus,
+  onBlur,
+  getBorderClass,
+  hasError,
+}) => (
+  <div>
+    <Dropdown
+      id={id}
+      placeholder={label}
+      name={id}
+      required={required}
+      value={value}
+      options={options}
+      onChange={handleInputChange}
+      onFocus={onFocus(id)}
+      onBlur={onBlur()}
+      className={`border ${getBorderClass(id)} rounded-md p-2`}
+      aria-invalid={hasError(label, id)}
+      aria-describedby={hasError(label, id) ? `err-${id}` : undefined}
+    />
+    {hasError(label, id) && (
+      <p id={`err-${id}`} className="text-red-500 text-sm mt-1">
+        {label} is required
+      </p>
+    )}
+  </div>
+);
+
+// PropTypes
+YourInfo.propTypes = {
+  formData: PropTypes.object,
+  handleInputChange: PropTypes.func.isRequired,
+  errors: PropTypes.array,
+  showErrors: PropTypes.bool,
+};
+
+YourInfo.defaultProps = {
+  formData: {},
+  errors: [],
+  showErrors: false,
+};
+
+export default React.memo(YourInfo);

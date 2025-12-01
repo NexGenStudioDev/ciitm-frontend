@@ -3,9 +3,11 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { appStore } from './store/appStore';
 import { Provider } from 'react-redux';
-import App from './App';
+
 import Lenis from 'lenis';
 import { ToastContainer } from 'react-toastify';
+import App from './App';
+
 
 const lenis = new Lenis({
    autoRaf: true,
@@ -14,7 +16,7 @@ const lenis = new Lenis({
 createRoot(document.getElementById('root')).render(
    <StrictMode>
       <Provider store={appStore}>
-         <App />
+        <App />
          <ToastContainer
             position='top-right'
             autoClose={3000}

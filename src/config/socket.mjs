@@ -10,6 +10,8 @@ const MAX_RETRIES = 5;
 let retryCount = 0;
 let reconnecting = false;
 
+console.log('Connecting to', import.meta.env.VITE_BACKEND_URL);
+
 const socket = io(import.meta.env.VITE_BACKEND_URL, {
    auth: {
       token: localStorage.getItem('token'), // or sessionStorage

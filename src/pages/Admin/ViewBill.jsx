@@ -3,7 +3,6 @@ import AdminTemplate from '../../components/Templates/Admin/AdminTemplate';
 import FormTemplate_Secondary from '../../components/Templates/Admin/form/FormTemplate_Secondary';
 import { useParams } from 'react-router-dom';
 import { getFee_Info } from '../../service/user.service';
-import { date } from 'yup';
 
 const ViewBill = () => {
    const { Payment_id } = useParams();
@@ -37,7 +36,6 @@ const ViewBill = () => {
                paymentMode: data[0].PaymentMode,
                semester: data[0].Semester,
                paymentStatus: data[0].PaymentStatus,
-               paymentMode: data[0].PaymentMethod,
                description: data[0].PaymentType,
                amount: data[0].AmountPaid,
             });

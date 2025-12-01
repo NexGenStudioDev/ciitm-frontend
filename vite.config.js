@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -7,10 +7,13 @@ export default defineConfig({
    server: {
       proxy: {
          '/api': {
-            target: 'http://localhost:7000',
+            target: 'https://ciitm-backend.onrender.com',
             changeOrigin: true,
-            secure: false, // Set to true if using HTTPS
+            secure: true, // Set to true if using HTTPS
          },
       },
    },
 });
+
+
+
