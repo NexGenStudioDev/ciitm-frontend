@@ -9,7 +9,7 @@ export default defineConfig({
          '/api': {
             target: 'https://ciitm-backend.onrender.com',
             changeOrigin: true,
-            secure: true, // Set to true if using HTTPS
+            secure: false, // Set to true if using HTTPS
          },
       },
    },
