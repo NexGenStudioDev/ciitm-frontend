@@ -14,6 +14,7 @@ import AdminSidebarLink from '../../../Atoms/Links/AdminSidebarLink';
 import { FaBookBookmark } from 'react-icons/fa6';
 import { PiChalkboardTeacher } from 'react-icons/pi';
 import { MdSpaceDashboard } from 'react-icons/md';
+import { FaUserShield } from 'react-icons/fa';
 
 const links = [
    {
@@ -61,6 +62,11 @@ const links = [
       name: 'Update Status',
       link: '/admin/update/status',
       icon: <MdSystemUpdateAlt />,
+   },
+   {
+      name: 'Role Management',
+      link: '/admin/role-management',
+      icon: <FaUserShield />,
    },
 ];
 

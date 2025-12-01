@@ -16,4 +16,9 @@ export const Sign_Up_EndPoint = '/api/v1/auth/Admin/SignUp';
 export const Admin_get_ContactData_EndPoint =
    '/api/v1/contact/admin/getContact';
 
+// Admin Role Management Endpoints
+export const Assign_Admin_Role_EndPoint = '/api/v1/role/create';
+export const Get_All_Admins_EndPoint = '/api/v1/role/admins';
+export const Delete_Admin_Role_EndPoint = '/api/v1/role/admin';
+
 // https://ciitm-backend.onrender.com
