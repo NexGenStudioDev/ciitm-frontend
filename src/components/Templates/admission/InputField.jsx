@@ -11,8 +11,8 @@ const InputField = ({ placeholder, type, name, required }) => {
    let find_index = admission.findIndex(item => item.name === name);
 
    useEffect(() => {
-      setValue(admission[find_index]?.value);
-   }, [admission]);
+      setValue(admission[find_index]?.value ?? '');
+   }, [admission, find_index]);
 
    let array = [];
 
@@ -59,7 +59,7 @@ const InputField = ({ placeholder, type, name, required }) => {
             name={nameAndId}
             type={type}
             placeholder={placeholder}
-            value={value}
+            value={value ?? ''}
             required={required}
             onChange={handleChange}
             onBlur={handleBlur}

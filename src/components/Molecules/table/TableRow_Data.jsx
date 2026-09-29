@@ -15,7 +15,11 @@ const TableRow_Data = ({
 
    return (
       <TableRow Tailwind_utility_Class={TableRowClassName}>
-         {TableDataArray.map((item, index) => ({ data }))}
+         {TableDataArray.map((item, index) => (
+            <TableData key={index} Tailwind_utility_Class={TableDataClassName}>
+               {item}
+            </TableData>
+         ))}
       </TableRow>
    );
 };

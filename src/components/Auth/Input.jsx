@@ -4,24 +4,21 @@ import { setInput, UpdateInput } from '../../store/AuthSlice';
 
 const Input = ({ type, placeholder, label, id, name }) => {
    const [Name, setName] = useState(name);
-   const [Value, setValue] = useState(null);
+   const [Value, setValue] = useState('');
    const [Login_Checkbox, setLogin_Checkbox] = useState(false);
    const [SignUp_Checkbox, setSignUp_Checkbox] = useState(false);
 
-   let array = useSelector(state => state.auth.data);
-
-   if (!array) {
-      return null;
-   }
+   const array = useSelector(state => state.auth?.data);
+   const safeArray = array || [];
 
    const Find_Login_CheckBox = useMemo(
-      () => array.find(item => item.name === 'Login_CheckBox'),
-      [array],
+      () => safeArray.find(item => item.name === 'Login_CheckBox'),
+      [safeArray],
    );
 
    const Find_SignUp_CheckBox = useMemo(
-      () => array.find(item => item.name === 'Sign_UP_CHECK'),
-      [array],
+      () => safeArray.find(item => item.name === 'Sign_UP_CHECK'),
+      [safeArray],
    );
 
    useEffect(() => {
@@ -34,8 +31,8 @@ const Input = ({ type, placeholder, label, id, name }) => {
    }, [Find_Login_CheckBox, Find_SignUp_CheckBox]);
 
    const find_index = useMemo(
-      () => array.findIndex(item => item.name === Name),
-      [array, Name],
+      () => safeArray.findIndex(item => item.name === Name),
+      [safeArray, Name],
    );
 
    const dispatch = useDispatch();
@@ -58,6 +55,10 @@ const Input = ({ type, placeholder, label, id, name }) => {
       },
       [Name, find_index, dispatch],
    );
+
+   if (!array) {
+      return null;
+   }
 
    let Handle_Unchacked = () => {
       if (Login_Checkbox === true) {
@@ -83,7 +84,7 @@ const Input = ({ type, placeholder, label, id, name }) => {
          )}
          <input
             type={type !== 'password' ? 'text' : Handle_Unchacked()}
-            value={Value}
+            value={Value ?? ''}
             autoComplete='off'
             id={id}
             name={name}

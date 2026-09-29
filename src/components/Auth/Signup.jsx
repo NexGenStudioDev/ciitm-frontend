@@ -95,7 +95,7 @@ const Signup = () => {
                </div>
 
                <h1 className='heading text-[1.8vw] max-[999px]:text-[4.5vw] font-semibold mb-2'>
-                  Let's Go Started Together
+                  Let&apos;s Go Started Together
                </h1>
                <p className='text-[0.9vw] max-[999px]:text-[2.5vw] mb-6'>
                   Access to this Sign Up page is limited to Admin

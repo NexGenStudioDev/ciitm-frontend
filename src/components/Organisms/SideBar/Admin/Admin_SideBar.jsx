@@ -110,6 +110,7 @@ const Admin_SideBar = () => {
 
    useEffect(() => {
       if (isMobile()) {
+         handleSidebarClose();
       }
    }, [location.pathname]);
 

@@ -41,7 +41,7 @@ const AboutHero = () => {
                </p>
                <div className='btns flex items-center gap-4 max-[599px]:mt-4'>
                   <button className='bg-transparent text-[1vw] max-[599px]:text-[2.5vw] border-[1px] border-white px-3 py-2 rounded-md font-bold'>
-                     Let's Started
+                     Let&apos;s Started
                   </button>
                   <button className='bg-white text-[1vw] max-[599px]:text-[2.5vw] text-black px-4 py-2 rounded-md font-bold'>
                      Watch Now

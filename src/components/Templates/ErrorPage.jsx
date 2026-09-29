@@ -11,10 +11,10 @@ const ErrorPage = () => {
             Oops! Page Not Found
          </h2>
          <p className='mt-2 text-lg'>
-            It seems the page you're looking for doesn't exist.
+            It seems the page you&apos;re looking for doesn&apos;t exist.
          </p>
          <p className='mt-2 text-md'>
-            But don't worry, you can navigate back!
+            But don&apos;t worry, you can navigate back!
          </p>
          <Link
             to='/'

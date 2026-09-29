@@ -1,6 +1,16 @@
 // Drop-in React component for DMCA.com Protection Badge
 import React, { useState, useEffect } from 'react';
 
+const getEnv = () => {
+   if (typeof globalThis !== 'undefined' && globalThis.process?.env) {
+      return globalThis.process.env;
+   }
+   if (typeof import.meta !== 'undefined' && import.meta?.env) {
+      return import.meta.env;
+   }
+   return {};
+};
+
 const DMCABadge = ({
    size = 'medium',
    position = 'inline',
@@ -9,13 +19,16 @@ const DMCABadge = ({
    className = '',
    onBadgeClick = null,
 }) => {
+   const env = getEnv();
    // DMCA.com badge configuration
    const DMCA_CONFIG = {
       badgeUrl:
-         process.env.REACT_APP_DMCA_BADGE_URL ||
+         env.REACT_APP_DMCA_BADGE_URL ||
+         env.VITE_DMCA_BADGE_URL ||
          'https://images.dmca.com/Badges/DMCA_badge_grn_60w.png?ID=638734f7-8b37-47af-b022-7b03a77295f2',
       statusUrl:
-         process.env.REACT_APP_DMCA_STATUS_URL ||
+         env.REACT_APP_DMCA_STATUS_URL ||
+         env.VITE_DMCA_STATUS_URL ||
          'https://www.dmca.com/Protection/Status.aspx?ID=638734f7-8b37-47af-b022-7b03a77295f2',
       alt: 'DMCA.com Protection Status',
       guid: '638734f7-8b37-47af-b022-7b03a77295f2',
@@ -56,8 +69,8 @@ const DMCABadge = ({
       }
 
       // Analytics tracking (optional)
-      if (typeof gtag !== 'undefined') {
-         gtag('event', 'dmca_badge_click', {
+      if (typeof window !== 'undefined' && typeof window.gtag !== 'undefined') {
+         window.gtag('event', 'dmca_badge_click', {
             event_category: 'protection',
             event_label: 'dmca_status_check',
          });
@@ -78,11 +91,11 @@ const DMCABadge = ({
 
    // Check if DMCA is properly configured
    const isConfigured =
-      !!process.env.REACT_APP_DMCA_BADGE_URL &&
-      !!process.env.REACT_APP_DMCA_STATUS_URL;
+      !!(env.REACT_APP_DMCA_BADGE_URL || env.VITE_DMCA_BADGE_URL) &&
+      !!(env.REACT_APP_DMCA_STATUS_URL || env.VITE_DMCA_STATUS_URL);
 
    // Don't render if not configured in production
-   if (!isConfigured && process.env.NODE_ENV === 'production') {
+   if (!isConfigured && env.NODE_ENV === 'production') {
       console.warn(
          'DMCA badge not configured. Please add your DMCA.com badge details.',
       );

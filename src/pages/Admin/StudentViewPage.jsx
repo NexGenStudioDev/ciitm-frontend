@@ -9,13 +9,11 @@ import StudentGradeInfo from '../../components/Templates/Admin/StudentView/Stude
 import StudentUniversityInfo from '../../components/Templates/Admin/StudentView/StudentUniversityInfo';
 import FeeUniversityInfo from '../../components/Templates/Admin/StudentView/FeeUniversityInfo';
 import socket from '../../config/socket.mjs';
+import Swal from 'sweetalert2';
 
 const fallbackImage = 'https://via.placeholder.com/150';
 
 const StudentViewPage = () => {
-   if (socket.connected) {
-      socket.connect();
-   }
 
    const { studentId } = useParams();
    const [studentPersonalData, setStudentPersonalData] = useState({

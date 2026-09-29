@@ -67,7 +67,7 @@ const Payment = () => {
         paymentSessionId: payment_session_id,
         redirectTarget: '_self',
         oneClickCheckout: true,
-        returnUrl: `${import.meta.env.VITE_BACKEND_URL}/success?order_id=${order_id}`,
+        returnUrl: `${import.meta.env.VITE_BACKEND_URL || window.location.origin}/success?order_id=${order_id}`,
         style: {
           theme: 'dark',
           buttonColor: '#28a745',

@@ -14,7 +14,7 @@ const Input = ({ Name, Placeholder, Label, Value }) => {
             className='bg-white border-[1px] border-[#D7D7D79E] rounded-lg px-4 py-3 placeholder:text-[.9vw] max-[599px]:placeholder:text-[2.9vw] outline-none'
             type='text'
             name={Name}
-            value={Value}
+            value={Value ?? ''}
             placeholder={Placeholder}
             id={Name}
             disabled

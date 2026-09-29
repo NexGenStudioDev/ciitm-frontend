@@ -1,24 +1,21 @@
 import { io } from 'socket.io-client';
 
-if (!import.meta.env.VITE_BACKEND_URL) {
-   throw new Error(
-      'VITE_BACKEND_URL is not defined in environment variables',
-   );
-}
+const backendUrl =
+   import.meta.env.VITE_BACKEND_URL || 'https://ciitm-backend.onrender.com';
 
 const MAX_RETRIES = 5;
 let retryCount = 0;
 let reconnecting = false;
 
-console.log('Connecting to', import.meta.env.VITE_BACKEND_URL);
+console.log('Connecting to socket at', backendUrl);
 
-const socket = io(import.meta.env.VITE_BACKEND_URL, {
+const socket = io(backendUrl, {
    auth: {
       token: localStorage.getItem('token'), // or sessionStorage
    },
    withCredentials: true,
    autoConnect: true,
-   transports: ['websocket'],
+   transports: ['websocket', 'polling'],
    reconnection: false, // We'll handle reconnection manually
    timeout: 20000,
    pingTimeout: 20000,
@@ -60,8 +57,8 @@ function attemptReconnection() {
 
       if (retryCount >= MAX_RETRIES) {
          clearInterval(retryInterval);
-         console.error('❌ Reconnection failed. Reloading page...');
-         window.location.reload();
+         console.warn('⚠️ Socket reconnection attempts reached max limit.');
+         reconnecting = false;
          return;
       }
 

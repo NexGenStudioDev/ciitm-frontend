@@ -112,6 +112,10 @@ const App = () => {
                      element={<Testimonial />}
                   />
                   <Route
+                     path='/album/:AlbumName'
+                     element={<Album_Image />}
+                  />
+                  <Route
                      path='/album/:name'
                      element={<Album_Image />}
                   />

@@ -55,15 +55,14 @@ const Footer = React.memo(() => {
                <Link to='/contact'>Contact Us</Link>
             </div>
 
-            <div className='flex max-[599px]:w-[45%] mx-0 items-start justify-between flex-col gap-4 text-center mb-4'>
+            <div className='flex max-[599px]:w-[45%] mx-0 items-start justify-between flex-col gap-4 mb-4'>
                <p className='text-base text-[#333] font-bold'>
-                  Important Links
+                  Quick Links
                </p>
-               <Link to='/privacy'>Privacy Policy</Link>
-               <Link to='/terms'>Terms of Services</Link>
+               <Link to='/admission'>Online Admission</Link>
+               <Link to='/status'>Check Status</Link>
+               <Link to='/testimonial'>Testimonials</Link>
                <Link to='/contact'>Contact Us</Link>
-               <Link to='/blog'>Blog</Link>
-               <Link to='/support'>Support</Link>
             </div>
 
             <div className='flex max-[599px]:w-full items-start max-[599px]:items-center justify-between flex-col gap-4 mb-4 mx-8'>
