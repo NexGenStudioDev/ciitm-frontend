@@ -15,7 +15,7 @@ const CourseCard = memo(({ data }) => {
          <div
             className='div w-full h-[35vh] rounded-xl bg-[#d9d9d9]'
             style={{
-               backgroundImage: `url('https://courses.msqfon.com/wp-content/uploads/2021/03/program-bachelor-of-science-in-computer-science-1920x1080-1.jpg')`,
+               backgroundImage: `url(${data?.imageUrl || 'https://courses.msqfon.com/wp-content/uploads/2021/03/program-bachelor-of-science-in-computer-science-1920x1080-1.jpg'})`,
                backgroundSize: 'cover',
                backgroundPosition: 'center',
                backgroundRepeat: 'no-repeat',
