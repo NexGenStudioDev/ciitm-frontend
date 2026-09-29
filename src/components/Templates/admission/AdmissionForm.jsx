@@ -3,30 +3,28 @@ import Steps from './Steps.jsx';
 
 const AdmissionForm = () => {
    return (
-      <div className='px-[3vw] text-[#333333] bg-[#D7D7D726] pb-[6vw] pt-[3vw]'>
-         <div className='font-[400] lg:w-[60%] text-[18px]'>
-            <span className='font-[700]'>Note:</span> Welcome to CIITM
-            Dhanbad, an institution dedicated to fostering innovation,
-            knowledge, and personal growth. Our mission is to shape
-            tom
-         </div>
-
-         <div className='bg-white rounded-[16px] border border-[#D7D7D7] shadow-sm mt-5 px-6 pt-4 pb-10'>
-            <div className='border-b border-[#A0A0A0] font-[700] text-[20px] pb-[9px] '>
-               Admission Form
+      <div className='px-4 sm:px-8 lg:px-12 text-[#333333] bg-slate-50 pb-16 pt-8'>
+         <div className='max-w-6xl mx-auto'>
+            <div className='bg-blue-50/70 border border-blue-200/80 rounded-2xl p-5 mb-6 text-sm sm:text-base text-gray-700 leading-relaxed'>
+               <span className='font-bold text-blue-900'>Note: </span>
+               Welcome to CIITM Dhanbad, an institution dedicated to fostering innovation, knowledge, and personal growth. Our mission is to empower students with technical excellence, modern industry skills, and holistic career opportunities.
             </div>
 
-            <div className='pt-6'>
-               <h1 className='font-[700] text-[20px]'>
-                  Current Status:
-               </h1>
-               <div className='font-[400]  text-sm pt-1'>
-                  <span className='font-[700]'>Note:</span> Welcome to
-                  CIITM Dhanbad, an institution dedicated to fostering
-                  innovation,
+            <div className='bg-white rounded-3xl border border-gray-200 shadow-sm p-6 sm:p-10'>
+               <div className='border-b border-gray-200 pb-4 mb-6 flex flex-wrap items-center justify-between gap-2'>
+                  <div>
+                     <h1 className='font-extrabold text-2xl text-gray-900'>
+                        Online Admission Application (2026-2027)
+                     </h1>
+                     <p className='text-xs sm:text-sm text-gray-500 mt-1'>
+                        Please fill in all required academic, personal, and guardian details carefully before submitting your application.
+                     </p>
+                  </div>
                </div>
 
-               <Steps />
+               <div>
+                  <Steps />
+               </div>
             </div>
          </div>
       </div>
